@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:form id="searchForm">
+
+		<p:growl id="growl" showDetail="false" sticky="false" life="5000"
+			for="searchButton" />
+		<p:panelGrid columns="9" id="searchCriteria1"
+			styleClass="panelGridCenter noBorder">
+			<f:facet name="header">  
+            Enter Search Criteria
+        </f:facet>
+			<p:outputLabel for="teamsAuto" value="Team:" />
+			<p:autoComplete id="teamsAuto" value="#{searchBean.teamName}"
+				completeMethod="#{teamBean.completeTeam}" forceSelection="true"
+				queryDelay="600" minQueryLength="2" maxResults="9" size="24" />
+			<p:watermark for="teamsAuto" value="Enter team name" />
+
+			<p:outputLabel for="playersAuto" value="Player:" />
+			<p:autoComplete id="playersAuto" value="#{searchBean.playerName}"
+				completeMethod="#{playerBean.completePlayer}" forceSelection="true"
+				queryDelay="600" minQueryLength="2" maxResults="12">
+			</p:autoComplete>
+			<p:watermark for="playersAuto" value="Enter player name" />
+
+			<p:splitButton value="Search" action="#{searchBean.search}"
+				id="searchButton" icon="ui-icon-search" title="Search" ajax="false">
+				<p:menuitem value="Reset" action="#{searchBean.reset}" ajax="false"
+					title="Reset" icon="ui-icon-arrowreturn-1-wl" />
+				<p:menuitem value="Add player" action="#{playerBean.addPlayer}"
+					ajax="false" title="Add Player" icon="ui-icon-plus" update="growl" />
+			</p:splitButton>
+
+		</p:panelGrid>
+
+		<p:accordionPanel widgetVar="accordion" style="width:1050px"
+			activeIndex="" styleClass="panelGridCenter">
+			<p:tab title="Additional Search Criteria">
+				<p:panelGrid columns="6" id="searchCriteria2"
+					styleClass="left noBorder">
+					<p:outputLabel for="popupCalFrom" value="Date Range:" />
+					<p:column>
+						<p:calendar value="#{searchBean.fromDate}" id="popupCalFrom"
+							pattern="MM/dd/yyyy" size="8" />
+						<p:watermark for="popupCalFrom" value="Start date" />
+					</p:column>
+					<p:outputLabel for="popupCalTo" value="Thru:" />
+					<p:column>
+						<p:calendar value="#{searchBean.toDate}" id="popupCalTo"
+							pattern="MM/dd/yyyy" size="8" />
+						<p:watermark for="popupCalTo" value="End date" />
+					</p:column>
+					<p:outputLabel for="homeAway" value="Home or Away:" />
+					<p:selectOneMenu id="homeAway" value="#{searchBean.homeAway.value}">
+						<f:selectItems value="#{searchBean.homeAwayEnums}" var="homeAway"
+							itemValue="#{homeAway.value}" itemLabel="#{homeAway}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="competition" value="Competition:" />
+					<p:selectOneMenu id="competition"
+						value="#{searchBean.gameType.value}">
+						<f:selectItems value="#{searchBean.gameTypeEnums}" var="gameType"
+							itemValue="#{gameType.value}" itemLabel="#{gameType}" />
+					</p:selectOneMenu>
+					<p:outputLabel for="divSpinner" value="Division:" />
+					<p:spinner id="divSpinner" min="0" max="10" stepFactor="1"
+						value="#{searchBean.division}" size="1" />
+
+					<p:panel>
+						<h:outputLabel value="Possession %:" for="possessionPercentage" />
+						<h:selectOneMenu id="searchCriteria"
+							value="#{searchBean.searchCriteria}">
+							<f:selectItems value="#{searchCriteriaBean.searchCriteriaValues}"
+								var="searchCriteria" itemValue="#{searchCriteria}"
+								itemLabel="#{searchCriteria.label}" />
+						</h:selectOneMenu>
+					</p:panel>
+
+					<p:spinner id="possessionPercentage" size="2"
+						value="#{searchBean.possessionPercentage}" min="1" max="99" />
+
+					<p:outputLabel for="extraTime" value="Extra Time:" />
+					<h:selectBooleanCheckbox id="extraTime"
+						value="#{searchBean.extraTime}" />
+
+					<p:outputLabel for="matchAbandoned" value="Match Abandoned:" />
+					<h:selectBooleanCheckbox id="matchAbandoned"
+						value="#{searchBean.matchAbandoned}" />
+
+					<p:outputLabel for="country" value="Country:" />
+					<p:column>
+						<p:autoComplete id="country" value="#{searchBean.countryName}"
+							completeMethod="#{countryBean.completeCountry}"
+							forceSelection="true" queryDelay="600" maxResults="9" size="17" />
+						<p:watermark for="country" value="Enter country name" />
+					</p:column>
+				</p:panelGrid>
+			</p:tab>
+		</p:accordionPanel>
+	</h:form>
+
+</ui:composition>

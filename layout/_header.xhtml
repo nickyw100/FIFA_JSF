@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:panelGrid columns="4" width="100%">
+
+		<h:panelGroup>
+			<ui:insert name="nav">
+				<ui:include src="/layout/_navigationMenu.xhtml" />
+			</ui:insert>
+		</h:panelGroup>
+
+		<h:panelGroup styleClass="panelGroupLeft">
+			<ui:insert name="version">
+				<ui:include src="/layout/_versionSelect.xhtml" />
+			</ui:insert>
+		</h:panelGroup>
+
+		<h:panelGroup styleClass="panelGroupRightCarousel">
+			<ui:insert name="fact">
+				<ui:include src="/layout/_factCarousel.xhtml" />
+			</ui:insert>
+
+		</h:panelGroup>
+
+		<h:panelGroup styleClass="panelGroupRight">
+			<h:outputText value="#{versionBean.databaseEnvironment}"></h:outputText>
+			<p:clock pattern="MM/dd/yyyy hh:mm:ss a" />
+		</h:panelGroup>
+	</h:panelGrid>
+
+</ui:composition>

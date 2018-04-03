@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<title>Edit Statistics</title>
+</h:head>
+<h:body>
+	<h:panelGroup rendered="#{!statsBeanEdit.edit}">
+		<h3>Add result</h3>
+		<h:form>
+			<p:growl id="growl" showDetail="false" sticky="false" life="5000" severity="info, warn" />
+			<p:panel id="addStats">
+				<p:messages id="messages" autoUpdate="true" closable="true" severity="error"
+					errorClass="error" />
+				<h:outputLabel value="Version ID:" for="versionId" />
+				<h:inputText value="#{statsBeanEdit.statsBean.versionId}" size="5"
+					id="versionId" maxlength="6" required="true"
+					requiredMessage="You must enter a version ID"
+					title="Enter a version ID" />
+				<h:outputLabel value="Team Name:" for="teamsAuto" />
+				<p:autoComplete id="teamsAuto"
+					value="#{statsBeanEdit.statsBean.teamName}"
+					completeMethod="#{teamBean.completeTeam}" forceSelection="true"
+					queryDelay="600" minQueryLength="2" maxResults="9" size="24"
+					required="true" requiredMessage="You must enter a team"
+					title="Enter a team name" />
+				<p:watermark for="teamsAuto" value="Team name" />
+				<h:outputLabel value="Player Name:" for="playersAuto" />
+				<p:autoComplete id="playersAuto"
+					value="#{statsBeanEdit.statsBean.playerName}"
+					completeMethod="#{playerBean.completePlayer}" forceSelection="true"
+					queryDelay="600" minQueryLength="2" maxResults="12" required="true"
+					requiredMessage="You must enter a player name"
+					title="Enter a player name" />
+				<p:watermark for="playersAuto" value="Player name" />
+				<p:commandButton action="#{playerBean.addPlayerFromStatsCrud}"
+					title="Add player" immediate="true" id="addPlayer"
+					icon="ui-icon-plus" update="growl" />
+				<h:outputLabel value="Competition:" for="competition" />
+				<p:selectOneMenu value="#{statsBeanEdit.statsBean.gameType}" id="competition">
+    				<f:selectItems value="#{statsBeanEdit.statsBean.gameTypeEnums}" />
+				</p:selectOneMenu>
+				<h:outputLabel value="Division:" for="division" />
+				<p:spinner id="division" size="2"
+					value="#{statsBeanEdit.statsBean.division}" min="0" max="10" />
+				<br />
+				<h:outputLabel value="Location:" for="homeAway" />
+				
+				<p:selectOneMenu value="#{statsBeanEdit.statsBean.homeAway}" id="homeAway">
+    				<f:selectItems value="#{statsBeanEdit.statsBean.homeAwayEnums}" />
+				</p:selectOneMenu>
+
+				<h:outputLabel value="Game date:" for="popupCalFrom" />
+				<p:calendar value="#{statsBeanEdit.statsBean.gameDateTime}"
+					id="popupCalFrom" pattern="MM/dd/yyyy HH:mm" size="16" />
+				<p:watermark for="popupCalFrom" value="Game date" />
+				<h:outputLabel value="Goals for:" for="goalsFor" />
+				<p:spinner id="goalsFor" size="2"
+					value="#{statsBeanEdit.statsBean.goalsFor}" min="0" max="10" />
+
+				<h:outputLabel value="Goals against:" for="goalsAgainst" />
+				<p:spinner id="goalsAgainst" size="2"
+					value="#{statsBeanEdit.statsBean.goalsAgainst}" min="0" max="10" />
+				<h:outputLabel value="DNF:" for="matchAbandoned" />
+				<h:selectBooleanCheckbox
+					value="#{statsBeanEdit.statsBean.matchAbandoned}"
+					id="matchAbandoned" />
+
+				<h:outputLabel value="Extra Time:" for="extraTime" />
+				<h:selectBooleanCheckbox
+					value="#{statsBeanEdit.statsBean.extraTime}" id="extraTime" />
+
+				<h:outputLabel value="Penalties for:" for="penaltiesFor" />
+				<p:spinner id="penaltiesFor" size="2"
+					value="#{statsBeanEdit.statsBean.penaltiesFor}" min="0" max="10" />
+
+				<h:outputLabel value="Penalties against:" for="penaltiesAgainst" />
+				<p:spinner id="penaltiesAgainst" size="2"
+					value="#{statsBeanEdit.statsBean.penaltiesAgainst}" min="0"
+					max="10" />
+				<br />
+				<h:outputLabel value="Possession:" for="possessionPercentage" />
+				<p:spinner id="possessionPercentage" size="2"
+					value="#{statsBeanEdit.statsBean.possessionPercentage}" min="1"
+					max="99" />
+				<h:outputLabel value="% " />
+				<h:outputLabel value="Shots:" for="shots" />
+				<p:spinner id="shots" size="2"
+					value="#{statsBeanEdit.statsBean.shots}" min="0" max="50" />
+				<h:outputLabel value="Shots on target:" for="shotsOnTarget" />
+				<p:spinner id="shotsOnTarget" size="2"
+					value="#{statsBeanEdit.statsBean.shotsOnTarget}" min="0" max="50" />
+				<h:outputLabel value="Opponent shots:" for="opponentShots" />
+				<p:spinner id="opponentShots" size="2"
+					value="#{statsBeanEdit.statsBean.opponentShots}" min="0" max="50" />
+				<h:outputLabel value="Shots on target:" for="opponentShotsOnTarget" />
+				<p:spinner id="opponentShotsOnTarget" size="2"
+					value="#{statsBeanEdit.statsBean.opponentShotsOnTarget}" min="0"
+					max="50" />
+				<h:outputLabel value="Opponent Division:" for="opponentDivision" />
+				<p:spinner id="opponentDivision" size="2"
+					value="#{statsBeanEdit.statsBean.opponentDivision}" min="0"
+					max="10" />
+				<br />
+				<h:outputLabel value="Comments:" for="gameComments" />
+				<h:inputTextarea value="#{statsBeanEdit.statsBean.gameComments}"
+					id="gameComments" cols="100" rows="3" />
+				<p>
+					<p:splitButton value="Add" action="#{statsBeanEdit.add}"
+						icon="ui-icon-circle-plus">
+						<p:menuitem value="Cancel"
+							action = "#{statsBeanEdit.cancel}" ajax="false"
+							icon="ui-icon-cancel" />
+					</p:splitButton>
+					<br /> <br />
+					<h:outputLabel value="Last player added: " for="lastPlayerAdded"
+						styleClass="footer" />
+					<h:outputText id="lastPlayerAdded"
+						value="#{statsBeanEdit.statsBean.lastPlayerNameAdded}"
+						styleClass="footer" />
+				</p>
+			</p:panel>
+		</h:form>
+	</h:panelGroup>
+	<h:panelGroup rendered="#{statsBeanEdit.edit}">
+		<h3>Edit result #{statsBeanEdit.statsBean.gameDateTime}</h3>
+		<h:form>
+			<p:panel id="editStats">
+			<p:messages id="messages" autoUpdate="true" closable="true"
+					errorClass="error" />
+				<h:outputLabel value="Version ID:" for="versionId" />
+				<p:inputText value="#{statsBeanEdit.statsBean.versionId}"
+					id="versionId" disabled="true" size="5" maxlength="6" />
+
+				<h:outputLabel value="Team Name:" for="teamsAuto" />
+				<p:autoComplete id="teamsAuto"
+					value="#{statsBeanEdit.statsBean.teamName}"
+					completeMethod="#{teamBean.completeTeam}" forceSelection="true"
+					queryDelay="600" minQueryLength="2" maxResults="9" size="24"
+					disabled="true" />
+
+				<h:outputLabel value="Player Name:" for="playersAuto" />
+				<p:autoComplete id="playersAuto"
+					value="#{statsBeanEdit.statsBean.playerName}"
+					completeMethod="#{playerBean.completePlayer}" forceSelection="true"
+					queryDelay="600" minQueryLength="2" maxResults="12" disabled="true" />
+
+				<h:outputLabel value="Competition:" for="competition" />
+				
+				<p:selectOneMenu value="#{statsBeanEdit.statsBean.gameType}" id="competition">
+    				<f:selectItems value="#{statsBeanEdit.statsBean.gameTypeEnums}" />
+				</p:selectOneMenu>
+
+				<h:outputLabel value="Division: " for="division" />
+				<p:spinner id="division" size="2"
+					value="#{statsBeanEdit.statsBean.division}" min="0" max="10" />
+				<br />
+
+				<h:outputLabel value="Location:" for="homeAway" />
+				<p:selectOneMenu value="#{statsBeanEdit.statsBean.homeAway}" id="homeAway">
+    				<f:selectItems value="#{statsBeanEdit.statsBean.homeAwayEnums}" />
+				</p:selectOneMenu>
+
+				<h:outputLabel value="Game date:" for="popupCalFrom" />
+				<p:calendar value="#{statsBeanEdit.statsBean.gameDateTime}"
+					id="popupCalFrom" pattern="MM/dd/yyyy HH:mm" size="16"
+					disabled="true" />
+
+				<h:outputLabel value="Goals for:" for="goalsFor" />
+				<p:spinner id="goalsFor" size="2"
+					value="#{statsBeanEdit.statsBean.goalsFor}" min="0" max="10" />
+
+				<h:outputLabel value="Goals against:" for="goalsAgainst" />
+				<p:spinner id="goalsAgainst" size="2"
+					value="#{statsBeanEdit.statsBean.goalsAgainst}" min="0" max="10" />
+
+				<h:outputLabel value="DNF:" for="matchAbandoned" />
+				<h:selectBooleanCheckbox
+					value="#{statsBeanEdit.statsBean.matchAbandoned}"
+					id="matchAbandoned" />
+				<h:outputLabel value="Extra Time:" for="extraTime" />
+				<h:selectBooleanCheckbox
+					value="#{statsBeanEdit.statsBean.extraTime}" id="extraTime" />
+
+				<h:outputLabel value="Penalties for:" for="penaltiesFor" />
+				<p:spinner id="penaltiesFor" size="2"
+					value="#{statsBeanEdit.statsBean.penaltiesFor}" min="0" max="20" />
+
+				<h:outputLabel value="Penalties against:" for="penaltiesAgainst" />
+				<p:spinner id="penaltiesAgainst" size="2"
+					value="#{statsBeanEdit.statsBean.penaltiesAgainst}" min="0"
+					max="20" />
+				<br />
+				<h:outputLabel value="Possession:" for="possessionPercentage" />
+				<p:spinner id="possessionPercentage" size="2"
+					value="#{statsBeanEdit.statsBean.possessionPercentage}" min="1"
+					max="99" />
+				<h:outputLabel value="% " />
+				<h:outputLabel value="Shots:" for="shots" />
+				<p:spinner id="shots" size="2"
+					value="#{statsBeanEdit.statsBean.shots}" min="0" max="50" />
+				<h:outputLabel value="Shots on target:" for="shotsOnTarget" />
+				<p:spinner id="shotsOnTarget" size="2"
+					value="#{statsBeanEdit.statsBean.shotsOnTarget}" min="0" max="50" />
+				<h:outputLabel value="Opponent shots:" for="opponentShots" />
+				<p:spinner id="opponentShots" size="2"
+					value="#{statsBeanEdit.statsBean.opponentShots}" min="0" max="50" />
+				<h:outputLabel value="Opponent shots on target:"
+					for="opponentShotsOnTarget" />
+				<p:spinner id="opponentShotsOnTarget" size="2"
+					value="#{statsBeanEdit.statsBean.opponentShotsOnTarget}" min="0"
+					max="50" />
+				<h:outputLabel value="Opponent Division:" for="opponentDivision" />
+				<p:spinner id="opponentDivision" size="2"
+					value="#{statsBeanEdit.statsBean.opponentDivision}" min="0"
+					max="10" />
+				<br />
+				<h:outputLabel value="Comments:" for="gameComments" />
+				<h:inputTextarea value="#{statsBeanEdit.statsBean.gameComments}"
+					id="gameComments" cols="100" rows="3" />
+
+				<p>
+					<p:splitButton value="Save" action="#{statsBeanEdit.save}"
+						update="messages" icon="ui-icon-disk">
+						<p:menuitem value="Cancel"
+							action = "#{statsBeanEdit.cancel}" ajax="false"
+							icon="ui-icon-cancel" />
+					</p:splitButton>
+				</p>
+			</p:panel>
+		</h:form>
+	</h:panelGroup>
+	<h:form rendered="#{not empty statsBeanEdit.list}">
+		<h:outputLabel value="Restrict Rows: " title="restrictRows" />
+		<p:spinner id="restrictRows" size="3"
+			value="#{statsBeanEdit.restrictRows}" min="10" max="90000"
+			stepFactor="10" />
+		<h:commandLink id="btnrefresh" action="#{statsBeanEdit.refreshPage}"
+			title="Refresh">
+			<h:graphicImage library="images" name="refreshIcon.png"></h:graphicImage>
+		</h:commandLink>
+		<h:dataTable value="#{statsBeanEdit.model}" var="stats"
+			styleClass="dataTableCenter" border="1">
+			<h:column>
+				<f:facet name="header">Opponent</f:facet>
+				<h:outputText value="#{stats.teamName}"
+					title="#{stats.versionId} Country: #{stats.countryName} Team ID: #{stats.teamId} " />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Player Name</f:facet>
+				<h:outputText value="#{stats.playerName}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Competition</f:facet>
+				<h:selectOneMenu value="#{stats.gameType.value}"  >
+    				<f:selectItems value="#{stats.gameTypeEnums}" var="gameType"
+    				itemValue="#{gameType.value}" itemLabel="#{gameType}" />
+				</h:selectOneMenu>
+				<br/>
+				<h:outputText value="Div: #{stats.division}" style="font-size: 0.675em;"
+					rendered="#{stats.division > 0}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Home/Away</f:facet>				
+				<h:selectOneMenu value="#{stats.homeAway.value}" >
+    				<f:selectItems value="#{stats.homeAwayEnums}" var="homeAway"
+    				itemValue="#{homeAway.value}" itemLabel="#{homeAway}" />
+				</h:selectOneMenu>				
+			</h:column>
+			<h:column>
+				<f:facet name="header">Date</f:facet>#{stats.gameDateTimeString}</h:column>
+			<h:column>
+				<f:facet name="header">Score</f:facet>#{stats.goalsFor} - #{stats.goalsAgainst} </h:column>
+			<h:column>
+				<f:facet name="header">DNF</f:facet>
+				<h:outputText value="#{stats.matchAbandoned}"
+					title="The game was abandonded" rendered="#{stats.matchAbandoned}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Extra Time</f:facet>
+				<h:outputText value="#{stats.extraTime}"
+					rendered="#{stats.extraTime}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Penalties</f:facet>
+				<h:outputText
+					value="#{stats.penaltiesFor} - #{stats.penaltiesAgainst}"
+					rendered="#{stats.penaltiesFor > 0}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Comments</f:facet>#{stats.gameComments}</h:column>
+			<h:column>
+				<h:commandLink id="btnedit" action="#{statsBeanEdit.editStat}"
+					title="Edit Statistic">
+					<h:graphicImage library="images" name="editIcon.png"></h:graphicImage>
+				</h:commandLink>
+			</h:column>
+			<h:column>
+				<h:commandLink id="btndelete" action="#{statsBeanEdit.delete}"
+					title="Delete Result">
+					<h:graphicImage library="images" name="deleteIcon.png"></h:graphicImage>
+				</h:commandLink>
+			</h:column>
+		</h:dataTable>
+	</h:form>
+	<h:panelGroup rendered="#{empty statsBeanEdit.list}"
+		styleClass="dataTableCenter">
+		<p>Table is empty! Please play (and record) some games!</p>
+	</h:panelGroup>
+
+</h:body>
+</html>

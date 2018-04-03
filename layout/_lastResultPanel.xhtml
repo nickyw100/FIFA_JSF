@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<p:accordionPanel style="width:1000px" styleClass="panelGridCenter">
+		<p:tab title="Last Result">
+			<table align="center" width="100%">
+				<tr>					
+					<th class="ui-widget-header" colspan="3">Score</th>
+					<th class="white"></th>
+					<th class="ui-widget-header">&nbsp;&nbsp;&nbsp;&nbsp;Opponent&nbsp;&nbsp;&nbsp;&nbsp;</th>
+					<th class="white"></th>
+					<th class="ui-widget-header">Date</th>
+					<th class="white"></th>
+					<th class="ui-widget-header">&nbsp;&nbsp;Competition&nbsp;&nbsp;</th>
+					<th class="white"></th>
+					<th class="ui-widget-header">&nbsp;&nbsp;Country&nbsp;&nbsp;</th>
+				</tr>
+				<ui:repeat var="lastResult" value="#{lastResultBean.lastResult}"
+					varStatus="status">
+					<tr align="center">
+						<td><h:graphicImage url="#{lastResult.homeTeamLogo}"
+								id="homeTeam" width="50" alt="#{lastResult.homeTeamName}" /> 
+								<p:tooltip
+								for="homeTeam" value="#{lastResult.homeTeamName}"
+								showEffect="clip" hideEffect="explode" /></td>
+
+						<td>
+						<table>
+								<tr>
+								<td>&nbsp;</td>
+									<td><h:outputText id="score1"
+											value="#{lastResult.goalsFor} - #{lastResult.goalsAgainst}"
+											styleClass="#{lastResult.resultColor}"
+											rendered="#{lastResult.homeAway.value == 'H'}" />
+											<h:outputText id="score2"
+											value="#{lastResult.goalsAgainst} - #{lastResult.goalsFor}"
+											styleClass="#{lastResult.resultColor}"
+											rendered="#{lastResult.homeAway.value == 'A'}" />
+									</td>
+									<td><h:outputText
+											rendered="#{lastResult.gameComments != null}" value="*"
+											styleClass="superscript #{lastResult.resultColor}" /> 
+											<p:tooltip	for="score1" value="#{lastResult.fullGameComments}"
+											showEffect="clip" hideEffect="explode"
+											rendered="#{!empty lastResult.gameComments}" /> 
+											<p:tooltip for="score2" value="#{lastResult.fullGameComments}"
+											showEffect="clip" hideEffect="explode"
+											rendered="#{!empty lastResult.gameComments}" />
+									</td>
+									<td><h:outputText value="AET"
+											rendered="#{lastResult.extraTime}"
+											styleClass="superscript3 #{lastResult.resultColor}" /></td>
+								</tr>
+
+								<h:outputText value="&lt;tr&gt;" escape="false"
+									rendered="#{(lastResult.penaltiesFor > 0) or (lastResult.penaltiesAgainst > 0)}" />
+
+								<!--  Was the game decided on penalties at home? -->
+								<h:outputText value="&lt;td&gt;" escape="false"
+									styleClass="#{lastResult.win ? 'green' : 'red'}"
+									rendered="#{(lastResult.homeAway.value == 'H') and ((lastResult.penaltiesFor > 0) or (lastResult.penaltiesAgainst > 0))}" />									
+								<h:outputText value="(" 
+									styleClass="#{lastResult.win ? 'green' : 'red'}"
+									rendered="#{(lastResult.homeAway.value == 'H') and ((lastResult.penaltiesFor > 0) or (lastResult.penaltiesAgainst > 0))}" />	
+								<h:outputText value="&lt;/td&gt;" escape="false"
+									styleClass="#{lastResult.win ? 'green' : 'red'}"
+									rendered="#{(lastResult.homeAway.value == 'H') and ((lastResult.penaltiesFor > 0) or (lastResult.penaltiesAgainst > 0))}" />
+								<h:outputText value="&lt;td&gt;" escape="false"
+									styleClass="#{lastResult.win ? 'green' : 'red'}"
+									rendered="#{(lastResult.homeAway.value == 'H') and ((lastResult.penaltiesFor > 0) or (lastResult.penaltiesAgainst > 0))}" />
+								<h:outputText id="pscore1"
+									value="#{lastResult.penaltiesFor} - #{lastResult.penaltiesAgainst}"
+									styleClass="#{lastResult.win ? 'green' : 'red'}"
+									rendered="#{(lastResult.homeAway.value == 'H') and ((lastResult.penaltiesFor > 0) or (lastResult.penaltiesAgainst > 0))}" />
+								<p:tooltip for="pscore1"
+									value="Game finished #{lastResult.penaltiesFor} - #{lastResult.penaltiesAgainst} after penalties"
+									showEffect="clip" hideEffect="explode"
+									rendered="#{(lastResult.homeAway.value == 'H') and ((lastResult.penaltiesFor > 0) or (lastResult.penaltiesAgainst > 0))}" />
+								<h:outputText value="&lt;/td&gt;" escape="false"
+									styleClass="#{lastResult.win ? 'green' : 'red'}"
+									rendered="#{(lastResult.homeAway.value == 'H') and ((lastResult.penaltiesFor > 0) or (lastResult.penaltiesAgainst > 0))}" />
+								<h:outputText value="&lt;td&gt;" escape="false"
+									styleClass="#{lastResult.win ? 'green' : 'red'}"
+									rendered="#{(lastResult.homeAway.value == 'H') and ((lastResult.penaltiesFor > 0) or (lastResult.penaltiesAgainst > 0))}" />
+								<h:outputText value="P)"
+									styleClass="#{lastResult.win ? 'green' : 'red'}"
+									rendered="#{(lastResult.homeAway.value == 'H') and ((lastResult.penaltiesFor > 0) or (lastResult.penaltiesAgainst > 0))}" />
+								<h:outputText value="&lt;/td&gt;" escape="false"
+									styleClass="#{lastResult.win ? 'green' : 'red'}"
+									rendered="#{(lastResult.homeAway.value == 'H') and ((lastResult.penaltiesFor > 0) or (lastResult.penaltiesAgainst > 0))}" />
+									
+								<!--  Was the game decided on penalties away? -->
+								<h:outputText value="&lt;td&gt;" escape="false"
+									styleClass="#{lastResult.win ? 'green' : 'red'}"
+									rendered="#{(lastResult.homeAway.value == 'A') and ((lastResult.penaltiesFor > 0) or (lastResult.penaltiesAgainst > 0))}" />
+								<h:outputText value="(" 
+									styleClass="#{lastResult.win ? 'green' : 'red'}"
+									rendered="#{(lastResult.homeAway.value == 'A') and ((lastResult.penaltiesFor > 0) or (lastResult.penaltiesAgainst > 0))}" />
+
+								<h:outputText value="&lt;/td&gt;" escape="false"
+									styleClass="#{lastResult.win ? 'green' : 'red'}"
+									rendered="#{(lastResult.homeAway.value == 'A') and ((lastResult.penaltiesFor > 0) or (lastResult.penaltiesAgainst > 0))}" />
+
+								<h:outputText value="&lt;td&gt;" escape="false"
+									styleClass="#{lastResult.win ? 'green' : 'red'}"
+									rendered="#{(lastResult.homeAway.value == 'A') and ((lastResult.penaltiesFor > 0) or (lastResult.penaltiesAgainst > 0))}" />
+
+								<h:outputText id="pscore2"
+									value="#{lastResult.penaltiesAgainst} - #{lastResult.penaltiesFor}"
+									styleClass="#{lastResult.win ? 'green' : 'red'}"
+									rendered="#{(lastResult.homeAway.value == 'A') and ((lastResult.penaltiesFor > 0) or (lastResult.penaltiesAgainst > 0))}" />
+								<p:tooltip for="pscore2"
+									value="Game finished #{lastResult.penaltiesAgainst} - #{lastResult.penaltiesFor} after penalties"
+									showEffect="clip" hideEffect="explode"
+									rendered="#{(lastResult.homeAway.value == 'A') and ((lastResult.penaltiesFor > 0) or (lastResult.penaltiesAgainst > 0))}" />
+								<h:outputText value="&lt;/td&gt;" escape="false"
+									styleClass="#{lastResult.win ? 'green' : 'red'}"
+									rendered="#{(lastResult.homeAway.value == 'A') and ((lastResult.penaltiesFor > 0) or (lastResult.penaltiesAgainst > 0))}" />
+
+								<h:outputText value="&lt;td&gt;" escape="false"
+									styleClass="#{lastResult.win ? 'green' : 'red'}"
+									rendered="#{(lastResult.homeAway.value == 'A') and ((lastResult.penaltiesFor > 0) or (lastResult.penaltiesAgainst > 0))}" />
+								<h:outputText value="P)"
+									styleClass="#{lastResult.win ? 'green' : 'red'}"
+									rendered="#{(lastResult.homeAway.value == 'A') and ((lastResult.penaltiesFor > 0) or (lastResult.penaltiesAgainst > 0))}" />
+								<h:outputText value="&lt;/td&gt;" escape="false"
+									styleClass="#{lastResult.win ? 'green' : 'red'}"
+									rendered="#{(lastResult.homeAway.value == 'A') and ((lastResult.penaltiesFor > 0) or (lastResult.penaltiesAgainst > 0))}" />
+									
+								<h:outputText value="&lt;/tr&gt;" escape="false"
+									rendered="#{(lastResult.penaltiesFor > 0) or (lastResult.penaltiesAgainst > 0)}" />
+							</table>
+						</td>
+						<td><h:graphicImage url="#{lastResult.awayTeamLogo}"
+								id="awayTeam" width="50" alt="#{lastResult.awayTeamName}" /> 
+								<p:tooltip for="awayTeam" value="#{lastResult.awayTeamName}"
+								showEffect="clip" hideEffect="explode" />
+						</td>
+								<td>&nbsp;</td>
+						<td><h:outputText value="#{lastResult.playerName}"
+								id="player" /> <h:outputText
+								rendered="#{lastResult.playerComments != null}" value=" *"
+								styleClass="superscript" /> 
+								<p:tooltip for="player"  value="#{lastResult.playerComments}" showEffect="clip"
+								hideEffect="explode" rendered="#{!empty lastResult.playerComments}" />
+						</td>
+								<td>&nbsp;</td>
+						<td><h:outputText id="date"
+								value="#{lastResult.gameDateTimeStr}"
+								styleClass="#{lastResult.matchAbandoned ? 'red' : 'black'}" />
+							<p:tooltip for="date" value="Match abandoned" showEffect="clip"
+								hideEffect="explode" rendered="#{lastResult.matchAbandoned}" />
+						</td>
+						<td>&nbsp;</td>
+						<td><h:outputText id="comp"
+								value="#{lastResult.gameTypeDescription}" />
+						<p:tooltip for="comp" value="#{lastResult.versionId}" showEffect="clip" hideEffect="explode" /> 		
+						</td>
+						<td>&nbsp;</td>
+						<td>
+						<h:graphicImage url="#{lastResult.flagImage}" id="country" height="50" width="60" /> 
+							<p:tooltip for="country" value="#{lastResult.countryName}" showEffect="clip"
+								hideEffect="explode" />							
+						</td>
+					</tr>
+
+				</ui:repeat>
+
+			</table>
+		</p:tab>
+	</p:accordionPanel>
+</ui:composition>

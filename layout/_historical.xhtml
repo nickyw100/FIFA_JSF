@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<p:accordionPanel style="width:1000px" styleClass="panelGridCenter" activeIndex="">
+		<p:tab title="Historical Results">
+	<p:tabView id="tabView" styleClass="panelGridCenter" >
+		<p:tab title="Historical Results - All">
+			<h:panelGrid columns="5" width="80%">
+
+				<h:panelGroup style="left">
+					<h:link outcome="index?faces-redirect=true">
+						<h:graphicImage library="images" name="easfc.png" height="80"
+							width="80" />
+					</h:link>
+				</h:panelGroup>
+				<h:panelGroup style="right">
+					<ui:include src="charts/_overallResults.xhtml" />
+				</h:panelGroup>
+
+				<h:panelGroup style="right">
+					<ui:include src="charts/_homeResults.xhtml" />
+				</h:panelGroup>
+
+				<h:panelGroup style="right">
+					<ui:include src="charts/_awayResults.xhtml" />
+				</h:panelGroup>
+			</h:panelGrid>
+		</p:tab>
+		<p:tab title="Historical Results - Cup">
+			<h:panelGrid columns="5" width="80%">
+
+				<h:panelGroup style="left">
+					<h:link outcome="index?faces-redirect=true">
+						<h:graphicImage library="images" name="easfc.png" height="80"
+							width="80" />
+					</h:link>
+				</h:panelGroup>
+				<h:panelGroup style="right">
+					<ui:include src="charts/_overallCupResults.xhtml" />
+				</h:panelGroup>
+
+				<h:panelGroup style="right">
+					<ui:include src="charts/_homeCupResults.xhtml" />
+				</h:panelGroup>
+
+				<h:panelGroup style="right">
+					<ui:include src="charts/_awayCupResults.xhtml" />
+				</h:panelGroup>
+			</h:panelGrid>
+		</p:tab>
+		<p:tab title="Historical Results - Season">
+			<h:panelGrid columns="5" width="80%">
+
+				<h:panelGroup style="left">
+					<h:link outcome="index?faces-redirect=true">
+						<h:graphicImage library="images" name="easfc.png" height="80"
+							width="80" />
+					</h:link>
+				</h:panelGroup>
+				<h:panelGroup style="right">
+					<ui:include src="charts/_overallSeasonResults.xhtml" />
+				</h:panelGroup>
+
+				<h:panelGroup style="right">
+					<ui:include src="charts/_homeSeasonResults.xhtml" />
+				</h:panelGroup>
+
+				<h:panelGroup style="right">
+					<ui:include src="charts/_awaySeasonResults.xhtml" />
+				</h:panelGroup>
+			</h:panelGrid>
+		</p:tab>
+				<p:tab title="Historical Results - Friendly">
+			<h:panelGrid columns="5" width="80%">
+
+				<h:panelGroup style="left">
+					<h:link outcome="index?faces-redirect=true">
+						<h:graphicImage library="images" name="easfc.png" height="80"
+							width="80" />
+					</h:link>
+				</h:panelGroup>
+				<h:panelGroup style="right">
+					<ui:include src="charts/_overallFriendlyResults.xhtml" />
+				</h:panelGroup>
+
+				<h:panelGroup style="right">
+					<ui:include src="charts/_homeFriendlyResults.xhtml" />
+				</h:panelGroup>
+
+				<h:panelGroup style="right">
+					<ui:include src="charts/_awayFriendlyResults.xhtml" />
+				</h:panelGroup>
+			</h:panelGrid>
+		</p:tab>
+	</p:tabView>
+	</p:tab>
+	</p:accordionPanel>
+</ui:composition>

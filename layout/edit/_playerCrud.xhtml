@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<ui:debug hotkey="x"
+		rendered="#{facesContext.application.projectStage == 'Development'}" />
+	<h:panelGroup rendered="#{!playerBeanEdit.edit}">
+		<h3>Add player</h3>
+		<h:form>
+		<p:growl id="growl" showDetail="false" sticky="false" life="5000" for="addButton" />
+			<p:panel id="addPlayer">
+				<p:messages id="messages" autoUpdate="true" closable="true"
+					errorClass="error" />
+				<h:panelGrid columns="2">
+					<h:outputLabel value="Player name: " />
+					<h:inputText id="addPlayerName"
+						value="#{playerBeanEdit.playerBean.playerName}" maxlength="45"
+						size="30" required="true"
+						requiredMessage="You must enter a player name"
+						title="Enter a Player name" />
+
+					<h:outputLabel value="Player comments: " />
+					<h:inputTextarea
+						value="#{playerBeanEdit.playerBean.playerComments}" cols="50"
+						rows="3" title="Enter comments about the player here" />
+
+					<p:splitButton value="Add" action="#{playerBeanEdit.add}" id="addButton"
+						icon="ui-icon-circle-plus">
+						<p:menuitem value="Cancel"
+							action = "#{playerBeanEdit.cancel}" ajax="false"
+							icon="ui-icon-cancel" />
+					</p:splitButton>
+
+				</h:panelGrid>
+			</p:panel>
+
+		</h:form>
+	</h:panelGroup>
+	<h:panelGroup rendered="#{playerBeanEdit.edit}">
+		<h3>Edit player #{playerBeanEdit.playerBean.playerName}</h3>
+		<h:form>
+		<p:growl id="growl" showDetail="false" sticky="false" life="5000" for="saveButton" />
+			<p:panel id="editPlayer">
+				<p:messages id="messages" autoUpdate="true" closable="true"
+					errorClass="error" />
+				<h:panelGrid columns="2">
+					<h:outputLabel value="Player name: " title="Player name" />
+					<h:inputText value="#{playerBeanEdit.playerBean.playerName}"
+						disabled="true" maxlength="45" size="30" />
+
+					<h:outputLabel value="Player comments: " />
+					<h:inputTextarea
+						value="#{playerBeanEdit.playerBean.playerComments}" cols="50"
+						rows="3" title="Enter comments about the player here" />
+				</h:panelGrid>
+
+				<p:splitButton value="Save" action= "#{playerBeanEdit.save}" id="saveButton"
+					update="messages" icon="ui-icon-disk">
+					<p:menuitem value="Cancel"
+						action = "#{playerBeanEdit.cancel}" ajax="false"
+						icon="ui-icon-cancel" />
+				</p:splitButton>
+
+			</p:panel>
+		</h:form>
+	</h:panelGroup>
+	<h:form rendered="#{not empty playerBeanEdit.playerList}">
+
+		<h:outputLabel value="Restrict Rows: " title="restrictRows" />
+		<p:spinner id="restrictRows" size="2"
+			value="#{playerBeanEdit.restrictRows}" min="100" max="10000"
+			stepFactor="100" />
+		<h:commandLink id="btnrefresh" action="#{playerBeanEdit.refreshPage}"
+			title="Refresh">
+			<h:graphicImage library="images" name="refreshIcon.png"></h:graphicImage>
+		</h:commandLink>
+		<br />
+
+		<h:dataTable id="dataTable" value="#{playerBeanEdit.model}"
+			styleClass="dataTableCenter" var="player" border="1"
+			columnClasses="player-first,player-second, player-third, player-fourth">
+
+			<h:column id="playerNameColumn">
+				<f:facet name="header">
+					<h:outputText value="Player name" />
+				</f:facet>
+				<h:outputText value="#{player.playerName}" />
+			</h:column>
+
+			<h:column id="playerCommentsColumn">
+				<f:facet name="header">
+					<h:outputText value="Comments" />
+				</f:facet>
+				<h:outputText value="#{player.playerComments}" />
+			</h:column>
+			<h:column>
+				<h:commandLink id="btnedit" action="#{playerBeanEdit.editPlayer}"
+					title="Edit Player">
+					<h:graphicImage library="images" name="editIcon.png"></h:graphicImage>
+				</h:commandLink>
+
+			</h:column>
+			<h:column>
+				<h:commandLink id="btndelete" action="#{playerBeanEdit.delete}"
+					title="Delete Player">
+					<h:graphicImage library="images" name="deleteIcon.png"></h:graphicImage>
+				</h:commandLink>
+
+			</h:column>
+		</h:dataTable>
+	</h:form>
+	<h:panelGroup rendered="#{empty playerBeanEdit.playerList}"
+		styleClass="dataTableCenter">
+		<p>Table is empty! Please add new players.</p>
+	</h:panelGroup>
+</ui:composition>

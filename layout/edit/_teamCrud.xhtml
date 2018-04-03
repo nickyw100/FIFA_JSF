@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<ui:debug hotkey="x"
+		rendered="#{facesContext.application.projectStage == 'Development'}" />
+	<h:panelGroup rendered="#{!teamBeanEdit.edit}">
+		<h3>Add team</h3>
+		<h:form>
+			<p:panel id="addTeam">
+				<p:messages id="messages" autoUpdate="true" closable="true"
+					errorClass="error" />
+				<h:panelGrid columns="2">
+					<h:outputLabel value="Team ID: " />
+					<h:inputText value="#{teamBeanEdit.teamBean.teamId}" id="addTeamId"
+						size="5" maxlength="5" required="true"
+						requiredMessage="You must enter a team ID" />
+					<h:outputLabel value="Country ID: " />
+					<h:inputText value="#{teamBeanEdit.teamBean.countryId}" size="5"
+						maxlength="5" required="true"
+						requiredMessage="You must enter a country ID" />
+					<h:outputLabel value="Team Name: " />
+					<h:inputText value="#{teamBeanEdit.teamBean.teamName}" size="45"
+						maxlength="45" required="true"
+						requiredMessage="You must enter a team name" />
+					<h:outputLabel value="Team logo URL: " />
+					<h:inputText value="#{teamBeanEdit.teamBean.logoImage}" size="140"
+						maxlength="150" />
+					<h:outputLabel value="Comments: " />
+					<h:inputTextarea value="#{teamBeanEdit.teamBean.teamComments}"
+						cols="50" rows="3" />					
+				</h:panelGrid>
+				<p:splitButton value="Add" action="#{teamBeanEdit.add}"
+						icon="ui-icon-circle-plus">
+						<p:menuitem value="Cancel"
+							action = "#{teamBeanEdit.cancel}" ajax="false"
+							icon="ui-icon-cancel" />
+					</p:splitButton>
+			</p:panel>
+		</h:form>
+	</h:panelGroup>
+	<h:panelGroup rendered="#{teamBeanEdit.edit}">
+		<h3>Edit team #{teamBeanEdit.teamBean.teamName}</h3>
+		<h:form>
+			<p:panel id="editTeam">
+				<p:messages id="messages" autoUpdate="true" closable="true"
+					errorClass="error" />
+				<h:panelGrid columns="2">
+					<h:outputLabel value="Team ID: " />
+					<h:inputText value="#{teamBeanEdit.teamBean.teamId}"
+						disabled="true" size="5" />
+					<h:outputLabel value="Country ID: " />
+					<h:inputText value="#{teamBeanEdit.teamBean.countryId}"
+						disabled="true" size="5" />
+					<h:outputLabel value="Team Name: " />
+					<h:inputText value="#{teamBeanEdit.teamBean.teamName}" size="45"
+						maxlength="45" />
+					<h:outputLabel value="Team logo URL: " />
+					<h:inputText value="#{teamBeanEdit.teamBean.logoImage}" size="140"
+						maxlength="150" />
+					<h:outputLabel value="Comments: " />
+					<h:inputTextarea value="#{teamBeanEdit.teamBean.teamComments}"
+						cols="50" rows="3" />
+						</h:panelGrid>
+				<p:splitButton value="Save" action="#{teamBeanEdit.save}"
+					update="messages" icon="ui-icon-disk">
+					<p:menuitem value="Cancel"
+						action = "#{teamBeanEdit.cancel}" ajax="false"
+						icon="ui-icon-cancel" />
+				</p:splitButton>
+				
+			</p:panel>
+		</h:form>
+	</h:panelGroup>
+	<h:form rendered="#{not empty teamBeanEdit.teamList}">
+		<h:outputLabel value="Restrict Rows: " title="restrictRows" />
+		<p:spinner id="restrictRows" size="3"
+			value="#{teamBeanEdit.restrictRows}" min="50" max="5000"
+			stepFactor="50" />
+		<h:commandLink id="btnrefresh" action="#{teamBeanEdit.refreshPage}"
+			title="Refresh">
+			<h:graphicImage library="images" name="refreshIcon.png"></h:graphicImage>
+		</h:commandLink>
+		<h:dataTable id="dataTable" value="#{teamBeanEdit.model}" border="1"
+			styleClass="dataTableCenter" var="team">
+
+			<h:column id="teamIdColumn">
+				<f:facet name="header">
+					<h:outputText value="Team ID" />
+				</f:facet>
+				<h:outputText value="#{team.teamId}" />
+			</h:column>
+
+			<h:column id="countryIdColumn">
+				<f:facet name="header">
+					<h:outputText value="Country ID" />
+				</f:facet>
+				<h:outputText value="#{team.countryId}" />
+			</h:column>
+
+			<h:column id="teamNameColumn">
+				<f:facet name="header">
+					<h:outputText value="Team name" />
+				</f:facet>
+				<h:outputText value="#{team.teamName}" />
+			</h:column>
+
+			<h:column id="logoImageColumn">
+				<f:facet name="header">
+					<h:outputText value="Team logo URL" />
+				</f:facet>
+				<h:graphicImage url="#{team.logoImage}" height="50" width="60" />
+			</h:column>
+			<h:column id="teamCommentsColumn" headerText="Comments"
+				resizable="true">
+				<f:facet name="header">
+					<h:outputText value="Comments" />
+				</f:facet>
+				<h:outputText value="#{team.teamComments}" />
+			</h:column>
+			<h:column id="editColumn">
+				<h:commandLink id="btnedit" action="#{teamBeanEdit.editTeam}"
+					title="Edit team">
+					<h:graphicImage library="images" name="editIcon.png"></h:graphicImage>
+				</h:commandLink>
+			</h:column>
+			<h:column id="deleteColumn">
+				<h:commandLink id="btndelete" action="#{teamBeanEdit.delete}"
+					title="Delete team">
+					<h:graphicImage library="images" name="deleteIcon.png"></h:graphicImage>
+				</h:commandLink>
+			</h:column>
+		</h:dataTable>
+	</h:form>
+	<h:panelGroup rendered="#{empty teamBeanEdit.teamList}"
+		styleClass="dataTableCenter">
+		<p>Table is empty! Please add teams.</p>
+	</h:panelGroup>
+</ui:composition>
