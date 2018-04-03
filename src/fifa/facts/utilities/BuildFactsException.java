@@ -3,7 +3,7 @@
 // Decompiler options: packimports(3) 
 // Source File Name:   BuildFactsException.java
 
-package fifa.utilities;
+package fifa.facts.utilities;
 
 
 public class BuildFactsException extends Exception
