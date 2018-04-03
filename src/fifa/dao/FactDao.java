@@ -551,7 +551,7 @@ public class FactDao implements FIFAConstants
     }
     catch (SQLException se) {
       FacesContext fc = FacesContext.getCurrentInstance();
-      fc.addMessage("addFactId", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error building facts! Check the logs!", "Something terrible has happened!"));
+      fc.addMessage("addFactId", new FacesMessage(FacesMessage.SEVERITY_ERROR, "SQL Error building facts! Check the logs!", "Something terrible has happened!"));
       System.err.println(se.getLocalizedMessage());
     }
     catch (Exception e) {
