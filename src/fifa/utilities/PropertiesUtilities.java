@@ -112,7 +112,7 @@ public class PropertiesUtilities
     {
         String messageResource = null;
         String hostName = getHostName();
-        if(hostName.equalsIgnoreCase("SERVER2012"))
+        if(hostName.equalsIgnoreCase("Win10ProX64Dev"))
             messageResource = "../webapps/FIFA_JSF/WEB-INF/classes/resources/messageresources.properties";
         else
         if(hostName.equalsIgnoreCase("nwilsonvu1"))
@@ -126,7 +126,7 @@ public class PropertiesUtilities
     {
         String factResource = null;
         String hostName = getHostName();
-        if(hostName.equalsIgnoreCase("SERVER2012"))
+        if(hostName.equalsIgnoreCase("Win10ProX64Dev"))
             factResource = "../webapps/FIFA_JSF/WEB-INF/classes/resources/factresources.properties";
         else
         if(hostName.equalsIgnoreCase("nwilsonvu1"))
@@ -140,7 +140,7 @@ public class PropertiesUtilities
     {
         String hostName = getHostName();
         String databaseResource;
-        if(hostName.equalsIgnoreCase("SERVER2012"))
+        if(hostName.equalsIgnoreCase("Win10ProX64Dev"))
             databaseResource = "../webapps/FIFA_JSF/WEB-INF/classes/resources/database.properties";
         else
         if(hostName.equalsIgnoreCase("nwilsonvu1"))
@@ -169,7 +169,7 @@ public class PropertiesUtilities
     {
         String hostName = getHostName();
         String dbEnv = "";
-        if(!hostName.equalsIgnoreCase("SERVER2012"))
+        if(!hostName.equalsIgnoreCase("Win10ProX64Dev"))
             dbEnv = getProperty(getDatabaseResource(), "environment");
         return dbEnv.toUpperCase();
     }

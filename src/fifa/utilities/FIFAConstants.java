@@ -22,8 +22,7 @@ public interface FIFAConstants
     public static final String productionEnvironment = "prod";
     public static final String qaEnvironment = "qa";
     public static final String devServerEnvironment = "devServer";
-    public static final String productionServer = "SERVER2012";
-    public static final String workDevPC = "nwilsonvu1";
+    public static final String productionServer = "Win10ProX64Dev";
     public static final String homeDevPC = "Ubuntu1404VirtualBox";
     public static final String homeDevVBox = "Ubuntu1404VirtualBox";
     public static final String Cup = "C";
