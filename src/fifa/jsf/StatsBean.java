@@ -17,8 +17,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 @ManagedBean
 @ViewScoped
-public class StatsBean
-        extends AbstractResultBean
+public class StatsBean extends AbstractResultBean
 {
     private static final long serialVersionUID = -4163535146058707662L;
     private String countryId;
@@ -30,6 +29,10 @@ public class StatsBean
     private int opponentDivision;
     private boolean matchAbandoned;
     private String lastPlayerNameAdded;
+
+
+    private String value;
+    private boolean selectable;
 
     public StatsBean() {
         StatsDao statsDao = new StatsDao();
@@ -75,23 +78,15 @@ public class StatsBean
         return arrayOfGameTypeEnum;
     }
 
-
-
-
     public String getTeamId() { return this.teamId; }
 
-
-
     public void setTeamId(String teamId) { this.teamId = teamId; }
-
-
 
     public String getTeamName() {
         if (this.teamName == null) {
             TeamDao teamDao = new TeamDao();
             this.teamName = teamDao.getTeamName(this.countryId, this.teamId);
         }
-
         return this.teamName;
     }
 
@@ -101,31 +96,17 @@ public class StatsBean
         return sdf.format(date);
     }
 
-
-
     public int getDivision() { return this.division; }
-
-
 
     public void setDivision(int division) { this.division = division; }
 
-
-
     public boolean isMatchAbandoned() { return this.matchAbandoned; }
-
-
 
     public void setMatchAbandoned(boolean matchAbandoned) { this.matchAbandoned = matchAbandoned; }
 
-
-
     public String getCountryId() { return this.countryId; }
 
-
-
     public void setCountryId(String countryId) { this.countryId = countryId; }
-
-
 
     public void setCountryName(String countryName) { this.countryName = countryName; }
 
@@ -141,42 +122,27 @@ public class StatsBean
 
     public String getLastPlayerNameAdded() { return this.lastPlayerNameAdded; }
 
-
-
     public void setLastPlayerNameAdded(String lastPlayerNameAdded) { this.lastPlayerNameAdded = lastPlayerNameAdded; }
-
-
 
     public int getOpponentDivision() { return this.opponentDivision; }
 
-
-
     public void setOpponentDivision(int opponentDivision) { this.opponentDivision = opponentDivision; }
-
-
 
     public HomeAwayEnum getHomeAway() { return this.homeAway; }
 
-
-
-
     public void setHomeAway(HomeAwayEnum homeAway) { this.homeAway = homeAway; }
-
-
-
 
     public enum HomeAwayEnum
     {
         Home("H", true), Away("A", true), Both("B", false);
         static  {
-            valueMap = new HashMap();
+            Map<String, GameTypeEnum>  valueMap = new HashMap();
 
 
             for (HomeAwayEnum instance : EnumSet.allOf(HomeAwayEnum.class))
                 valueMap.put(instance.getValue(), instance);
         }
 
-        private static final Map<String, HomeAwayEnum> valueMap;
         private String value;
         private boolean selectable;
 
@@ -237,10 +203,6 @@ public class StatsBean
             for (GameTypeEnum instance : EnumSet.allOf(GameTypeEnum.class))
                 valueMap.put(instance.getValue(), instance);
         }
-
-        private static final Map<String, GameTypeEnum> valueMap;
-        private String value;
-        private boolean selectable;
 
         GameTypeEnum(String value, boolean selectable) {
             this.value = value;

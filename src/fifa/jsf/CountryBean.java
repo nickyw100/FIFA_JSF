@@ -69,7 +69,7 @@ public class CountryBean
     public List completeCountry(String countryPrefix)
     {
         CountrySingleton countrySingleton = CountrySingleton.getInstance();
-        List teams = countrySingleton.getcountries();
+        List teams = countrySingleton.getCountries();
         List matches = new ArrayList();
         for(Iterator iterator = teams.iterator(); iterator.hasNext();)
         {

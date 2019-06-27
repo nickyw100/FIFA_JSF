@@ -2,14 +2,11 @@ package fifa.dao;
 
 import com.mysql.jdbc.StringUtils;
 import fifa.jsf.SearchResultsBean;
-import fifa.jsf.StatsBean.GameTypeEnum;
-import fifa.jsf.StatsBean.HomeAwayEnum;
-import fifa.jsf.StatsBean.SearchCriteriaEnum;
+import fifa.jsf.StatsBean;
 import fifa.utilities.FIFAConstants;
 import fifa.utilities.JDBCConnect;
 import fifa.utilities.PropertiesUtilities;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,73 +20,70 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import org.apache.log4j.Logger;
 
-
 public class SearchDao
-  implements FIFAConstants
+        implements FIFAConstants
 {
   private static final Logger logger = Logger.getLogger(SearchDao.class);
-  
-  public SearchDao() {}
-  
-  public List<SearchResultsBean> getSearchResults(String teamName, String playerName, StatsBean.HomeAwayEnum homeAway, Date fromDate, Date toDate, StatsBean.GameTypeEnum gameType, int division, StatsBean.SearchCriteriaEnum searchCriteria, int possessionPercentage, boolean matchAbandoned, boolean extraTime, String countryName)
-  {
+
+
+  public List<SearchResultsBean> getSearchResults(String teamName, String playerName, StatsBean.HomeAwayEnum homeAway, Date fromDate, Date toDate, StatsBean.GameTypeEnum gameType, int division, StatsBean.SearchCriteriaEnum searchCriteria, int possessionPercentage, boolean matchAbandoned, boolean extraTime, String countryName) {
     logger.debug("Entering the getSearchResults method.");
-    
-    List<SearchResultsBean> results = new ArrayList();
+
+    List<SearchResultsBean> results = new ArrayList<>();
     Connection conn = null;
-    PreparedStatement preparedStatement = null;
+    PreparedStatement preparedStatement;
     JDBCConnect jdbcConnect = null;
     String myTeamName = null;
     String myLogoImage = null;
-    try
-    {
+
+    try {
       jdbcConnect = new JDBCConnect();
       conn = jdbcConnect.getConnection();
-      
+
       if (conn != null) {
         PropertiesUtilities propertiesUtilities = PropertiesUtilities.getInstance();
-        
+
         String orderBy = propertiesUtilities.getProperty(propertiesUtilities.getMessageResource(), "sql.searchOrderBy");
         String searchSelect = propertiesUtilities.getProperty(propertiesUtilities.getMessageResource(), "sql.searchSelect");
         if (StringUtils.isEmptyOrWhitespaceOnly(searchSelect)) {
           throw new IOException("SQL Select statement is null.");
         }
-        
 
-        String sql = searchSelect + 
-          getWhereClause(teamName, playerName, homeAway.getValue(), fromDate, toDate, gameType.getValue(), 
-          division, searchCriteria, possessionPercentage, matchAbandoned, extraTime, countryName, 
-          true) + orderBy;
-        
+
+        String sql = String.valueOf(searchSelect) +
+                getWhereClause(teamName, playerName, homeAway.getValue(), fromDate, toDate, gameType.getValue(),
+                        division, searchCriteria, possessionPercentage, matchAbandoned, extraTime, countryName,
+                        true) + orderBy;
+
         preparedStatement = conn.prepareStatement(sql);
-        
+
         ResultSet rs = preparedStatement.executeQuery();
-        
 
 
-        if (!rs.isBeforeFirst())
-        {
+
+        if (!rs.isBeforeFirst()) {
+
           String messageResources = propertiesUtilities.getMessageResource();
           String versionId = propertiesUtilities.getProperty(messageResources, "defaultVersion");
-          
-          if (!versionId.equalsIgnoreCase("A"))
-          {
-            rs = searchWithoutVersion(teamName, playerName, homeAway.getValue(), fromDate, toDate, gameType.getValue(), 
-              division, searchCriteria, possessionPercentage, matchAbandoned, extraTime, countryName, 
-              preparedStatement, orderBy, searchSelect, rs);
-            
+
+          if (!versionId.equalsIgnoreCase("A")) {
+
+            rs = searchWithoutVersion(teamName, playerName, homeAway.getValue(), fromDate, toDate, gameType.getValue(),
+                    division, searchCriteria, possessionPercentage, matchAbandoned, extraTime, countryName,
+                    preparedStatement, orderBy, searchSelect, rs);
+
             FacesContext context = FacesContext.getCurrentInstance();
-            FacesMessage message = new FacesMessage("Nothing found for " + versionId + 
-              ". Searched all versions for results.");
+            FacesMessage message = new FacesMessage("Nothing found for " + versionId +
+                    ". Searched all versions for results.");
             context.addMessage(null, message);
           }
         }
-        
 
-        while (rs.next())
-        {
+
+        while (rs.next()) {
+
           SearchResultsBean searchResults = new SearchResultsBean();
-          
+
           searchResults.setVersionId(rs.getString("s.versionId"));
           searchResults.setCountryId(rs.getString("s.countryId"));
           searchResults.setCountryName(rs.getString("c.countryName"));
@@ -116,18 +110,18 @@ public class SearchDao
           searchResults.setFlagImage(rs.getString("c.flagImage"));
           searchResults.setLogoImage(rs.getString("t.logoImage"));
           searchResults.setPlayerComments(rs.getString("p.playerComments"));
-          
+
 
           if (StringUtils.isNullOrEmpty(myTeamName)) {
             TeamDao teamDao = new TeamDao();
-            
+
             myTeamName = teamDao.getTeamName("ENG", searchResults.getMyTeamId());
             myLogoImage = teamDao.getTeamLogo("ENG", searchResults.getMyTeamId());
           }
-          
+
           searchResults.setMyTeamName(myTeamName);
           searchResults.setMyLogoImage(myLogoImage);
-          
+
           if (searchResults.getHomeAway().equals(StatsBean.HomeAwayEnum.Home)) {
             searchResults.setAwayTeamName(searchResults.getTeamName());
             searchResults.setHomeTeamName(myTeamName);
@@ -139,17 +133,17 @@ public class SearchDao
             searchResults.setHomeTeamLogo(searchResults.getLogoImage());
             searchResults.setAwayTeamLogo(myLogoImage);
           }
-          
+
           results.add(searchResults);
         }
-        
+
         rs.close();
       }
-    }
-    catch (SQLException se) {
+    } catch (SQLException se) {
+
       System.err.println(se.getLocalizedMessage());
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
+
       System.err.println(e.getLocalizedMessage());
     } finally {
       if (conn != null)
@@ -158,124 +152,148 @@ public class SearchDao
     return results;
   }
 
-  private ResultSet searchWithoutVersion(String teamName, String playerName, String homeAway, Date fromDate, Date toDate, String gameType, int division, StatsBean.SearchCriteriaEnum searchCriteria, int possessionPercentage, boolean matchAbandoned, boolean extraTime, String countryName, PreparedStatement preparedStatement, String orderBy, String searchSelect, ResultSet rs)
-    throws SQLException
-  {
-    String sql = searchSelect + 
-      getWhereClause(teamName, playerName, homeAway, fromDate, toDate, gameType, division, searchCriteria, possessionPercentage, matchAbandoned, extraTime, 
-      countryName, false) + " " + orderBy;
-    
-    rs = preparedStatement.executeQuery(sql);
-    
-    return rs;
+
+
+
+
+  private ResultSet searchWithoutVersion(String teamName, String playerName, String homeAway, Date fromDate, Date toDate, String gameType, int division, StatsBean.SearchCriteriaEnum searchCriteria, int possessionPercentage, boolean matchAbandoned, boolean extraTime, String countryName, PreparedStatement preparedStatement, String orderBy, String searchSelect, ResultSet rs) throws SQLException {
+    String sql = String.valueOf(searchSelect) +
+            getWhereClause(teamName, playerName, homeAway, fromDate, toDate, gameType, division, searchCriteria, possessionPercentage, matchAbandoned, extraTime,
+                    countryName, false) + " " + orderBy;
+
+    return preparedStatement.executeQuery(sql);
   }
 
 
-  private String getWhereClause(String teamName, String playerName, String homeAway, Date fromDate, Date toDate, String gameType, int division, StatsBean.SearchCriteriaEnum searchCriteria, int possessionPercentage, boolean matchAbandoned, boolean extraTime, String countryName, boolean versionSearch)
-  {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  private String getWhereClause(String teamName, String playerName, String homeAway, Date fromDate, Date toDate, String gameType, int division, StatsBean.SearchCriteriaEnum searchCriteria, int possessionPercentage, boolean matchAbandoned, boolean extraTime, String countryName, boolean versionSearch) {
     String whereClause = " WHERE ";
     boolean andNeeded = false;
-    
+
     if (!StringUtils.isNullOrEmpty(teamName)) {
       whereClause = andNeeded(whereClause, andNeeded);
-      whereClause = whereClause + "t.teamName = '" + teamName + "' ";
+      whereClause = String.valueOf(whereClause) + "t.teamName = '" + teamName + "' ";
       andNeeded = true;
     }
-    
+
     if (!StringUtils.isNullOrEmpty(playerName)) {
       whereClause = andNeeded(whereClause, andNeeded);
-      whereClause = whereClause + "s.playerName = '" + playerName + "' ";
+      whereClause = String.valueOf(whereClause) + "s.playerName = '" + playerName + "' ";
       andNeeded = true;
     }
-    
-    if ((!StringUtils.isNullOrEmpty(homeAway)) && ((homeAway.equalsIgnoreCase("H")) || (homeAway.equalsIgnoreCase("A")))) {
+
+    if (!StringUtils.isNullOrEmpty(homeAway) && (homeAway.equalsIgnoreCase("H") || homeAway.equalsIgnoreCase("A"))) {
       whereClause = andNeeded(whereClause, andNeeded);
-      whereClause = whereClause + "s.homeAway = '" + homeAway + "' ";
+      whereClause = String.valueOf(whereClause) + "s.homeAway = '" + homeAway + "' ";
       andNeeded = true;
     }
-    
-    if ((!StringUtils.isNullOrEmpty(gameType)) && (
-      (gameType.equalsIgnoreCase("C")) || (gameType.equalsIgnoreCase("S")) || 
-      (gameType.equalsIgnoreCase("F")))) {
+
+    if (!StringUtils.isNullOrEmpty(gameType) && (
+            gameType.equalsIgnoreCase("C") || gameType.equalsIgnoreCase("S") || gameType
+                    .equalsIgnoreCase("F"))) {
       whereClause = andNeeded(whereClause, andNeeded);
-      whereClause = whereClause + "s.gameType = '" + gameType + "' ";
+      whereClause = String.valueOf(whereClause) + "s.gameType = '" + gameType + "' ";
       andNeeded = true;
     }
-    
-    if ((division > 0) && (gameType.equalsIgnoreCase("S"))) {
+
+    if (division > 0 && gameType.equalsIgnoreCase("S")) {
       whereClause = andNeeded(whereClause, andNeeded);
-      whereClause = whereClause + "s.division = " + division + " ";
+      whereClause = String.valueOf(whereClause) + "s.division = " + division + " ";
       andNeeded = true;
     }
-    
+
     if (possessionPercentage > 0) {
       whereClause = andNeeded(whereClause, andNeeded);
-      whereClause = whereClause + "s.possessionPercentage " + searchCriteria.getLabel() + " " + possessionPercentage + " ";
+      whereClause = String.valueOf(whereClause) + "s.possessionPercentage " + searchCriteria.getLabel() + " " + possessionPercentage + " ";
       andNeeded = true;
     }
-    
+
     if (extraTime) {
       whereClause = andNeeded(whereClause, andNeeded);
-      whereClause = whereClause + "s.extraTime = '1' ";
+      whereClause = String.valueOf(whereClause) + "s.extraTime = '1' ";
       andNeeded = true;
     }
-    
+
     if (matchAbandoned) {
       whereClause = andNeeded(whereClause, andNeeded);
-      whereClause = whereClause + "s.matchAbandoned = '1' ";
+      whereClause = String.valueOf(whereClause) + "s.matchAbandoned = '1' ";
       andNeeded = true;
     }
-    
+
     if (fromDate != null) {
       whereClause = andNeeded(whereClause, andNeeded);
       String fromDateStr = formatDate(fromDate);
-      fromDateStr = fromDateStr + " 00:00:00";
-      whereClause = whereClause + "s.gameDateTime >= '" + fromDateStr + "' ";
+      fromDateStr = String.valueOf(fromDateStr) + " 00:00:00";
+      whereClause = String.valueOf(whereClause) + "s.gameDateTime >= '" + fromDateStr + "' ";
       andNeeded = true;
     }
-    
+
     if (toDate != null) {
       whereClause = andNeeded(whereClause, andNeeded);
       String toDateStr = formatDate(toDate);
-      toDateStr = toDateStr + " 23:59:59";
-      whereClause = whereClause + "s.gameDateTime <= '" + toDateStr + "' ";
+      toDateStr = String.valueOf(toDateStr) + " 23:59:59";
+      whereClause = String.valueOf(whereClause) + "s.gameDateTime <= '" + toDateStr + "' ";
       andNeeded = true;
     }
-    if (!StringUtils.isNullOrEmpty(countryName))
-    {
+    if (!StringUtils.isNullOrEmpty(countryName)) {
+
       CountryDao countryDao = new CountryDao();
       String countryId = countryDao.getCountryId(countryName);
       if (!StringUtils.isNullOrEmpty(countryId)) {
         whereClause = andNeeded(whereClause, andNeeded);
-        whereClause = whereClause + "s.countryId = '" + countryId + "' ";
+        whereClause = String.valueOf(whereClause) + "s.countryId = '" + countryId + "' ";
         andNeeded = true;
       }
     }
     if (whereClause.equals(" WHERE ")) {
       whereClause = "";
     }
-    
+
     if (versionSearch) {
       PropertiesUtilities propertiesUtilities = PropertiesUtilities.getInstance();
-      whereClause = whereClause + propertiesUtilities.addVersionWhere(!andNeeded);
+      whereClause = String.valueOf(whereClause) + propertiesUtilities.addVersionWhere(!andNeeded);
     }
-    
-    if ((whereClause.equals(" WHERE ")) || (whereClause.equals("WHERE "))) {
+
+    if (whereClause.equals(" WHERE ") || whereClause.equals("WHERE ")) {
       whereClause = " ";
     }
     return whereClause;
   }
 
-  private String andNeeded(String whereClause, boolean andNeeded)
-  {
+
+
+
+
+
+
+  private String andNeeded(String whereClause, boolean andNeeded) {
     if (andNeeded) {
-      whereClause = whereClause + "AND ";
+      whereClause = String.valueOf(whereClause) + "AND ";
     }
     return whereClause;
   }
-  
+
   private String formatDate(Date inputDate) {
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+
 
     return df.format(inputDate);
   }

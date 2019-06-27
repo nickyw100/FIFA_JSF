@@ -1,40 +1,32 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   LastResultBean.java
-
 package fifa.jsf;
 
 import fifa.dao.StatsDao;
 import java.util.List;
+import javax.faces.bean.ManagedBean;
 import org.apache.log4j.Logger;
 
-// Referenced classes of package fifa.jsf:
-//            SearchResultsBean
-
-public class LastResultBean extends SearchResultsBean
+@ManagedBean
+public class LastResultBean
+        extends SearchResultsBean
 {
+    private static final long serialVersionUID = 6199312392098189907L;
+    private static Logger logger = Logger.getLogger(LastResultBean.class);
 
-    public LastResultBean()
-    {
-    }
+    private List<LastResultBean> lastResult;
 
-    public List getLastResult()
-    {
+
+    public List<LastResultBean> getLastResult() {
         logger.debug("Entering fifa.jsf.LastResultBean.getLastResult()");
+
         StatsDao statsDao = new StatsDao();
-        if(lastResult == null)
-            lastResult = statsDao.getLastResult();
-        return lastResult;
+
+        if (this.lastResult == null) {
+            this.lastResult = statsDao.getLastResult();
+        }
+
+        return this.lastResult;
     }
 
-    public void setLastResult(List results)
-    {
-        lastResult = results;
-    }
 
-    private static final long serialVersionUID = 0x76b09253L;
-    private static Logger logger = Logger.getLogger(fifa/jsf/LastResultBean);
-    private List lastResult;
-
+    public void setLastResult(List<LastResultBean> results) { this.lastResult = results; }
 }
