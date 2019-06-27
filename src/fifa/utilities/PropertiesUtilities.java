@@ -2,27 +2,20 @@ package fifa.utilities;
 
 import com.mysql.jdbc.StringUtils;
 import fifa.jsf.VersionBean;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
+
+import javax.faces.context.FacesContext;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
-import javax.faces.context.FacesContext;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
-
-
-
-
 
 
 public class PropertiesUtilities
-        implements FIFAConstants
-{
+        implements FIFAConstants {
     private static PropertiesUtilities instance = null;
-
-
-
 
 
     public static PropertiesUtilities getInstance() {
@@ -33,11 +26,18 @@ public class PropertiesUtilities
         return instance;
     }
 
-
-
-
-
-
+    private static void autoBuildFacts() {
+//        int delay = 5000;
+//        int interval = 900000;
+//        Timer timer = new Timer();
+//        FacesContext context = FacesContext.getCurrentInstance();
+//        final VersionBean versionBean = context.getApplication().evaluateExpressionGet(context, "#{versionBean}", VersionBean.class);
+//        timer.scheduleAtFixedRate(new TimerTask() {
+//            public void run() {
+//                versionBean.buildAllFacts(false);
+//            }
+//        }, delay, interval);
+    }
 
     public String getProperty(String propsFile, String propertyKey) {
         PropertiesConfiguration config = null;
@@ -48,24 +48,23 @@ public class PropertiesUtilities
             config = new PropertiesConfiguration(propsFile);
             propertyValueObject = config.getProperty(propertyKey);
 
-            if (propertyValueObject != null)
-            {
+            if (propertyValueObject != null) {
                 if (propertyValueObject instanceof ArrayList) {
-                    propertyValueList = (ArrayList)config.getProperty(propertyKey);
+                    propertyValueList = (ArrayList) config.getProperty(propertyKey);
                     for (int x = 0; x <= propertyValueList.size() - 1; x++) {
                         if (x == 0) {
-                            propertyValue = (String)propertyValueList.get(x);
-                            propertyValue = String.valueOf(propertyValue) + ", ";
+                            propertyValue = propertyValueList.get(x);
+                            propertyValue = propertyValue + ", ";
                         } else {
-                            propertyValue = String.valueOf(propertyValue) + (String)propertyValueList.get(x);
+                            propertyValue = propertyValue + propertyValueList.get(x);
                             if (x < propertyValueList.size() - 1) {
-                                propertyValue = String.valueOf(propertyValue) + ", ";
+                                propertyValue = propertyValue + ", ";
                             }
                         }
                     }
                 } else {
 
-                    propertyValue = (String)propertyValueObject;
+                    propertyValue = (String) propertyValueObject;
                 }
 
             }
@@ -77,15 +76,6 @@ public class PropertiesUtilities
 
         return propertyValue;
     }
-
-
-
-
-
-
-
-
-
 
     public void setMessageProperty(String propsFile, String propertyKey, String propertyValue) {
         PropertiesConfiguration config = null;
@@ -99,7 +89,6 @@ public class PropertiesUtilities
         }
     }
 
-
     public String addVersionWhere(boolean addWhere) {
         String messageResources = getMessageResource();
 
@@ -112,7 +101,7 @@ public class PropertiesUtilities
             } else {
                 whereClause = " AND ";
             }
-            whereClause = String.valueOf(whereClause) + "s.versionId = '" + versionId + "' ";
+            whereClause = whereClause + "s.versionId = '" + versionId + "' ";
         }
         return whereClause;
     }
@@ -122,8 +111,7 @@ public class PropertiesUtilities
         String hostName = getHostName();
         if (hostName.equalsIgnoreCase("SERVER2012")) {
             messageResource = "../webapps/FIFA_JSF/WEB-INF/classes/resources/messageresources.properties";
-        }
-        else if (hostName.equalsIgnoreCase("nwilsonvu1")) {
+        } else if (hostName.equalsIgnoreCase("nwilsonvu1")) {
             messageResource = "/home/nwilson/Documents/FIFA_JSF/build/classes/resources/messageresources.properties";
         } else {
             messageResource = "/home/nick/workspace/FIFA_JSF/build/classes/resources/messageresources.properties";
@@ -132,14 +120,12 @@ public class PropertiesUtilities
         return messageResource;
     }
 
-
     public String getFactResource() {
         String factResource = null;
         String hostName = getHostName();
         if (hostName.equalsIgnoreCase("SERVER2012")) {
             factResource = "../webapps/FIFA_JSF/WEB-INF/classes/resources/factresources.properties";
-        }
-        else if (hostName.equalsIgnoreCase("nwilsonvu1")) {
+        } else if (hostName.equalsIgnoreCase("nwilsonvu1")) {
             factResource = "/home/nwilson/Documents/FIFA_JSF/build/classes/resources/factresources.properties";
         } else {
             factResource = "/home/nick/workspace/FIFA_JSF/build/classes/resources/factresources.properties";
@@ -148,13 +134,11 @@ public class PropertiesUtilities
         return factResource;
     }
 
-
     public String getDatabaseResource() {
         String databaseResource, hostName = getHostName();
         if (hostName.equalsIgnoreCase("SERVER2012")) {
             databaseResource = "../webapps/FIFA_JSF/WEB-INF/classes/resources/database.properties";
-        }
-        else if (hostName.equalsIgnoreCase("nwilsonvu1")) {
+        } else if (hostName.equalsIgnoreCase("nwilsonvu1")) {
             databaseResource = "/home/nwilson/Documents/FIFA_JSF/build/classes/resources/database.properties";
         } else {
             databaseResource = "/home/nick/workspace/FIFA_JSF/build/classes/resources/database.properties";
@@ -163,9 +147,6 @@ public class PropertiesUtilities
 
         return databaseResource;
     }
-
-
-
 
     String getHostName() {
         String hostName = null;
@@ -187,19 +168,5 @@ public class PropertiesUtilities
         }
 
         return dbEnv.toUpperCase();
-    }
-
-
-    private static void autoBuildFacts() {
-        int delay = 5000;
-        int interval = 900000;
-        Timer timer = new Timer();
-        FacesContext context = FacesContext.getCurrentInstance();
-        final VersionBean versionBean = (VersionBean)context.getApplication().evaluateExpressionGet(context, "#{versionBean}", VersionBean.class);
-        timer.scheduleAtFixedRate(new TimerTask() {
-            public void run() {
-                versionBean.buildAllFacts(false);
-            }
-        },  delay, interval);
     }
 }
