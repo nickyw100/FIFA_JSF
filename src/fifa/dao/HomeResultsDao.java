@@ -41,10 +41,11 @@ public class HomeResultsDao extends OverallResultsDao
         jdbcConnect = new JDBCConnect();
         conn = jdbcConnect.getConnection();
         PropertiesUtilities propertiesUtilities = PropertiesUtilities.getInstance();
+        try {
         if(conn != null)
         {
             String sql = null;
-            PreparedStatement preparedStatement;
+
             if((StringUtils.isEmpty(versionId) || versionId.equalsIgnoreCase("ALL")) && (StringUtils.isEmpty(gameType) || StringUtils.equalsIgnoreCase(gameType, "A")))
                 preparedStatement = conn.prepareStatement(propertiesUtilities.getProperty(propertiesUtilities.getMessageResource(), "sql.homeSelect"));
             else
@@ -92,25 +93,18 @@ public class HomeResultsDao extends OverallResultsDao
             }
 
             rs.close();
+        } } catch (SQLException se) {
+            ;
+            System.err.println(se.getLocalizedMessage());
+            if (conn != null)
+                jdbcConnect.closeConnection(conn);
+        } catch (Exception e) {
+            ;
+            System.err.println(e.getLocalizedMessage());
+            if (conn != null)
+                jdbcConnect.closeConnection(conn);
         }
-        break MISSING_BLOCK_LABEL_526;
-        SQLException se;
-        se;
-        System.err.println(se.getLocalizedMessage());
-        if(conn != null)
-            jdbcConnect.closeConnection(conn);
-        break MISSING_BLOCK_LABEL_538;
-        Exception e;
-        e;
-        System.err.println(e.getLocalizedMessage());
-        if(conn != null)
-            jdbcConnect.closeConnection(conn);
-        break MISSING_BLOCK_LABEL_538;
-        Exception exception;
-        exception;
-        if(conn != null)
-            jdbcConnect.closeConnection(conn);
-        throw exception;
+
         if(conn != null)
             jdbcConnect.closeConnection(conn);
         results.add(Integer.valueOf(wins));

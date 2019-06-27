@@ -6,7 +6,6 @@
 package fifa.jsf;
 
 import com.mysql.jdbc.StringUtils;
-import fifa.facts.dao.FactDao;
 import fifa.facts.utilities.FactUtilities;
 import fifa.utilities.*;
 import java.io.Serializable;
@@ -17,6 +16,8 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
+
+import static fifa.utilities.PropertiesUtilities.*;
 
 public class VersionBean
     implements Serializable, FIFAConstants
