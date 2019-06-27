@@ -1,16 +1,12 @@
 package fifa.utilities;
 
 import com.mysql.jdbc.StringUtils;
-import fifa.jsf.VersionBean;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
-import javax.faces.context.FacesContext;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class PropertiesUtilities
@@ -69,7 +65,7 @@ public class PropertiesUtilities
 
             }
         } catch (ConfigurationException e) {
-            System.err.println("Error occured getting property " + propertyKey + " from file " + propsFile + ". " +
+            System.err.println("Error occurred getting property " + propertyKey + " from file " + propsFile + ". " +
                     e.getLocalizedMessage());
             System.err.println(e.getLocalizedMessage());
         }
@@ -109,12 +105,10 @@ public class PropertiesUtilities
     public String getMessageResource() {
         String messageResource = null;
         String hostName = getHostName();
-        if (hostName.equalsIgnoreCase("SERVER2012")) {
-            messageResource = "../webapps/FIFA_JSF/WEB-INF/classes/resources/messageresources.properties";
-        } else if (hostName.equalsIgnoreCase("nwilsonvu1")) {
-            messageResource = "/home/nwilson/Documents/FIFA_JSF/build/classes/resources/messageresources.properties";
+        if (hostName.equalsIgnoreCase("Win10x64Dev")) {
+            messageResource = "../WEB_INF/classes/resources/messageresources.properties";
         } else {
-            messageResource = "/home/nick/workspace/FIFA_JSF/build/classes/resources/messageresources.properties";
+            messageResource = "../WEB_INF/classes/resources/messageresources.properties";
         }
 
         return messageResource;
@@ -123,12 +117,10 @@ public class PropertiesUtilities
     public String getFactResource() {
         String factResource = null;
         String hostName = getHostName();
-        if (hostName.equalsIgnoreCase("SERVER2012")) {
-            factResource = "../webapps/FIFA_JSF/WEB-INF/classes/resources/factresources.properties";
-        } else if (hostName.equalsIgnoreCase("nwilsonvu1")) {
-            factResource = "/home/nwilson/Documents/FIFA_JSF/build/classes/resources/factresources.properties";
+        if (hostName.equalsIgnoreCase("Win10x64Dev")) {
+            factResource = "../WEB_INF/classes/resources/factresources.properties";
         } else {
-            factResource = "/home/nick/workspace/FIFA_JSF/build/classes/resources/factresources.properties";
+            factResource = "../WEB_INF/classes/resources/factresources.properties";
         }
 
         return factResource;
@@ -136,12 +128,10 @@ public class PropertiesUtilities
 
     public String getDatabaseResource() {
         String databaseResource, hostName = getHostName();
-        if (hostName.equalsIgnoreCase("SERVER2012")) {
-            databaseResource = "../webapps/FIFA_JSF/WEB-INF/classes/resources/database.properties";
-        } else if (hostName.equalsIgnoreCase("nwilsonvu1")) {
-            databaseResource = "/home/nwilson/Documents/FIFA_JSF/build/classes/resources/database.properties";
+        if (hostName.equalsIgnoreCase("Win10x64Dev")) {
+            databaseResource = "../WEB_INF/classes/resources/database.properties";
         } else {
-            databaseResource = "/home/nick/workspace/FIFA_JSF/build/classes/resources/database.properties";
+            databaseResource = "../WEB_INF/classes/resources/database.properties";
         }
 
 
@@ -163,7 +153,7 @@ public class PropertiesUtilities
         String hostName = getHostName();
         String dbEnv = "";
 
-        if (!hostName.equalsIgnoreCase("SERVER2012")) {
+        if (!hostName.equalsIgnoreCase("Win10x64Dev")) {
             dbEnv = getProperty(getDatabaseResource(), "environment");
         }
 

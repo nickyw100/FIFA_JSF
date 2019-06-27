@@ -28,7 +28,7 @@ public class JDBCConnect
             propertiesUtilities = PropertiesUtilities.getInstance();
             String userName = propertiesUtilities.getProperty(propertiesUtilities.getDatabaseResource(), "user");
             String password = propertiesUtilities.getProperty(propertiesUtilities.getDatabaseResource(), "password");
-            String urlKey = "prodDbURL";
+            String urlKey = "localhostDbURL";
             urlKey = getDevelopmentUrlKey(propertiesUtilities, urlKey);
             String url = propertiesUtilities.getProperty(propertiesUtilities.getDatabaseResource(), urlKey);
             String driver = propertiesUtilities.getProperty(propertiesUtilities.getDatabaseResource(), "driver");
