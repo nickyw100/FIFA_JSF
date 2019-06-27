@@ -41,76 +41,61 @@ public class AwayResultsDao extends OverallResultsDao
         jdbcConnect = new JDBCConnect();
         conn = jdbcConnect.getConnection();
         PropertiesUtilities propertiesUtilities = PropertiesUtilities.getInstance();
-        if(conn != null)
-        {
-            String sql = null;
-            PreparedStatement preparedStatement;
-            if((StringUtils.isEmpty(versionId) || versionId.equalsIgnoreCase("ALL")) && (StringUtils.isEmpty(gameType) || StringUtils.equalsIgnoreCase(gameType, "A")))
-                preparedStatement = conn.prepareStatement(propertiesUtilities.getProperty(propertiesUtilities.getMessageResource(), "sql.awaySelect"));
-            else
-            if(StringUtils.isNotEmpty(versionId) && !versionId.equalsIgnoreCase("ALL") && StringUtils.isNotEmpty(gameType) && StringUtils.equalsIgnoreCase(gameType, "A"))
-            {
-                sql = propertiesUtilities.getProperty(propertiesUtilities.getMessageResource(), "sql.awaySelect2");
-                emptySQLCheck(propertiesUtilities, sql, "sql.awaySelect2");
-                preparedStatement = conn.prepareStatement(sql);
-                preparedStatement.setString(1, versionId);
-            } else
-            if((StringUtils.isEmpty(versionId) || versionId.equalsIgnoreCase("ALL")) && StringUtils.isNotEmpty(gameType) && !StringUtils.equalsIgnoreCase(gameType, "A"))
-            {
-                sql = propertiesUtilities.getProperty(propertiesUtilities.getMessageResource(), "sql.awaySelect4");
-                emptySQLCheck(propertiesUtilities, sql, "sql.awaySelect4");
-                preparedStatement = conn.prepareStatement(sql);
-                preparedStatement.setString(1, gameType);
-            } else
-            {
-                sql = propertiesUtilities.getProperty(propertiesUtilities.getMessageResource(), "sql.awaySelect3");
-                emptySQLCheck(propertiesUtilities, sql, "sql.awaySelect3");
-                preparedStatement = conn.prepareStatement(sql);
-                preparedStatement.setString(1, versionId);
-                preparedStatement.setString(2, gameType);
-            }
-            ResultSet rs;
-            for(rs = preparedStatement.executeQuery(); rs.next();)
-            {
-                int goalsFor = rs.getInt("goalsFor");
-                int goalsAgainst = rs.getInt("goalsAgainst");
-                int penaltiesFor = rs.getInt("penaltiesFor");
-                int penaltiesAgainst = rs.getInt("penaltiesAgainst");
-                if(goalsFor > goalsAgainst)
-                    wins++;
-                else
-                if(goalsFor < goalsAgainst)
-                    losses++;
-                else
-                if(penaltiesFor > penaltiesAgainst)
-                    wins++;
-                else
-                if(penaltiesFor < penaltiesAgainst)
-                    losses++;
-                else
-                    draws++;
-            }
 
-            rs.close();
+        try {
+            if (conn != null) {
+                String sql = null;
+                PreparedStatement preparedStatement;
+                if ((StringUtils.isEmpty(versionId) || versionId.equalsIgnoreCase("ALL")) && (StringUtils.isEmpty(gameType) || StringUtils.equalsIgnoreCase(gameType, "A")))
+                    preparedStatement = conn.prepareStatement(propertiesUtilities.getProperty(propertiesUtilities.getMessageResource(), "sql.awaySelect"));
+                else if (StringUtils.isNotEmpty(versionId) && !versionId.equalsIgnoreCase("ALL") && StringUtils.isNotEmpty(gameType) && StringUtils.equalsIgnoreCase(gameType, "A")) {
+                    sql = propertiesUtilities.getProperty(propertiesUtilities.getMessageResource(), "sql.awaySelect2");
+                    emptySQLCheck(propertiesUtilities, sql, "sql.awaySelect2");
+                    preparedStatement = conn.prepareStatement(sql);
+                    preparedStatement.setString(1, versionId);
+                } else if ((StringUtils.isEmpty(versionId) || versionId.equalsIgnoreCase("ALL")) && StringUtils.isNotEmpty(gameType) && !StringUtils.equalsIgnoreCase(gameType, "A")) {
+                    sql = propertiesUtilities.getProperty(propertiesUtilities.getMessageResource(), "sql.awaySelect4");
+                    emptySQLCheck(propertiesUtilities, sql, "sql.awaySelect4");
+                    preparedStatement = conn.prepareStatement(sql);
+                    preparedStatement.setString(1, gameType);
+                } else {
+                    sql = propertiesUtilities.getProperty(propertiesUtilities.getMessageResource(), "sql.awaySelect3");
+                    emptySQLCheck(propertiesUtilities, sql, "sql.awaySelect3");
+                    preparedStatement = conn.prepareStatement(sql);
+                    preparedStatement.setString(1, versionId);
+                    preparedStatement.setString(2, gameType);
+                }
+                ResultSet rs;
+                for (rs = preparedStatement.executeQuery(); rs.next(); ) {
+                    int goalsFor = rs.getInt("goalsFor");
+                    int goalsAgainst = rs.getInt("goalsAgainst");
+                    int penaltiesFor = rs.getInt("penaltiesFor");
+                    int penaltiesAgainst = rs.getInt("penaltiesAgainst");
+                    if (goalsFor > goalsAgainst)
+                        wins++;
+                    else if (goalsFor < goalsAgainst)
+                        losses++;
+                    else if (penaltiesFor > penaltiesAgainst)
+                        wins++;
+                    else if (penaltiesFor < penaltiesAgainst)
+                        losses++;
+                    else
+                        draws++;
+                }
+
+                rs.close();
+            }
+        } catch (SQLException se) {
+
+            System.err.println(se.getLocalizedMessage());
+            if (conn != null)
+                jdbcConnect.closeConnection(conn);
+        } catch (Exception e) {
+
+            System.err.println(e.getLocalizedMessage());
+            if (conn != null)
+                jdbcConnect.closeConnection(conn);
         }
-        break MISSING_BLOCK_LABEL_526;
-        SQLException se;
-        se;
-        System.err.println(se.getLocalizedMessage());
-        if(conn != null)
-            jdbcConnect.closeConnection(conn);
-        break MISSING_BLOCK_LABEL_538;
-        Exception e;
-        e;
-        System.err.println(e.getLocalizedMessage());
-        if(conn != null)
-            jdbcConnect.closeConnection(conn);
-        break MISSING_BLOCK_LABEL_538;
-        Exception exception;
-        exception;
-        if(conn != null)
-            jdbcConnect.closeConnection(conn);
-        throw exception;
         if(conn != null)
             jdbcConnect.closeConnection(conn);
         results.add(Integer.valueOf(wins));
