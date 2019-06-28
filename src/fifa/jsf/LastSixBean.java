@@ -1,93 +1,91 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   LastSixBean.java
-
 package fifa.jsf;
 
 import fifa.dao.StatsDao;
 
+import javax.faces.bean.ManagedBean;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-// Referenced classes of package fifa.jsf:
-//            AbstractResultBean
 
-public class LastSixBean extends AbstractResultBean
-{
+@ManagedBean
+public class LastSixBean
+        extends AbstractResultBean {
+    private static final long serialVersionUID = -6485511691963816181L;
+    private List<LastSixBean> results;
+    private String winLossDraw;
+    private String gameDateTimeStr;
 
-    public LastSixBean()
-    {
-    }
-
-    public void setGameDateTime(Date gameDateTime)
-    {
+    public void setGameDateTime(Date gameDateTime) {
         setGameDateTimeStr(formatDate(gameDateTime));
     }
 
-    public String getWinLossDraw()
-    {
-        return winLossDraw;
+
+    public String getWinLossDraw() {
+        return this.winLossDraw;
     }
 
-    public void setWinLossDraw(String winLossDraw)
-    {
+
+    public void setWinLossDraw(String winLossDraw) {
         this.winLossDraw = winLossDraw;
     }
 
-    public List getResults()
-    {
+
+    public List<LastSixBean> getResults() {
         StatsDao statsDao = new StatsDao();
-        results = statsDao.getLastSix("C");
-        return results;
+
+        this.results = statsDao.getLastSix("C");
+
+        return this.results;
     }
 
-    public void setResults(List results)
-    {
+
+    public void setResults(List<LastSixBean> results) {
         this.results = results;
     }
 
-    public String getGameDateTimeStr()
-    {
-        return gameDateTimeStr;
+
+    public String getGameDateTimeStr() {
+        return this.gameDateTimeStr;
     }
 
-    public void setGameDateTimeStr(String gameDateTimeStr)
-    {
+
+    public void setGameDateTimeStr(String gameDateTimeStr) {
         this.gameDateTimeStr = gameDateTimeStr;
     }
 
-    private String formatDate(Date inputDate)
-    {
+
+    private String formatDate(Date inputDate) {
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+
+
         return df.format(inputDate);
     }
 
-    public String getWinComment()
-    {
-        if(getPenaltiesAgainst() == 0 && getPenaltiesFor() == 0)
-            return (new StringBuilder("Beat ")).append(getTeamName()).append(" ").append(getGoalsFor()).append("-").append(getGoalsAgainst()).append(" played by ").append(getPlayerName()).append(" on ").append(getGameDateTimeStr()).toString();
-        else
-            return (new StringBuilder("Beat ")).append(getTeamName()).append(" ").append(getGoalsFor()).append("-").append(getGoalsAgainst()).append(" (").append(getPenaltiesFor()).append(" - ").append(getPenaltiesAgainst()).append(" P) played by ").append(getPlayerName()).append(" on ").append(getGameDateTimeStr()).toString();
+
+    public String getWinComment() {
+        if (getPenaltiesAgainst() == 0 && getPenaltiesFor() == 0) {
+            return "Beat " + getTeamName() + " " + getGoalsFor() + "-" + getGoalsAgainst() + " played by " + getPlayerName() +
+                    " on " + getGameDateTimeStr();
+        }
+        return "Beat " + getTeamName() + " " + getGoalsFor() + "-" + getGoalsAgainst() + " (" + getPenaltiesFor() + " - " +
+                getPenaltiesAgainst() + " P) played by " + getPlayerName() + " on " + getGameDateTimeStr();
     }
 
-    public String getLossComment()
-    {
-        if(getPenaltiesAgainst() == 0 && getPenaltiesFor() == 0)
-            return (new StringBuilder("Lost to ")).append(getTeamName()).append(" ").append(getGoalsFor()).append("-").append(getGoalsAgainst()).append(" played by ").append(getPlayerName()).append(" on ").append(getGameDateTimeStr()).toString();
-        else
-            return (new StringBuilder("Lost to ")).append(getTeamName()).append(" ").append(getGoalsFor()).append("-").append(getGoalsAgainst()).append(" (").append(getPenaltiesFor()).append(" - ").append(getPenaltiesAgainst()).append(" P) played by ").append(getPlayerName()).append(" on ").append(getGameDateTimeStr()).toString();
+
+    public String getLossComment() {
+        if (getPenaltiesAgainst() == 0 && getPenaltiesFor() == 0) {
+            return "Lost to " + getTeamName() + " " + getGoalsFor() + "-" + getGoalsAgainst() + " played by " + getPlayerName() +
+                    " on " + getGameDateTimeStr();
+        }
+        return "Lost to " + getTeamName() + " " + getGoalsFor() + "-" + getGoalsAgainst() + " (" + getPenaltiesFor() + " - " +
+                getPenaltiesAgainst() + " P) played by " + getPlayerName() + " on " + getGameDateTimeStr();
     }
 
-    public String getDrawComment()
-    {
-        return (new StringBuilder("Drew with ")).append(getTeamName()).append(" ").append(getGoalsFor()).append("-").append(getGoalsAgainst()).append(" played by ").append(getPlayerName()).append(" on ").append(getGameDateTimeStr()).toString();
-    }
 
-    private static final long serialVersionUID = 0x55daa70bL;
-    private List results;
-    private String winLossDraw;
-    private String gameDateTimeStr;
+    public String getDrawComment() {
+        return "Drew with " + getTeamName() + " " + getGoalsFor() + "-" + getGoalsAgainst() + " played by " + getPlayerName() +
+                " on " + getGameDateTimeStr();
+    }
 }

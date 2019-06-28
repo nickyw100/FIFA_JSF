@@ -22,12 +22,10 @@ import java.util.List;
 import java.util.Random;
 
 
-
 @ManagedBean(name = "versionBean")
 @ApplicationScoped
 public class VersionBean
-        implements Serializable, FIFAConstants
-{
+        implements Serializable, FIFAConstants {
     private static final long serialVersionUID = 1L;
     private List<SelectItem> versionSelectItems = loadVersionSelectItems();
     private final String FIFA = "FIFA";
@@ -43,8 +41,6 @@ public class VersionBean
     }
 
 
-
-
     public String getVersionIdNotAll() {
         resetSessionAttributes();
 
@@ -52,8 +48,7 @@ public class VersionBean
 
         String versionId = propertiesUtilities.getProperty(propertiesUtilities.getMessageResource(), "defaultVersion");
 
-        if (versionId == null || versionId.equalsIgnoreCase("ALL"))
-        {
+        if (versionId == null || versionId.equalsIgnoreCase("ALL")) {
 
             versionId = propertiesUtilities.getProperty(propertiesUtilities.getMessageResource(), "latestVersion");
         }
@@ -63,8 +58,7 @@ public class VersionBean
 
     private void resetSessionAttributes() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession)facesContext.getExternalContext().getSession(false);
-
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
 
 
         session.setAttribute("playersRestrictRows", Integer.valueOf(200));
@@ -74,10 +68,8 @@ public class VersionBean
     }
 
 
-
-
-    public void setVersionId(String versionId) {}
-
+    public void setVersionId(String versionId) {
+    }
 
 
     public void versionIdChanged(ValueChangeEvent arg0) throws AbortProcessingException {
@@ -98,7 +90,9 @@ public class VersionBean
     }
 
 
-    public void buildAllFactsInteractive() { buildAllFacts(true); }
+    public void buildAllFactsInteractive() {
+        buildAllFacts(true);
+    }
 
 
     public void buildAllFacts(boolean interactive) {
@@ -124,7 +118,7 @@ public class VersionBean
 
     public void doVersionToggle() {
         FacesContext context = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession)context.getExternalContext().getSession(true);
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
 
         String factVersionId = getNextVersionId();
 
@@ -133,17 +127,16 @@ public class VersionBean
 
     public String getNextVersionId() {
         FacesContext context = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession)context.getExternalContext()
+        HttpSession session = (HttpSession) context.getExternalContext()
                 .getSession(true);
-        String factVersionId = (String)session.getAttribute("factVersion");
+        String factVersionId = (String) session.getAttribute("factVersion");
         PropertiesUtilities propertiesUtilities =
                 PropertiesUtilities.getInstance();
 
         if (factVersionId != null && factVersionId.equals("ALL")) {
             factVersionId = "FIFA12";
 
-        }
-        else {
+        } else {
 
             if (StringUtils.isBlank(factVersionId)) {
                 factVersionId = propertiesUtilities.getProperty(
@@ -178,11 +171,14 @@ public class VersionBean
     }
 
 
-    public List<SelectItem> getVersionSelectItems() { return this.versionSelectItems; }
+    public List<SelectItem> getVersionSelectItems() {
+        return this.versionSelectItems;
+    }
 
 
-
-    public void setVersionSelectItems(List<SelectItem> versionSelectItems) { this.versionSelectItems = versionSelectItems; }
+    public void setVersionSelectItems(List<SelectItem> versionSelectItems) {
+        this.versionSelectItems = versionSelectItems;
+    }
 
 
     private List<SelectItem> loadVersionSelectItems() {

@@ -1,8 +1,3 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   ChartBeanAway.java
-
 package fifa.jsf.charts;
 
 import fifa.jsf.AwayResultsBean;
@@ -10,41 +5,46 @@ import fifa.utilities.FIFAConstants;
 import fifa.utilities.PropertiesUtilities;
 import org.primefaces.model.chart.PieChartModel;
 
+import javax.faces.bean.ManagedBean;
 import java.util.List;
 
-public class ChartBeanAway
-    implements FIFAConstants
-{
 
-    public ChartBeanAway()
-    {
+@ManagedBean
+public class ChartBeanAway
+        implements FIFAConstants {
+    private PieChartModel pieAwayModel;
+
+    public ChartBeanAway() {
         createPieModel();
     }
 
-    public PieChartModel getPieModel()
-    {
-        return pieAwayModel;
+
+    public PieChartModel getPieModel() {
+        return this.pieAwayModel;
     }
 
-    protected void createPieModel()
-    {
-        pieAwayModel = new PieChartModel();
-        pieAwayModel.setTitle("Away Results");
-        pieAwayModel.setShowDataLabels(true);
-        pieAwayModel.setLegendPosition("w");
-        pieAwayModel.setSeriesColors("99FF99, E0E0E0, E34230");
-        pieAwayModel.setDataFormat("value");
-        PropertiesUtilities propertiesUtilities = PropertiesUtilities.getInstance();
+
+    protected void createPieModel() {
+        this.pieAwayModel = new PieChartModel();
+        this.pieAwayModel.setTitle("Away Results");
+        this.pieAwayModel.setShowDataLabels(true);
+        this.pieAwayModel.setLegendPosition("w");
+        this.pieAwayModel.setSeriesColors("99FF99, E0E0E0, E34230");
+        this.pieAwayModel.setDataFormat("value");
+
+        PropertiesUtilities propertiesUtilities =
+                PropertiesUtilities.getInstance();
+
         String versionId = propertiesUtilities.getProperty(propertiesUtilities.getMessageResource(), "defaultVersion");
+
         AwayResultsBean awayResultsBean = new AwayResultsBean();
-        List awayResults = awayResultsBean.getAwayResultsList(versionId);
-        if(awayResults != null)
-        {
-            pieAwayModel.set("Won", (Number)awayResults.get(0));
-            pieAwayModel.set("Drawn", (Number)awayResults.get(1));
-            pieAwayModel.set("Lost", (Number)awayResults.get(2));
+
+        List<Integer> awayResults = awayResultsBean.getAwayResultsList(versionId);
+
+        if (awayResults != null) {
+            this.pieAwayModel.set("Won", (Number) awayResults.get(0));
+            this.pieAwayModel.set("Drawn", (Number) awayResults.get(1));
+            this.pieAwayModel.set("Lost", (Number) awayResults.get(2));
         }
     }
-
-    private PieChartModel pieAwayModel;
 }

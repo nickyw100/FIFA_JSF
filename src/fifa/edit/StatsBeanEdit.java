@@ -1,8 +1,3 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   StatsBeanEdit.java
-
 package fifa.edit;
 
 import fifa.dao.StatsDao;
@@ -10,6 +5,10 @@ import fifa.jsf.StatsBean;
 import fifa.jsf.VersionBean;
 import fifa.utilities.FIFAConstants;
 
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
@@ -18,154 +17,150 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+
+@ManagedBean
+@ViewScoped
 public class StatsBeanEdit
-    implements Serializable, FIFAConstants
-{
+        implements Serializable, FIFAConstants {
+    private static final long serialVersionUID = 1L;
+    private List<StatsBean> list;
+    private DataModel<StatsBean> model;
+    private StatsBean statsBean = new StatsBean();
+    private boolean edit;
+    private Integer restrictRows;
+    private VersionBean versionBean = new VersionBean();
 
-    public StatsBeanEdit()
-    {
-        statsBean = new StatsBean();
-        versionBean = new VersionBean();
-    }
-
-    public void init()
-    {
+    @PostConstruct
+    public void init() {
         int restrictRows = 0;
         restrictRows = getStatsRestrictRows(restrictRows);
         setRestrictRows(Integer.valueOf(restrictRows));
+
         StatsDao statsDao = new StatsDao();
-        list = statsDao.getStatsEdit();
-        java.util.Date gameDateTime = Calendar.getInstance().getTime();
-        statsBean.setGameDateTime(gameDateTime);
-        statsBean.setVersionId(versionBean.getVersionIdNotAll());
+        this.list = statsDao.getStatsEdit();
+
+        Date gameDateTime = Calendar.getInstance().getTime();
+        this.statsBean.setGameDateTime(gameDateTime);
+        this.statsBean.setVersionId(this.versionBean.getVersionIdNotAll());
+
         FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession)facesContext.getExternalContext().getSession(false);
-        statsBean.setLastPlayerNameAdded((String)session.getAttribute("lastPlayerName"));
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+        this.statsBean.setLastPlayerNameAdded((String) session.getAttribute("lastPlayerName"));
     }
 
-    private int getStatsRestrictRows(int restrictRows)
-    {
+
+    private int getStatsRestrictRows(int restrictRows) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession)facesContext.getExternalContext().getSession(false);
-        if(session.getAttribute("statsRestrictRows") != null)
-            restrictRows = ((Integer)session.getAttribute("statsRestrictRows")).intValue();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+
+
+        if (session.getAttribute("statsRestrictRows") != null) {
+            restrictRows = ((Integer) session.getAttribute("statsRestrictRows")).intValue();
+        }
         return restrictRows;
     }
 
-    public String add()
-    {
+    public String add() {
         StatsDao statsDao = new StatsDao();
-        statsDao.addStat(statsBean);
+        statsDao.addStat(this.statsBean);
         refreshPage();
         return null;
     }
 
-    public String editStat()
-    {
-        statsBean = (StatsBean)model.getRowData();
+
+    public String editStat() {
+        this.statsBean = this.model.getRowData();
         setEdit(true);
         return null;
     }
 
-    public String save()
-    {
+    public String save() {
         StatsDao statsDao = new StatsDao();
-        statsDao.updateStat(statsBean);
+        statsDao.updateStat(this.statsBean);
         refreshPage();
         return null;
     }
 
-    public String cancel()
-    {
+    public String cancel() {
         resetPlaceHolder();
         refreshPage();
         return null;
     }
 
-    public String delete()
-    {
+    public String delete() {
         StatsDao statsDao = new StatsDao();
-        statsBean = (StatsBean)model.getRowData();
-        statsDao.deleteStat(statsBean);
-        list.remove(model.getRowData());
+        this.statsBean = this.model.getRowData();
+        statsDao.deleteStat(this.statsBean);
+        this.list.remove(this.model.getRowData());
+
         resetPlaceHolder();
         return null;
     }
 
-    private void resetPlaceHolder()
-    {
-        statsBean = new StatsBean();
+    private void resetPlaceHolder() {
+        this.statsBean = new StatsBean();
         setEdit(false);
     }
 
-    public List getList()
-    {
-        return list;
+
+    public List<StatsBean> getList() {
+        return this.list;
     }
 
-    public DataModel getModel()
-    {
-        if(model == null)
-            model = new ListDataModel(list);
-        return model;
+
+    public DataModel<StatsBean> getModel() {
+        if (this.model == null) {
+            this.model = new ListDataModel(this.list);
+        }
+
+        return this.model;
     }
 
-    public StatsBean getStatsBean()
-    {
-        return statsBean;
+
+    public StatsBean getStatsBean() {
+        return this.statsBean;
     }
 
-    public boolean isEdit()
-    {
-        return edit;
+
+    public boolean isEdit() {
+        return this.edit;
     }
 
-    public void setEdit(boolean edit)
-    {
+
+    public void setEdit(boolean edit) {
         this.edit = edit;
     }
 
-    public Integer getRestrictRows()
-    {
-        return restrictRows;
+
+    public Integer getRestrictRows() {
+        return this.restrictRows;
     }
 
-    public void setRestrictRows(Integer restrictRows)
-    {
+
+    public void setRestrictRows(Integer restrictRows) {
         this.restrictRows = restrictRows;
         FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession)facesContext.getExternalContext().getSession(false);
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
         session.setAttribute("statsRestrictRows", restrictRows);
     }
 
-    public String refreshPage()
-    {
+    public String refreshPage() {
         FacesContext fc = FacesContext.getCurrentInstance();
-        Iterator messages = fc.getMessages();
-        if(!messages.hasNext())
-        {
+        Iterator<FacesMessage> messages = fc.getMessages();
+        if (!messages.hasNext()) {
+
             String url = "editStats_template.jsf";
             ExternalContext ec = fc.getExternalContext();
-            try
-            {
+            try {
                 ec.redirect(url);
-            }
-            catch(IOException ex)
-            {
+            } catch (IOException ex) {
                 System.err.println(ex.getLocalizedMessage());
             }
         }
         return null;
     }
-
-    private static final long serialVersionUID = 1L;
-    private List list;
-    private transient DataModel model;
-    private StatsBean statsBean;
-    private boolean edit;
-    private Integer restrictRows;
-    private VersionBean versionBean;
 }

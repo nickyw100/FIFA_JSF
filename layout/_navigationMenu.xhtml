@@ -1,28 +1,28 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
-	<br />
-	<h:form>
-		<p:commandButton id="dynaButton" type="button" icon="iconhammer"/>
-		<p:menu overlay="true" trigger="dynaButton" my="left top"
-			at="left bottom">
-			<p:submenu label="Navigation">
-				<p:menuitem value="&nbsp;Home" icon="iconhome" outcome="/index" />
-			</p:submenu>
-			<p:submenu label="Maintenance">
-				<p:menuitem value="&nbsp;Countries" icon="iconflag"
-					outcome="/template/edit/editCountry_template.xhtml" />
-				<p:menuitem value="&nbsp;Players" icon="iconplayers"
-					outcome="/template/edit/editPlayer_template.xhtml" />
-				<p:menuitem value="&nbsp;Teams" icon="iconteams"
-					outcome="/template/edit/editTeam_template.xhtml" />
-				<p:menuitem value="&nbsp;Statistics" icon="iconstats"
-					outcome="/template/edit/editStats_template.xhtml" />
-			</p:submenu>
-		</p:menu>				
-		
-	</h:form>
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <br/>
+    <h:form>
+        <p:commandButton id="dynaButton" type="button" icon="iconhammer"/>
+        <p:menu overlay="true" trigger="dynaButton" my="left top"
+                at="left bottom">
+            <p:submenu label="Navigation">
+                <p:menuitem value="&nbsp;Home" icon="iconhome" outcome="/index"/>
+            </p:submenu>
+            <p:submenu label="Maintenance">
+                <p:menuitem value="&nbsp;Countries" icon="iconflag"
+                            outcome="/template/edit/editCountry_template.xhtml"/>
+                <p:menuitem value="&nbsp;Players" icon="iconplayers"
+                            outcome="/template/edit/editPlayer_template.xhtml"/>
+                <p:menuitem value="&nbsp;Teams" icon="iconteams"
+                            outcome="/template/edit/editTeam_template.xhtml"/>
+                <p:menuitem value="&nbsp;Statistics" icon="iconstats"
+                            outcome="/template/edit/editStats_template.xhtml"/>
+            </p:submenu>
+        </p:menu>
+
+    </h:form>
 </ui:composition>

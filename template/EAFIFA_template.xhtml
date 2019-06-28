@@ -1,67 +1,70 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
-	<link
-		href="#{facesContext.externalContext.requestContextPath}/resources/css/styles.css"
-		rel="stylesheet" type="text/css" />
-	<title><h:outputText value="#{msg.welcomeTitle}" /></title>	
+    <link
+            href="#{facesContext.externalContext.requestContextPath}/resources/css/styles.css"
+            rel="stylesheet" type="text/css"/>
+    <title><h:outputText value="#{msg.welcomeTitle}"/></title>
 </h:head>
 
 <h:body onload="accordion.unselect(0)">
 
-	<div id="page">
+    <div id="page">
 
-		<div id="header">
-			<ui:insert name="header">
-				<ui:include src="/layout/_header.xhtml" />
-			</ui:insert>
-		</div>
+        <div id="header">
+            <ui:insert name="header">
+                <ui:include src="/layout/_header.xhtml"/>
+            </ui:insert>
+        </div>
 
-		<div id="historical">
-			<ui:insert name="header">
-				<ui:include src="/layout/_historical.xhtml" />
-			</ui:insert>
-		</div>
+        <ui:remove>
+            <div id="historical">
+                <ui:insert name="header">
+                    <ui:include src="/layout/_historical.xhtml"/>
+                </ui:insert>
+            </div>
+        </ui:remove>
 
-		<div id="recentForm">
-			<ui:insert name="recentForm">
-				<ui:include src="/layout/_recentFormPanel.xhtml" />
-			</ui:insert>
-			<br />
-		</div>
+        <div id="recentForm">
+            <ui:insert name="recentForm">
+                <ui:include src="/layout/_recentFormPanel.xhtml"/>
+            </ui:insert>
+            <br/>
+        </div>
 
-		<div id="lastResult">
-			<ui:insert name="lastResult">
-				<ui:include src="/layout/_lastResultPanel.xhtml" />
-			</ui:insert>
-			<br />
-		</div>
+        <div id="lastResult">
+            <ui:insert name="lastResult">
+                <ui:include src="/layout/_lastResultPanel.xhtml"/>
+            </ui:insert>
+            <br/>
+        </div>
 
-		<div id="search" class="center">
-			<ui:insert name="search">
-				<ui:include src="/layout/_searchPanel.xhtml" />
-			</ui:insert>
-		</div>
 
-		<div id="searchResults">
-			<ui:insert name="searchResults">
-				<ui:include src="/layout/_resultsPanel.xhtml" />
-			</ui:insert>
-		</div>
+        <div id="search" class="center">
+            <ui:insert name="search">
+                <ui:include src="/layout/_searchPanel.xhtml"/>
+            </ui:insert>
+        </div>
 
-		<div id="footer" class="footer">
-			<ui:insert name="footer">
-				<ui:include src="/layout/_navigationMenu.xhtml" />
-			<ui:include src="/layout/_footer.xhtml" />	
-			</ui:insert>
-			
-		</div>
+        <div id="searchResults">
+            <ui:insert name="searchResults">
+                <ui:include src="/layout/_resultsPanel.xhtml"/>
+            </ui:insert>
+        </div>
 
-	</div>
+        <div id="footer" class="footer">
+            <ui:insert name="footer">
+                <ui:include src="/layout/_navigationMenu.xhtml"/>
+                <ui:include src="/layout/_footer.xhtml"/>
+            </ui:insert>
+
+        </div>
+
+    </div>
 
 </h:body>
 </html>

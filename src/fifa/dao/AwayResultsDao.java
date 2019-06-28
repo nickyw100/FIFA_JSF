@@ -13,8 +13,7 @@ import java.util.List;
 
 
 public class AwayResultsDao
-        extends OverallResultsDao
-{
+        extends OverallResultsDao {
     private final String SELECT_AWAY = "sql.awaySelect";
     private final String SELECT_AWAY2 = "sql.awaySelect2";
     private final String SELECT_AWAY3 = "sql.awaySelect3";
@@ -22,7 +21,7 @@ public class AwayResultsDao
 
     public List<Integer> getAwayResultsList(String versionId, String gameType) {
         List<Integer> results = new ArrayList<Integer>();
-       Connection conn = null;
+        Connection conn = null;
         PreparedStatement preparedStatement = null;
         JDBCConnect jdbcConnect = null;
         int wins = 0, draws = 0, losses = 0;
@@ -33,8 +32,7 @@ public class AwayResultsDao
 
             PropertiesUtilities propertiesUtilities = PropertiesUtilities.getInstance();
 
-            if (conn != null)
-            {
+            if (conn != null) {
                 String sql = null;
 
 
@@ -42,16 +40,14 @@ public class AwayResultsDao
                         StringUtils.equalsIgnoreCase(gameType, "A"))) {
                     preparedStatement = conn.prepareStatement(propertiesUtilities.getProperty(propertiesUtilities.getMessageResource(),
                             "sql.awaySelect"));
-                }
-                else if (StringUtils.isNotEmpty(versionId) && !versionId.equalsIgnoreCase("ALL") &&
+                } else if (StringUtils.isNotEmpty(versionId) && !versionId.equalsIgnoreCase("ALL") &&
                         StringUtils.isNotEmpty(gameType) && StringUtils.equalsIgnoreCase(gameType, "A")) {
 
                     sql = propertiesUtilities.getProperty(propertiesUtilities.getMessageResource(), "sql.awaySelect2");
                     emptySQLCheck(propertiesUtilities, sql, "sql.awaySelect2");
                     preparedStatement = conn.prepareStatement(sql);
                     preparedStatement.setString(1, versionId);
-                }
-                else if ((StringUtils.isEmpty(versionId) || versionId.equalsIgnoreCase("ALL")) &&
+                } else if ((StringUtils.isEmpty(versionId) || versionId.equalsIgnoreCase("ALL")) &&
                         StringUtils.isNotEmpty(gameType) &&
                         !StringUtils.equalsIgnoreCase(gameType, "A")) {
 
@@ -68,7 +64,6 @@ public class AwayResultsDao
                 }
 
 
-
                 ResultSet rs = preparedStatement.executeQuery();
 
                 while (rs.next()) {
@@ -78,22 +73,23 @@ public class AwayResultsDao
                     int penaltiesAgainst = rs.getInt("penaltiesAgainst");
 
                     if (goalsFor > goalsAgainst) {
-                        wins++; continue;
+                        wins++;
+                        continue;
                     }
                     if (goalsFor < goalsAgainst) {
                         losses++;
                         continue;
                     }
                     if (penaltiesFor > penaltiesAgainst) {
-                        wins++; continue;
+                        wins++;
+                        continue;
                     }
                     if (penaltiesFor < penaltiesAgainst) {
-                        losses++; continue;
+                        losses++;
+                        continue;
                     }
                     draws++;
                 }
-
-
 
 
                 rs.close();
@@ -116,8 +112,7 @@ public class AwayResultsDao
     }
 
     private void emptySQLCheck(PropertiesUtilities propertiesUtilities, String sql, String message) {
-        if (StringUtils.isEmpty(sql))
-        {
+        if (StringUtils.isEmpty(sql)) {
             System.err.println("SELECT statement not found, in the resource " + propertiesUtilities.getMessageResource() +
                     " for the property " + message);
         }

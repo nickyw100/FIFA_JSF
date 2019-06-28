@@ -1,34 +1,25 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   LastSixBeanCup.java
-
 package fifa.jsf;
 
 import fifa.dao.StatsDao;
-
 import java.util.List;
+import javax.faces.bean.ManagedBean;
 
-// Referenced classes of package fifa.jsf:
-//            LastSixBean
 
-public class LastSixBeanCup extends LastSixBean
+
+@ManagedBean
+public class LastSixBeanCup
+        extends LastSixBean
 {
+    private static final long serialVersionUID = -4593348336325385979L;
+    private List<LastSixBean> results;
 
-    public LastSixBeanCup()
-    {
-    }
-
-    public List getResults()
-    {
-        if(results == null)
-        {
+    public List<LastSixBean> getResults() {
+        if (this.results == null) {
             StatsDao statsDao = new StatsDao();
-            results = statsDao.getLastSix("C");
-        }
-        return results;
-    }
 
-    private static final long serialVersionUID = 0x53b1a105L;
-    private List results;
+            this.results = statsDao.getLastSix("C");
+        }
+
+        return this.results;
+    }
 }

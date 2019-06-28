@@ -1,41 +1,50 @@
 body {
-background:radial-gradient(circle farthest-corner at center top , #EBEBEB 0%, #7A7A7A 100%);
+    background: radial-gradient(circle farthest-corner at center top, #EBEBEB 0%, #7A7A7A 100%);
 }
-a:hover { 
-  color: red
+
+a:hover {
+    color: red
 }
-h1,h2,h3 {
-  text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
-  color: Black;
+
+h1, h2, h3 {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    color: Black;
 }
+
 h1.title {
-  display: table;
-  margin: auto;
-  background-color: #afc4d6;
-  border-width: 4px;
-  border-style: outset;
-  border-color: #9fd1ff;
-  padding: 5px 8px;
-  letter-spacing: -.025em;
-} /* If prompt and input are in two cells of one row, the prompt will be R-aligned. */
-.formTable {
-  display: table;
+    display: table;
+    margin: auto;
+    background-color: #afc4d6;
+    border-width: 4px;
+    border-style: outset;
+    border-color: #9fd1ff;
+    padding: 5px 8px;
+    letter-spacing: -.025em;
 }
+
+/* If prompt and input are in two cells of one row, the prompt will be R-aligned. */
+.formTable {
+    display: table;
+}
+
 .formTable td:first-child {
-  text-align: right;
+    text-align: right;
 }
 
 .panelGroupRight {
-float:right !important;margin:0px 0px 3px 0px;
+    float: right !important;
+    margin: 0px 0px 3px 0px;
 }
 
 .panelGroupLeft {
-float:left !important;margin:0px 0px 3px 0px;
+    float: left !important;
+    margin: 0px 0px 3px 0px;
 }
 
 .panelGroupRightCarousel {
-float:right !important;margin:0px 125px 3px 0px;
+    float: right !important;
+    margin: 0px 125px 3px 0px;
 }
 
 .ui-widget-header {
@@ -54,93 +63,123 @@ float:right !important;margin:0px 125px 3px 0px;
 }
 
 th {
-     color: black;
-     background-color: white;
-     font-size: 110%;
-     font-family: Arial, Helvetica, sans-serif;
+    color: black;
+    background-color: white;
+    font-size: 110%;
+    font-family: Arial, Helvetica, sans-serif;
 }
+
 legend {
-  font-weight: bold;
-  color: black;
-  background-color: #afc4d6;
-  border: 1px solid #1a55bf;
-  padding: 3px 5px;
+    font-weight: bold;
+    color: black;
+    background-color: #afc4d6;
+    border: 1px solid #1a55bf;
+    padding: 3px 5px;
 }
+
 input, textarea {
-  background-color: #ecedf2;
-  color: black;
-  text-align: left;
+    background-color: #ecedf2;
+    color: black;
+    text-align: left;
 }
+
 input[type="checkbox"] {
-  background-color: transparent;  /* For IE -- doesn't matter in FF or Chrome */
+    background-color: transparent; /* For IE -- doesn't matter in FF or Chrome */
 }
+
 input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
-  background-color: #9fd1ff;
-  color: black;
+    background-color: #9fd1ff;
+    color: black;
 }
+
 .error {
-  color: red;
-  font-weight: bold;
+    color: red;
+    font-weight: bold;
 }
 
 .red {
-  color: red;
+    color: red;
 }
 
 .green {
-  color: green;
+    color: green;
 }
 
 .blue {
-  color: blue;
+    color: blue;
 }
 
 .black {
-  color: black;
+    color: black;
 }
 
 .white {
-  background-color: white;
-  color: white;
+    background-color: white;
+    color: white;
 }
 
-.superscript { position: relative; top: -0.5em; font-size: 80%; }
-.superscript2 { position: relative; top: -0.5em; font-size: 100%; }
-.superscript3 { position: relative; top: -1.5em; font-size: 40%; }
-.subscript { position: relative; bottom: -0.5em; font-size: 60%; }
-.subscript2 { position: relative; bottom: -1.0em; font-size: 80%; }
+.superscript {
+    position: relative;
+    top: -0.5em;
+    font-size: 80%;
+}
+
+.superscript2 {
+    position: relative;
+    top: -0.5em;
+    font-size: 100%;
+}
+
+.superscript3 {
+    position: relative;
+    top: -1.5em;
+    font-size: 40%;
+}
+
+.subscript {
+    position: relative;
+    bottom: -0.5em;
+    font-size: 60%;
+}
+
+.subscript2 {
+    position: relative;
+    bottom: -1.0em;
+    font-size: 80%;
+}
 
 .noBorder tr, .noBorder td {
-       border-style: hidden !important;
+    border-style: hidden !important;
 }
 
 
-ul.aligned {  /* So if in centered div, the bullets line up under each other */
-  display: inline-block;
-  text-align: left; 
+ul.aligned { /* So if in centered div, the bullets line up under each other */
+    display: inline-block;
+    text-align: left;
 }
 
 .right {
-  text-align: right;
-  margin-right: 1em;
+    text-align: right;
+    margin-right: 1em;
 }
 
 .top-right {
-    top:20px;
-    right:20px;
+    top: 20px;
+    right: 20px;
 }
 
 
 .left {
-  text-align: left;
-  margin-left: 1em;
+    text-align: left;
+    margin-left: 1em;
 }
+
 .center {
-  text-align: center;
+    text-align: center;
 }
 
 .hidden {
-  visibility:hidden;
+    visibility: hidden;
 }
 
 .panelGridCenter {
@@ -162,7 +201,7 @@ ul.aligned {  /* So if in centered div, the bullets line up under each other */
 }
 
 .ui-widget {
-    font-family: Verdana,Arial,sans-serif;
+    font-family: Verdana, Arial, sans-serif;
     font-size: 1.0em;
 }
 
@@ -173,103 +212,110 @@ ul.aligned {  /* So if in centered div, the bullets line up under each other */
 
 .player-first {
 
-   width: 250px;
+    width: 250px;
 
 }
+
 .player-second {
 
-   width: 250px;
+    width: 250px;
 
 }
+
 .player-third {
 
-   width: 75px;
-   text-align:center;
+    width: 75px;
+    text-align: center;
 
 }
+
 .player-fourth {
 
-   width: 75px;
-   text-align:center;
+    width: 75px;
+    text-align: center;
 
 }
 
 .country-first {
 
-   width: 50px;
+    width: 50px;
 
 }
+
 .country-second {
 
-   width: 250px;
+    width: 250px;
 
 }
+
 .country-third {
 
-   width: 100px; text-align:center;
+    width: 100px;
+    text-align: center;
 
 }
+
 .country-fourth {
 
-   width: 250px;
+    width: 250px;
 
 }
+
 .country-fifth {
 
-   width: 75px;
-   text-align:center;
+    width: 75px;
+    text-align: center;
 
 }
+
 .country-sixth {
 
-   width: 75px;
-   text-align:center;
+    width: 75px;
+    text-align: center;
 
 }
 
 .dataTableCenter {
-margin-left:auto;
-margin-right:auto;
+    margin-left: auto;
+    margin-right: auto;
 
 }
 
 .iconhammer {
-   background:url('../images/hammer.png')
- no-repeat top left !important;
+    background: url('../images/hammer.png') no-repeat top left !important;
 }
+
 .iconhome {
-   background:url('../images/home.png')
- no-repeat top left !important;
+    background: url('../images/home.png') no-repeat top left !important;
 }
+
 .iconflag {
-   background:url('../images/UK_Flag.png')
- no-repeat top left !important;
+    background: url('../images/UK_Flag.png') no-repeat top left !important;
 }
+
 .iconplayers {
-   background:url('../images/players.png')
- no-repeat top left !important;
+    background: url('../images/players.png') no-repeat top left !important;
 }
+
 .iconteams {
-   background:url('../images/teams.png')
- no-repeat top left !important;
+    background: url('../images/teams.png') no-repeat top left !important;
 }
+
 .iconstats {
-   background:url('../images/stats.png')
- no-repeat top left !important;
+    background: url('../images/stats.png') no-repeat top left !important;
 }
 
 .navButton {
-    background: url('../images/navigation-icon.png')
-     no-repeat top left !important;;
+    background: url('../images/navigation-icon.png') no-repeat top left !important;;
 }
 
 .carouselGrid table {
-	margin-left:auto; 
-    margin-right:auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .carouselGrid tr, .carouselGrid td {
     border: none;
-    text-align:center; 
-    vertical-align:middle;
+    text-align: center;
+    vertical-align: middle;
 }

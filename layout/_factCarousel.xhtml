@@ -1,30 +1,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<h:form id="carouselForm">
-		<p:panel id="carouselPanel">
-			<p:carousel value="#{versionBean.facts}" headerText="Game Facts"
-				autoPlayInterval="5000" itemStyle="height:100px;width:650px;"
-				var="fact" numVisible="1" effect="elasticIn" circular="true">
-				<p:panelGrid columns="2" styleClass="carouselGrid" id="carouselGrid">
-					<p:panel id="carouselDetail">
-						<h:outputText
-							value="#{fact.versionDescription}: #{fact.factDescription} #{fact.factResult}"
-							styleClass="#{fact.goodFact ? 'green' : 'red'}" />
-					</p:panel>
+    <h:form id="carouselForm">
+        <p:panel id="carouselPanel">
+            <p:carousel value="#{versionBean.facts}" headerText="Game Facts"
+                        autoPlayInterval="5000" itemStyle="height:100px;width:650px;"
+                        var="fact" numVisible="1" effect="elasticIn" circular="true">
+                <p:panelGrid columns="2" styleClass="carouselGrid" id="carouselGrid">
+                    <p:panel id="carouselDetail">
+                        <h:outputText
+                                value="#{fact.versionDescription}: #{fact.factDescription} #{fact.factResult}"
+                                styleClass="#{fact.goodFact ? 'green' : 'red'}"/>
+                    </p:panel>
 
-					<p:panel id="versionButton">
-						<p:commandButton value="View #{versionBean.nextVersionId} facts"
-							action="#{versionBean.doVersionToggle}" ajax="true" update="@all" />
-					</p:panel>
-				</p:panelGrid>
+                    <p:panel id="versionButton">
+                        <p:commandButton value="View #{versionBean.nextVersionId} facts"
+                                         action="#{versionBean.doVersionToggle}" ajax="true" update="@all"/>
+                    </p:panel>
+                </p:panelGrid>
 
-			</p:carousel>
-		</p:panel>
-	</h:form>
+            </p:carousel>
+        </p:panel>
+    </h:form>
 
 </ui:composition>

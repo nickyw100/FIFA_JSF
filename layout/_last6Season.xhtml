@@ -1,54 +1,54 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<table>
+    <table>
 
-		<tr>
-			<th class="ui-widget-header" colspan="12">Season</th>
-		</tr>
-		<tr>
-			<ui:repeat var="results" value="#{lastSixBeanSeason.results}"
-				varStatus="status">
-				<td><ui:fragment rendered="#{results.winLossDraw=='W'}">
-						<h:outputText id="sw0" value="#{results.winLossDraw}"
-							style="color:green" />
-						<p:tooltip for="sw0" showEffect="clip" hideEffect="explode">
-							<h:outputText value="#{results.winComment}" escape="false" />
-							<br />
-							<h:outputText value="#{results.fullGameComments}" escape="false" />
-						</p:tooltip>
-					</ui:fragment> <ui:fragment rendered="#{results.winLossDraw=='L'}">
-						<h:outputText id="sl0" value="#{results.winLossDraw}"
-							style="color:red" />
-						<p:tooltip for="sl0" showEffect="clip" hideEffect="explode">
-							<h:outputText value="#{results.lossComment}" escape="false" />
-							<br />
-							<h:outputText value="#{results.fullGameComments}" escape="false" />
-						</p:tooltip>
-					</ui:fragment> <ui:fragment rendered="#{results.winLossDraw=='D'}">
-						<h:outputText id="sd0" value="#{results.winLossDraw}"
-							style="color:black" />
-						<p:tooltip for="sd0" showEffect="clip" hideEffect="explode">
-							<h:outputText value="#{results.drawComment}" escape="false" />
-							<br />
-							<h:outputText value="#{results.fullGameComments}" escape="false" />
-						</p:tooltip>
-					</ui:fragment>
-					
-								<ui:fragment rendered="#{results.winLossDraw=='N'}">
-						<h:outputText id="sn0" value="."  />	
-						<p:tooltip for="sn0" showEffect="clip" hideEffect="explode">
-							<h:outputText value="No game found" escape="false" />
-						</p:tooltip>					
-					</ui:fragment>
-					</td>
-					<td>&nbsp;&nbsp;</td>
-			</ui:repeat>
-		</tr>
-	</table>
+        <tr>
+            <th class="ui-widget-header" colspan="12">Season</th>
+        </tr>
+        <tr>
+            <ui:repeat var="results" value="#{lastSixBeanSeason.results}"
+                       varStatus="status">
+                <td><ui:fragment rendered="#{results.winLossDraw=='W'}">
+                    <h:outputText id="sw0" value="#{results.winLossDraw}"
+                                  style="color:green"/>
+                    <p:tooltip for="sw0" showEffect="clip" hideEffect="explode">
+                        <h:outputText value="#{results.winComment}" escape="false"/>
+                        <br/>
+                        <h:outputText value="#{results.fullGameComments}" escape="false"/>
+                    </p:tooltip>
+                </ui:fragment> <ui:fragment rendered="#{results.winLossDraw=='L'}">
+                    <h:outputText id="sl0" value="#{results.winLossDraw}"
+                                  style="color:red"/>
+                    <p:tooltip for="sl0" showEffect="clip" hideEffect="explode">
+                        <h:outputText value="#{results.lossComment}" escape="false"/>
+                        <br/>
+                        <h:outputText value="#{results.fullGameComments}" escape="false"/>
+                    </p:tooltip>
+                </ui:fragment> <ui:fragment rendered="#{results.winLossDraw=='D'}">
+                    <h:outputText id="sd0" value="#{results.winLossDraw}"
+                                  style="color:black"/>
+                    <p:tooltip for="sd0" showEffect="clip" hideEffect="explode">
+                        <h:outputText value="#{results.drawComment}" escape="false"/>
+                        <br/>
+                        <h:outputText value="#{results.fullGameComments}" escape="false"/>
+                    </p:tooltip>
+                </ui:fragment>
+
+                    <ui:fragment rendered="#{results.winLossDraw=='N'}">
+                        <h:outputText id="sn0" value="."/>
+                        <p:tooltip for="sn0" showEffect="clip" hideEffect="explode">
+                            <h:outputText value="No game found" escape="false"/>
+                        </p:tooltip>
+                    </ui:fragment>
+                </td>
+                <td>&nbsp;&nbsp;</td>
+            </ui:repeat>
+        </tr>
+    </table>
 
 </ui:composition>

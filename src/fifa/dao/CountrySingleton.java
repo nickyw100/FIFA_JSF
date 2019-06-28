@@ -2,8 +2,7 @@ package fifa.dao;
 
 import java.util.List;
 
-public class CountrySingleton
-{
+public class CountrySingleton {
     private static List<String> countries;
     private static CountrySingleton instance;
 
@@ -18,11 +17,13 @@ public class CountrySingleton
     }
 
 
-    public List<String> getCountries() { return countries; }
+    public List<String> getCountries() {
+        return countries;
+    }
 
 
     public static List<String> getCountriesFromDao() {
-      CountryDao  countryDao = new CountryDao();
+        CountryDao countryDao = new CountryDao();
         countries = countryDao.getCountryNames();
         return countries;
     }

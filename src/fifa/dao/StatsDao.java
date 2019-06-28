@@ -20,6 +20,7 @@ import java.util.List;
 public class StatsDao implements fifa.utilities.FIFAConstants {
     private final String STATS_EDIT_SELECT = "sql.statsEditSelect";
     private final String foreignKeyException = "Cannot add or update a child row: a foreign key constraint fails";
+
     public StatsDao() {
     }
 
@@ -278,8 +279,7 @@ public class StatsDao implements fifa.utilities.FIFAConstants {
     }
 
 
-    private void prepareLastResultDetails(List<LastResultBean> results, ResultSet rs)
-            throws SQLException {
+    private void prepareLastResultDetails(List<LastResultBean> results, ResultSet rs) {
         LastResultBean lastResultBean = new LastResultBean();
         int goalsFor = 0;
         int goalsAgainst = 0;
@@ -319,7 +319,7 @@ public class StatsDao implements fifa.utilities.FIFAConstants {
             shotsOnTarget = rs.getInt("s.shotsOnTarget");
             opponentShots = rs.getInt("s.opponentShots");
             opponentShotsOnTarget = rs.getInt("s.opponentShotsOnTarget");
-            opponentDivision = rs.getInt("s.opponentDivision");
+//            opponentDivision = rs.getInt("s.opponentDivision");
             division = rs.getInt("s.division");
             playerName = rs.getString("s.playerName");
             teamName = rs.getString("t.teamName");
@@ -328,6 +328,7 @@ public class StatsDao implements fifa.utilities.FIFAConstants {
             gameType = StatsBean.GameTypeEnum.findByValue(rs.getString("s.gameType"));
             logoImage = rs.getString("t.logoImage");
             flagImage = rs.getString("c.flagImage");
+            countryId = rs.getString("s.countryId");
             countryName = rs.getString("c.countryName");
             playerComments = rs.getString("p.playerComments");
             gameComments = rs.getString("s.gameComments");

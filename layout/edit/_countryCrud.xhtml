@@ -1,136 +1,136 @@
 <!DOCTYPE html>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
-	<ui:debug hotkey="x"
-		rendered="#{facesContext.application.projectStage == 'Development'}" />
-	<h:panelGroup rendered="#{!countryBeanEdit.edit}">
-		<h3>Add country</h3>
-		<h:form>
-			<p:panel id="addCountry">
-				<p:messages id="messages" autoUpdate="true" closable="true" 
-					styleClass="error" /> 
-				<h:panelGrid columns="2">
-					<h:outputLabel value="Country ID: " />
-					<h:inputText id="addCountryId"
-						value="#{countryBeanEdit.countryBean.countryId}" size="5"
-						maxlength="5" required="true"
-						requiredMessage="You must enter a country ID" />
-					<h:outputLabel value="Country Name: " />
-					<h:inputText id="addCountryName"
-						value="#{countryBeanEdit.countryBean.countryName}" size="30"
-						maxlength="45" required="true"
-						requiredMessage="You must enter a country name" />
-					<h:outputLabel value="Flag URL: " />
-					<h:inputText value="#{countryBeanEdit.countryBean.flagImage}"
-						size="100" maxlength="150" />
-					<h:outputLabel value="Comments: " />
-					<h:inputTextarea
-						value="#{countryBeanEdit.countryBean.countryComments}" cols="50"
-						rows="3" />
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:debug hotkey="x"
+              rendered="#{facesContext.application.projectStage == 'Development'}"/>
+    <h:panelGroup rendered="#{!countryBeanEdit.edit}">
+        <h3>Add country</h3>
+        <h:form>
+            <p:panel id="addCountry">
+                <p:messages id="messages" autoUpdate="true" closable="true"
+                            styleClass="error"/>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Country ID: "/>
+                    <h:inputText id="addCountryId"
+                                 value="#{countryBeanEdit.countryBean.countryId}" size="5"
+                                 maxlength="5" required="true"
+                                 requiredMessage="You must enter a country ID"/>
+                    <h:outputLabel value="Country Name: "/>
+                    <h:inputText id="addCountryName"
+                                 value="#{countryBeanEdit.countryBean.countryName}" size="30"
+                                 maxlength="45" required="true"
+                                 requiredMessage="You must enter a country name"/>
+                    <h:outputLabel value="Flag URL: "/>
+                    <h:inputText value="#{countryBeanEdit.countryBean.flagImage}"
+                                 size="100" maxlength="150"/>
+                    <h:outputLabel value="Comments: "/>
+                    <h:inputTextarea
+                            value="#{countryBeanEdit.countryBean.countryComments}" cols="50"
+                            rows="3"/>
 
-					<p:splitButton value="Add" action="#{countryBeanEdit.add}"
-						icon="ui-icon-circle-plus" >
-						<p:menuitem value="Cancel"
-							action = "#{countryBeanEdit.cancel}"
-							icon="ui-icon-cancel" />
-					</p:splitButton>
-				</h:panelGrid>
-			</p:panel>
-		</h:form>
-	</h:panelGroup>
-	<h:panelGroup rendered="#{countryBeanEdit.edit}">
-		<h3>Edit country #{countryBeanEdit.countryBean.countryName}</h3>
-		<h:form>
-			<p:panel id="editCountry">
-				<p:messages id="messages" autoUpdate="true" closable="true" styleClass="error" />
-				<h:panelGrid columns="2">
-					<h:outputLabel value="Country ID: " />
-					<h:inputText value="#{countryBeanEdit.countryBean.countryId}"
-						size="5" maxlength="5" disabled="true" />
-					<h:outputLabel value="Country Name: " />
-					<h:inputText value="#{countryBeanEdit.countryBean.countryName}"
-						size="30" maxlength="45" required="true"
-						requiredMessage="You must enter a country name" />
-					<h:outputLabel value="Flag URL: " />
-					<h:inputText value="#{countryBeanEdit.countryBean.flagImage}"
-						size="100" maxlength="150" />
-					<h:outputLabel value="Comments: " />
-					<h:inputTextarea
-						value="#{countryBeanEdit.countryBean.countryComments}" cols="50"
-						rows="3" />
+                    <p:splitButton value="Add" action="#{countryBeanEdit.add}"
+                                   icon="ui-icon-circle-plus">
+                        <p:menuitem value="Cancel"
+                                    action="#{countryBeanEdit.cancel}"
+                                    icon="ui-icon-cancel"/>
+                    </p:splitButton>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </h:panelGroup>
+    <h:panelGroup rendered="#{countryBeanEdit.edit}">
+        <h3>Edit country #{countryBeanEdit.countryBean.countryName}</h3>
+        <h:form>
+            <p:panel id="editCountry">
+                <p:messages id="messages" autoUpdate="true" closable="true" styleClass="error"/>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Country ID: "/>
+                    <h:inputText value="#{countryBeanEdit.countryBean.countryId}"
+                                 size="5" maxlength="5" disabled="true"/>
+                    <h:outputLabel value="Country Name: "/>
+                    <h:inputText value="#{countryBeanEdit.countryBean.countryName}"
+                                 size="30" maxlength="45" required="true"
+                                 requiredMessage="You must enter a country name"/>
+                    <h:outputLabel value="Flag URL: "/>
+                    <h:inputText value="#{countryBeanEdit.countryBean.flagImage}"
+                                 size="100" maxlength="150"/>
+                    <h:outputLabel value="Comments: "/>
+                    <h:inputTextarea
+                            value="#{countryBeanEdit.countryBean.countryComments}" cols="50"
+                            rows="3"/>
 
-					<p:splitButton value="Save"
-						action="#{countryBeanEdit.save}" update="messages"
-						icon="ui-icon-disk">
-						<p:menuitem value="Cancel" 
-							action = "#{countryBeanEdit.cancel}" 
-							icon="ui-icon-cancel" />
-					</p:splitButton>
+                    <p:splitButton value="Save"
+                                   action="#{countryBeanEdit.save}" update="messages"
+                                   icon="ui-icon-disk">
+                        <p:menuitem value="Cancel"
+                                    action="#{countryBeanEdit.cancel}"
+                                    icon="ui-icon-cancel"/>
+                    </p:splitButton>
 
-				</h:panelGrid>
-			</p:panel>
-		</h:form>
-	</h:panelGroup>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </h:panelGroup>
 
-	<h:form rendered="#{not empty countryBeanEdit.countryList}">
-		<h:outputLabel value="Restrict Rows: " title="restrictRows" />
-		<p:spinner id="restrictRows" size="3"
-			value="#{countryBeanEdit.restrictRows}" min="50" max="900"
-			stepFactor="50" />
-		<h:commandLink id="btnrefresh" action="#{countryBeanEdit.refreshPage}"
-			title="Refresh">
-			<h:graphicImage library="images" name="refreshIcon.png"></h:graphicImage>
-		</h:commandLink>
-		<h:dataTable id="dataTable" value="#{countryBeanEdit.model}"
-			styleClass="dataTableCenter" var="country" border="1"
-			columnClasses="country-first,country-second, country-third, country-fourth, country-fifth, country-sixth">
+    <h:form rendered="#{not empty countryBeanEdit.countryList}">
+        <h:outputLabel value="Restrict Rows: " title="restrictRows"/>
+        <p:spinner id="restrictRows" size="3"
+                   value="#{countryBeanEdit.restrictRows}" min="50" max="900"
+                   stepFactor="50"/>
+        <h:commandLink id="btnrefresh" action="#{countryBeanEdit.refreshPage}"
+                       title="Refresh">
+            <h:graphicImage library="images" name="refreshIcon.png"></h:graphicImage>
+        </h:commandLink>
+        <h:dataTable id="dataTable" value="#{countryBeanEdit.model}"
+                     styleClass="dataTableCenter" var="country" border="1"
+                     columnClasses="country-first,country-second, country-third, country-fourth, country-fifth, country-sixth">
 
-			<h:column id="countryIdColumn">
-				<f:facet name="header">
-					<h:outputText value="Country ID" />
-				</f:facet>
-				<h:outputText value="#{country.countryId}" />
+            <h:column id="countryIdColumn">
+                <f:facet name="header">
+                    <h:outputText value="Country ID"/>
+                </f:facet>
+                <h:outputText value="#{country.countryId}"/>
 
-			</h:column>
-			<h:column id="countryNameColumn">
-				<f:facet name="header">
-					<h:outputText value="Country Name" />
-				</f:facet>
-				<h:outputText value="#{country.countryName}" />
-			</h:column>
-			<h:column id="flagImageColumn" headerText="Flag URL">
-				<f:facet name="header">
-					<h:outputText value="Flag URL" />
-				</f:facet>
-				<h:graphicImage url="#{country.flagImage}" id="flagImage"
-					height="50" width="60" />
-			</h:column>
-			<h:column headerText="Comments" id="countryCommentsColumn">
-				<f:facet name="header">
-					<h:outputText value="Comments" />
-				</f:facet>
-				<h:outputText value="#{country.countryComments}" />
-			</h:column>
-			<h:column id="editColumn">
-				<h:commandLink id="btnedit" action="#{countryBeanEdit.editCountry}"
-					title="Edit country">
-					<h:graphicImage library="images" name="editIcon.png"></h:graphicImage>
-				</h:commandLink>
-			</h:column>
-			<h:column id="deleteColumn">
-				<h:commandLink id="btndelete" action="#{countryBeanEdit.delete}"
-					title="Delete Country">
-					<h:graphicImage library="images" name="deleteIcon.png"></h:graphicImage>
-				</h:commandLink>
-			</h:column>
-		</h:dataTable>
-	</h:form>
-	<h:panelGroup rendered="#{empty countryBeanEdit.countryList}"
-		styleClass="dataTableCenter">
-		<p>Table is empty! Please add new countries.</p>
-	</h:panelGroup>
+            </h:column>
+            <h:column id="countryNameColumn">
+                <f:facet name="header">
+                    <h:outputText value="Country Name"/>
+                </f:facet>
+                <h:outputText value="#{country.countryName}"/>
+            </h:column>
+            <h:column id="flagImageColumn" headerText="Flag URL">
+                <f:facet name="header">
+                    <h:outputText value="Flag URL"/>
+                </f:facet>
+                <h:graphicImage url="#{country.flagImage}" id="flagImage"
+                                height="50" width="60"/>
+            </h:column>
+            <h:column headerText="Comments" id="countryCommentsColumn">
+                <f:facet name="header">
+                    <h:outputText value="Comments"/>
+                </f:facet>
+                <h:outputText value="#{country.countryComments}"/>
+            </h:column>
+            <h:column id="editColumn">
+                <h:commandLink id="btnedit" action="#{countryBeanEdit.editCountry}"
+                               title="Edit country">
+                    <h:graphicImage library="images" name="editIcon.png"></h:graphicImage>
+                </h:commandLink>
+            </h:column>
+            <h:column id="deleteColumn">
+                <h:commandLink id="btndelete" action="#{countryBeanEdit.delete}"
+                               title="Delete Country">
+                    <h:graphicImage library="images" name="deleteIcon.png"></h:graphicImage>
+                </h:commandLink>
+            </h:column>
+        </h:dataTable>
+    </h:form>
+    <h:panelGroup rendered="#{empty countryBeanEdit.countryList}"
+                  styleClass="dataTableCenter">
+        <p>Table is empty! Please add new countries.</p>
+    </h:panelGroup>
 
 </ui:composition>

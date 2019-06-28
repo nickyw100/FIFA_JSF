@@ -8,8 +8,7 @@ import java.util.List;
 
 @ManagedBean
 public class LastResultBean
-        extends SearchResultsBean
-{
+        extends SearchResultsBean {
     private static final long serialVersionUID = 6199312392098189907L;
     private static Logger logger = Logger.getLogger(LastResultBean.class);
 
@@ -29,5 +28,7 @@ public class LastResultBean
     }
 
 
-    public void setLastResult(List<LastResultBean> results) { this.lastResult = results; }
+    public void setLastResult(List<LastResultBean> results) {
+        this.lastResult = results;
+    }
 }

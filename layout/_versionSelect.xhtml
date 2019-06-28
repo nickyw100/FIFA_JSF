@@ -1,17 +1,17 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
-	<h:form>
-		<p:selectOneMenu value="#{versionBean.versionId}"
-			valueChangeListener="#{versionBean.versionIdChanged}"
-			id="versionSelect">
-			<f:selectItems value="#{versionBean.versionSelectItems}" />
-			<p:ajax update="@this" />
-		</p:selectOneMenu>
-		<p:tooltip for="versionSelect"
-			value="Choose a specific FIFA game version" showEffect="slide"
-			hideEffect="slide" />
-	</h:form>
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:form>
+        <p:selectOneMenu value="#{versionBean.versionId}"
+                         valueChangeListener="#{versionBean.versionIdChanged}"
+                         id="versionSelect">
+            <f:selectItems value="#{versionBean.versionSelectItems}"/>
+            <p:ajax update="@this"/>
+        </p:selectOneMenu>
+        <p:tooltip for="versionSelect"
+                   value="Choose a specific FIFA game version" showEffect="slide"
+                   hideEffect="slide"/>
+    </h:form>
 </ui:composition>

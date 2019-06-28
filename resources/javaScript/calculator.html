@@ -1,418 +1,465 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-#calculator {
-	border: 2px solid #0E0101;
-	border-radius: 25px;
-	padding-top: 15px;
-	padding-left: 15px;
-	padding-bottom: 15px;
-	background: #A9A9A9;
-	width: 250px;
-}
+    <style>
+        #calculator {
+            border: 2px solid #0E0101;
+            border-radius: 25px;
+            padding-top: 15px;
+            padding-left: 15px;
+            padding-bottom: 15px;
+            background: #A9A9A9;
+            width: 250px;
+        }
 
-#resultBox {
-	border: 2px solid #a1a1a1;
-	padding: 10px 50px;
-	background: #C8E375;
-	width: 125px;
-	border-radius: 25px;
-}
+        #resultBox {
+            border: 2px solid #a1a1a1;
+            padding: 10px 50px;
+            background: #C8E375;
+            width: 125px;
+            border-radius: 25px;
+        }
 
-#calcResult {
-	padding-top: 10px;
-	padding-right: 21px;
-	padding-left: 25px;
-	background: #C8E375;
-	width: 125px;
-}
+        #calcResult {
+            padding-top: 10px;
+            padding-right: 21px;
+            padding-left: 25px;
+            background: #C8E375;
+            width: 125px;
+        }
 
-#operandSelected {
-	padding-top: 10px;
-	padding-right: 21px;
-	padding-left: 25px;
-	background: #C8E375;
-	font-size: 9px;
-	float: right;
-}
+        #operandSelected {
+            padding-top: 10px;
+            padding-right: 21px;
+            padding-left: 25px;
+            background: #C8E375;
+            font-size: 9px;
+            float: right;
+        }
 
-#memorySelected {
-	padding-top: 10px;
-	padding-right: 21px;
-	padding-left: 25px;
-	background: #C8E375;
-	font-size: 8px;
-	float: left;
-}
+        #memorySelected {
+            padding-top: 10px;
+            padding-right: 21px;
+            padding-left: 25px;
+            background: #C8E375;
+            font-size: 8px;
+            float: left;
+        }
 
-table {
-	border: 2px solid #a1a1a1;
-	padding: 10px 40px;
-	background: #dddddd;
-	width: 105px;
-	border-radius: 25px;
-}
+        table {
+            border: 2px solid #a1a1a1;
+            padding: 10px 40px;
+            background: #dddddd;
+            width: 105px;
+            border-radius: 25px;
+        }
 
-.clearfix:before,.clearfix:after {
-	content: " ";
-	display: table;
-}
+        .clearfix:before, .clearfix:after {
+            content: " ";
+            display: table;
+        }
 
-.clearfix:after {
-	clear: both;
-}
+        .clearfix:after {
+            clear: both;
+        }
 
-.shadow {
-	box-shadow: 0px 0px 1px 1px rgba(119, 119, 119, 0.75);
-	-moz-box-shadow: 0px 0px 1px 1px rgba(119, 119, 119, 0.75);
-	-webkit-box-shadow: 0px 0px 1px 1px rgba(119, 119, 119, 0.75);
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-}
+        .shadow {
+            box-shadow: 0px 0px 1px 1px rgba(119, 119, 119, 0.75);
+            -moz-box-shadow: 0px 0px 1px 1px rgba(119, 119, 119, 0.75);
+            -webkit-box-shadow: 0px 0px 1px 1px rgba(119, 119, 119, 0.75);
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
 
-button {
-	width: 32px;
-}
-</style>
+        button {
+            width: 32px;
+        }
+    </style>
 
-<script>
-	// Define global variables 
-	var currentCalcString = '0';
-	var calcArray = new Array();
-	var operandIsPressed = false;
-	var memoryIsPressed = false;
-	var secondOperand = '';
-	var memoryValue = 0;
-	var previousCalcValue = 0;
+    <script>
+        // Define global variables
+        var currentCalcString = '0';
+        var calcArray = new Array();
+        var operandIsPressed = false;
+        var memoryIsPressed = false;
+        var secondOperand = '';
+        var memoryValue = 0;
+        var previousCalcValue = 0;
 
-	document.onreadystatechange = function() {
-		if (document.readyState === "complete") {
-			initialize();
-		}
-	}
+        document.onreadystatechange = function () {
+            if (document.readyState === "complete") {
+                initialize();
+            }
+        }
 
-	function calc(evt) {
-		var calcValue = evt.target.calcValue;
+        function calc(evt) {
+            var calcValue = evt.target.calcValue;
 
-		if (calcValue === '.' || (calcValue >= 0 && calcValue <= 9)) {
-			numberPressed(calcValue);
+            if (calcValue === '.' || (calcValue >= 0 && calcValue <= 9)) {
+                numberPressed(calcValue);
 
-		} else {
-			if (calcValue != '=') {
-				calcValue = operandPressed(calcValue);
-			}
-		}
+            } else {
+                if (calcValue != '=') {
+                    calcValue = operandPressed(calcValue);
+                }
+            }
 
-		if (calcValue === '=') {
-			if (calcArray.length > 0) {
-				currentCalcString = performCalc(calcArray);
-				// Clear out the array of calcs, and then 
-				// add the previously calculated result to the first element 
-				// of the array.
-				calcArray.length = 0;
-				var currentTotal = parseInt(currentCalcString, 10);
-				calcArray.push(currentTotal);
-				// If the calc was triggered by the user pressing an 
-				// operand that is not '=', then store the operand in 
-				// the calcArray.
-				if (secondOperand != '') {
-					calcArray.push(secondOperand);
-					secondOperand = '';
-				}
-			}
-			document.getElementById("operandSelected").innerHTML = '&nbsp;';
-		}
-		// Store the entered value for usage when the next
-		// button is pressed. 
-		previousCalcValue = calcValue;
-		// Write the value to the screen.
-		document.getElementById("calcResult").innerHTML = currentCalcString;
-	}
+            if (calcValue === '=') {
+                if (calcArray.length > 0) {
+                    currentCalcString = performCalc(calcArray);
+                    // Clear out the array of calcs, and then
+                    // add the previously calculated result to the first element
+                    // of the array.
+                    calcArray.length = 0;
+                    var currentTotal = parseInt(currentCalcString, 10);
+                    calcArray.push(currentTotal);
+                    // If the calc was triggered by the user pressing an
+                    // operand that is not '=', then store the operand in
+                    // the calcArray.
+                    if (secondOperand != '') {
+                        calcArray.push(secondOperand);
+                        secondOperand = '';
+                    }
+                }
+                document.getElementById("operandSelected").innerHTML = '&nbsp;';
+            }
+            // Store the entered value for usage when the next
+            // button is pressed.
+            previousCalcValue = calcValue;
+            // Write the value to the screen.
+            document.getElementById("calcResult").innerHTML = currentCalcString;
+        }
 
-	function performCalc(calcArray) {
-		// This function goes thru the array and performs the calcs.
-		currentCalcString = '';
-		// alert(calcArray);
-		var index;
-		var val1 = 0, val2 = 0, currentNumber = 0;
-		var operand = '';
-		for (index = 0; index < calcArray.length; index++) {
+        function performCalc(calcArray) {
+            // This function goes thru the array and performs the calcs.
+            currentCalcString = '';
+            // alert(calcArray);
+            var index;
+            var val1 = 0, val2 = 0, currentNumber = 0;
+            var operand = '';
+            for (index = 0; index < calcArray.length; index++) {
 
-			// populate the calculation fields
-			if (val1 === 0) {
-				val1 = calcArray[index];
-			} else if (operand == '') {
-				operand = calcArray[index];
-			} else if (val2 === 0) {
-				val2 = calcArray[index];
-			}
+                // populate the calculation fields
+                if (val1 === 0) {
+                    val1 = calcArray[index];
+                } else if (operand == '') {
+                    operand = calcArray[index];
+                } else if (val2 === 0) {
+                    val2 = calcArray[index];
+                }
 
-			// If we've got enough to perform a calc then doooo it!
-			if (val2 > 0) {
-				if (operand == '+') {
-					currentNumber = val1 + val2;
-					// Round division to 8 decimal places.
-					currentNumber = +currentNumber.toFixed(8);
-				} else if (operand == '-') {
-					currentNumber = val1 - val2;
-					currentNumber = +currentNumber.toFixed(8);
-				} else if (operand == 'x') {
-					currentNumber = val1 * val2;
-					currentNumber = +currentNumber.toFixed(8);
-				} else if (operand == '/') {
-					currentNumber = val1 / val2;
-					currentNumber = +currentNumber.toFixed(8);
-				}
-				val1 = 0;
-				operand = '';
-				val2 = 0;
-			}
+                // If we've got enough to perform a calc then doooo it!
+                if (val2 > 0) {
+                    if (operand == '+') {
+                        currentNumber = val1 + val2;
+                        // Round division to 8 decimal places.
+                        currentNumber = +currentNumber.toFixed(8);
+                    } else if (operand == '-') {
+                        currentNumber = val1 - val2;
+                        currentNumber = +currentNumber.toFixed(8);
+                    } else if (operand == 'x') {
+                        currentNumber = val1 * val2;
+                        currentNumber = +currentNumber.toFixed(8);
+                    } else if (operand == '/') {
+                        currentNumber = val1 / val2;
+                        currentNumber = +currentNumber.toFixed(8);
+                    }
+                    val1 = 0;
+                    operand = '';
+                    val2 = 0;
+                }
 
-		}
-		currentCalcString = parseFloat(currentNumber);
+            }
+            currentCalcString = parseFloat(currentNumber);
 
-		return currentCalcString;
-	}
+            return currentCalcString;
+        }
 
-	function clearDisplay() {
-		currentCalcString = '0';
-		calcArray.length = 0;
-		document.getElementById("calcResult").innerHTML = currentCalcString;
-		document.getElementById("operandSelected").innerHTML = '&nbsp;';
-	}
+        function clearDisplay() {
+            currentCalcString = '0';
+            calcArray.length = 0;
+            document.getElementById("calcResult").innerHTML = currentCalcString;
+            document.getElementById("operandSelected").innerHTML = '&nbsp;';
+        }
 
-	function invertSign() {
-		// Invert the sign of the number currently displayed.
-		var currentNumber = parseInt(currentCalcString, 10);
-		currentNumber = currentNumber * -1;
-		currentCalcString = parseFloat(currentNumber);
-		document.getElementById("calcResult").innerHTML = currentCalcString;
-	}
+        function invertSign() {
+            // Invert the sign of the number currently displayed.
+            var currentNumber = parseInt(currentCalcString, 10);
+            currentNumber = currentNumber * -1;
+            currentCalcString = parseFloat(currentNumber);
+            document.getElementById("calcResult").innerHTML = currentCalcString;
+        }
 
-	function storeInMemory(evt) {
-		var calcValue = evt.target.calcValue;
-		memoryIsPressed = true;
-		var currentValue = parseInt(currentCalcString, 10);
-		if (calcValue === 'm+') {
-			memoryValue = memoryValue + currentValue;
-		} else {
-			memoryValue = memoryValue - currentValue;
-		}
-		document.getElementById("memorySelected").innerHTML = 'M';
-	}
+        function storeInMemory(evt) {
+            var calcValue = evt.target.calcValue;
+            memoryIsPressed = true;
+            var currentValue = parseInt(currentCalcString, 10);
+            if (calcValue === 'm+') {
+                memoryValue = memoryValue + currentValue;
+            } else {
+                memoryValue = memoryValue - currentValue;
+            }
+            document.getElementById("memorySelected").innerHTML = 'M';
+        }
 
-	function clearMemory() {
-		memoryValue = 0;
-		document.getElementById("memorySelected").innerHTML = '&nbsp;';
-	}
+        function clearMemory() {
+            memoryValue = 0;
+            document.getElementById("memorySelected").innerHTML = '&nbsp;';
+        }
 
-	function recallFromMemory() {
-		currentCalcString = parseFloat(memoryValue);
-		calcArray.push(memoryValue);
-		document.getElementById("calcResult").innerHTML = currentCalcString;
-	}
+        function recallFromMemory() {
+            currentCalcString = parseFloat(memoryValue);
+            calcArray.push(memoryValue);
+            document.getElementById("calcResult").innerHTML = currentCalcString;
+        }
 
-	function operandPressed(calcValue) {
-		var currentCalcNumber = parseFloat(currentCalcString);
+        function operandPressed(calcValue) {
+            var currentCalcNumber = parseFloat(currentCalcString);
 
-		// Check if the last value added to the array was an operand (but not the = button). 
-		// If it was, replace the operand with the new one. 
-		if (previousCalcValue === '+' || previousCalcValue === '-'
-				|| previousCalcValue === 'x' || previousCalcValue === '/') {
-			calcArray.pop();
-		} else {
-			if (calcArray.length == 0 || calcArray.length == 2) {
-				// An operand button was pressed; add the current number 
-				// to the array of numbers.
-				calcArray.push(currentCalcNumber);
-			}
-		}
+            // Check if the last value added to the array was an operand (but not the = button).
+            // If it was, replace the operand with the new one.
+            if (previousCalcValue === '+' || previousCalcValue === '-'
+                || previousCalcValue === 'x' || previousCalcValue === '/') {
+                calcArray.pop();
+            } else {
+                if (calcArray.length == 0 || calcArray.length == 2) {
+                    // An operand button was pressed; add the current number
+                    // to the array of numbers.
+                    calcArray.push(currentCalcNumber);
+                }
+            }
 
-		// Reset the number display
-		currentCalcNumber = 0;
-		operandIsPressed = true;
+            // Reset the number display
+            currentCalcNumber = 0;
+            operandIsPressed = true;
 
-		// Add the operand to the array of calcs 
-		if (calcValue != '=') {
+            // Add the operand to the array of calcs
+            if (calcValue != '=') {
 
-			calcArray.push(calcValue);
+                calcArray.push(calcValue);
 
-			// If this is the 2nd operand selected for this calc,
-			// then perform the calc now.
-			if (calcArray.length === 4) {
-				// Prepare to perform the calc
-				secondOperand = calcValue;
-				calcValue = '=';
-			}
-		}
-		if (calcValue != '=') {
-			document.getElementById("operandSelected").innerHTML = calcValue;
-		} else {
-			document.getElementById("operandSelected").innerHTML = '&nbsp;';
-		}
+                // If this is the 2nd operand selected for this calc,
+                // then perform the calc now.
+                if (calcArray.length === 4) {
+                    // Prepare to perform the calc
+                    secondOperand = calcValue;
+                    calcValue = '=';
+                }
+            }
+            if (calcValue != '=') {
+                document.getElementById("operandSelected").innerHTML = calcValue;
+            } else {
+                document.getElementById("operandSelected").innerHTML = '&nbsp;';
+            }
 
-		return calcValue;
-	}
+            return calcValue;
+        }
 
-	function numberPressed(calcValue) {
-		if (operandIsPressed) {
-			// If the user previously pressed an operand button, clear the 
-			// display before displaying the new number.
-			currentCalcString = '';
-			operandIsPressed = false;
-		}
-		if (memoryIsPressed) {
-			// If the user previously pressed an operand button, clear the 
-			// display before displaying the new number.
-			currentCalcString = '';
-			memoryIsPressed = false;
-		}
-		// Add a preceeding zero if the first button pressed is
-		// a decimal point.
-		if (calcValue === '.' && currentCalcString === '0') {
-			calcValue = '0.';
-		}
-		if (currentCalcString != '' && currentCalcString != '0') {
-			currentCalcString = currentCalcString.concat(calcValue.toString());
-		} else {
-			currentCalcString = calcValue.toString();
-		}
-	}
+        function numberPressed(calcValue) {
+            if (operandIsPressed) {
+                // If the user previously pressed an operand button, clear the
+                // display before displaying the new number.
+                currentCalcString = '';
+                operandIsPressed = false;
+            }
+            if (memoryIsPressed) {
+                // If the user previously pressed an operand button, clear the
+                // display before displaying the new number.
+                currentCalcString = '';
+                memoryIsPressed = false;
+            }
+            // Add a preceeding zero if the first button pressed is
+            // a decimal point.
+            if (calcValue === '.' && currentCalcString === '0') {
+                calcValue = '0.';
+            }
+            if (currentCalcString != '' && currentCalcString != '0') {
+                currentCalcString = currentCalcString.concat(calcValue.toString());
+            } else {
+                currentCalcString = calcValue.toString();
+            }
+        }
 
-	function isNumeric(n) {
-		return !isNaN(parseFloat(n)) && isFinite(n);
-	}
+        function isNumeric(n) {
+            return !isNaN(parseFloat(n)) && isFinite(n);
+        }
 
-	function initialize() {
-		var x = 0;
-		var theButton;
-		// Add event listeners for each of the buttons. 
-		// (We are doing it this way)
-		for (x = 0; x < 10; x++) {
-			theButton = document.getElementById(x.toString());
-			theButton.addEventListener("click", calc);
-			// calcValue is a parameter, which is passed 
-			// to the calc function. 
-			theButton.calcValue = x;
-		}
+        function initialize() {
+            var x = 0;
+            var theButton;
+            // Add event listeners for each of the buttons.
+            // (We are doing it this way)
+            for (x = 0; x < 10; x++) {
+                theButton = document.getElementById(x.toString());
+                theButton.addEventListener("click", calc);
+                // calcValue is a parameter, which is passed
+                // to the calc function.
+                theButton.calcValue = x;
+            }
 
-		theButton = document.getElementById("m+");
-		theButton.addEventListener("click", storeInMemory);
-		theButton.calcValue = 'm+';
+            theButton = document.getElementById("m+");
+            theButton.addEventListener("click", storeInMemory);
+            theButton.calcValue = 'm+';
 
-		theButton = document.getElementById("m-");
-		theButton.addEventListener("click", storeInMemory);
-		theButton.calcValue = 'm-';
+            theButton = document.getElementById("m-");
+            theButton.addEventListener("click", storeInMemory);
+            theButton.calcValue = 'm-';
 
-		theButton = document.getElementById("mr");
-		theButton.addEventListener("click", recallFromMemory);
-		theButton.calcValue = 'mr';
+            theButton = document.getElementById("mr");
+            theButton.addEventListener("click", recallFromMemory);
+            theButton.calcValue = 'mr';
 
-		theButton = document.getElementById("mc");
-		theButton.addEventListener("click", clearMemory);
-		theButton.calcValue = 'mc';
+            theButton = document.getElementById("mc");
+            theButton.addEventListener("click", clearMemory);
+            theButton.calcValue = 'mc';
 
-		theButton = document.getElementById("c");
-		theButton.addEventListener("click", clearDisplay);
-		theButton.calcValue = 'c';
+            theButton = document.getElementById("c");
+            theButton.addEventListener("click", clearDisplay);
+            theButton.calcValue = 'c';
 
-		theButton = document.getElementById("plusMinus");
-		theButton.addEventListener("click", invertSign);
-		theButton.calcValue = '+-';
+            theButton = document.getElementById("plusMinus");
+            theButton.addEventListener("click", invertSign);
+            theButton.calcValue = '+-';
 
-		theButton = document.getElementById("+");
-		theButton.addEventListener("click", calc);
-		theButton.calcValue = '+';
+            theButton = document.getElementById("+");
+            theButton.addEventListener("click", calc);
+            theButton.calcValue = '+';
 
-		theButton = document.getElementById("-");
-		theButton.addEventListener("click", calc);
-		theButton.calcValue = '-';
+            theButton = document.getElementById("-");
+            theButton.addEventListener("click", calc);
+            theButton.calcValue = '-';
 
-		theButton = document.getElementById("x");
-		theButton.addEventListener("click", calc);
-		theButton.calcValue = 'x';
+            theButton = document.getElementById("x");
+            theButton.addEventListener("click", calc);
+            theButton.calcValue = 'x';
 
-		theButton = document.getElementById("divide");
-		theButton.addEventListener("click", calc);
-		theButton.calcValue = '/';
+            theButton = document.getElementById("divide");
+            theButton.addEventListener("click", calc);
+            theButton.calcValue = '/';
 
-		theButton = document.getElementById(".");
-		theButton.addEventListener("click", calc);
-		theButton.calcValue = '.';
+            theButton = document.getElementById(".");
+            theButton.addEventListener("click", calc);
+            theButton.calcValue = '.';
 
-		theButton = document.getElementById("equals");
-		theButton.addEventListener("click", calc);
-		theButton.calcValue = '=';
+            theButton = document.getElementById("equals");
+            theButton.addEventListener("click", calc);
+            theButton.calcValue = '=';
 
-	}
-</script>
+        }
+    </script>
 </head>
 
 <body>
-	<div id="calculator">
+<div id="calculator">
 
-		<div id="resultBox">
+    <div id="resultBox">
 
-			<div id="calcResult" align="right"></div>
+        <div id="calcResult" align="right"></div>
 
-			<div class="clearfix">
-				<div id="memorySelected">&nbsp;</div>
-				<div id="operandSelected">&nbsp;</div>
-			</div>
+        <div class="clearfix">
+            <div id="memorySelected">&nbsp;</div>
+            <div id="operandSelected">&nbsp;</div>
+        </div>
 
-		</div>
-		<div>&nbsp;</div>
-		<table>
-			<tr>
-				<td><button type="button" id="mc" class="shadow">MC</button></td>
-				<td><button type="button" id="m+" class="shadow">M+</button></td>
-				<td><button type="button" id="m-" class="shadow">M-</button></td>
-				<td><button type="button" id="mr" class="shadow">MR</button></td>
-			</tr>
-			<tr>
-				<td><button type="button" id="c" class="shadow">C</button></td>
-				<td><button type="button" id="plusMinus"
-						style="width: 32px; height: 24px" class="shadow">&#8723;</button></td>
-				<td><button type="button" id="divide" class="shadow">&divide;</button></td>
-				<td><button type="button" id="x" class="shadow">x</button></td>
-			</tr>
+    </div>
+    <div>&nbsp;</div>
+    <table>
+        <tr>
+            <td>
+                <button type="button" id="mc" class="shadow">MC</button>
+            </td>
+            <td>
+                <button type="button" id="m+" class="shadow">M+</button>
+            </td>
+            <td>
+                <button type="button" id="m-" class="shadow">M-</button>
+            </td>
+            <td>
+                <button type="button" id="mr" class="shadow">MR</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="button" id="c" class="shadow">C</button>
+            </td>
+            <td>
+                <button type="button" id="plusMinus"
+                        style="width: 32px; height: 24px" class="shadow">&#8723;
+                </button>
+            </td>
+            <td>
+                <button type="button" id="divide" class="shadow">&divide;</button>
+            </td>
+            <td>
+                <button type="button" id="x" class="shadow">x</button>
+            </td>
+        </tr>
 
-			<tr>
-				<td><button type="button" id="7" class="shadow">7</button></td>
-				<td><button type="button" id="8" class="shadow">8</button></td>
-				<td><button type="button" id="9" class="shadow">9</button></td>
-				<td><button type="button" id="+" class="shadow">+</button></td>
-			</tr>
-			<tr>
-				<td><button type="button" id="4" class="shadow">4</button></td>
-				<td><button type="button" id="5" class="shadow">5</button></td>
-				<td><button type="button" id="6" class="shadow">6</button></td>
-				<td><button type="button" id="-" class="shadow">&nbsp;-</button></td>
-			</tr>
-			<tr>
-				<td><button type="button" id="1" class="shadow">1</button></td>
-				<td><button type="button" id="2" class="shadow">2</button></td>
-				<td><button type="button" id="3" class="shadow">3</button></td>
-				<td rowspan="2"><button type="button" id="equals"
-						style="height: 60px" class="shadow">=</button></td>
-			</tr>
-			<tr>
-				<td colspan="2"><button type="button" id="0"
-						style="width: 67px" class="shadow">0</button></td>
-				<td><button type="button" id="." class="shadow">&nbsp;.&nbsp;</button></td>
+        <tr>
+            <td>
+                <button type="button" id="7" class="shadow">7</button>
+            </td>
+            <td>
+                <button type="button" id="8" class="shadow">8</button>
+            </td>
+            <td>
+                <button type="button" id="9" class="shadow">9</button>
+            </td>
+            <td>
+                <button type="button" id="+" class="shadow">+</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="button" id="4" class="shadow">4</button>
+            </td>
+            <td>
+                <button type="button" id="5" class="shadow">5</button>
+            </td>
+            <td>
+                <button type="button" id="6" class="shadow">6</button>
+            </td>
+            <td>
+                <button type="button" id="-" class="shadow">&nbsp;-</button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="button" id="1" class="shadow">1</button>
+            </td>
+            <td>
+                <button type="button" id="2" class="shadow">2</button>
+            </td>
+            <td>
+                <button type="button" id="3" class="shadow">3</button>
+            </td>
+            <td rowspan="2">
+                <button type="button" id="equals"
+                        style="height: 60px" class="shadow">=
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="button" id="0"
+                        style="width: 67px" class="shadow">0
+                </button>
+            </td>
+            <td>
+                <button type="button" id="." class="shadow">&nbsp;.&nbsp;</button>
+            </td>
 
-			</tr>
-		</table>
-	</div>
-	<script>
-		// I am called automatically. I am used to display a zero when the calculator
-		// is first called.
-		(function() {
-			document.getElementById("calcResult").innerHTML = currentCalcString;
-		})();
-	</script>
+        </tr>
+    </table>
+</div>
+<script>
+    // I am called automatically. I am used to display a zero when the calculator
+    // is first called.
+    (function () {
+        document.getElementById("calcResult").innerHTML = currentCalcString;
+    })();
+</script>
 </body>
 </html>
 

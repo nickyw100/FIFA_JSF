@@ -1,37 +1,37 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
-	<link
-		href="#{facesContext.externalContext.requestContextPath}/resources/css/styles.css"
-		rel="stylesheet" type="text/css" />
+    <link
+            href="#{facesContext.externalContext.requestContextPath}/resources/css/styles.css"
+            rel="stylesheet" type="text/css"/>
 </h:head>
 
 <h:body>
 
-	<div id="page">
+    <div id="page">
 
-		<div id="header">
-			<ui:insert name="header">
-				<ui:include src="../edit_header_template.xhtml" />
-			</ui:insert>
-		</div>
+        <div id="header">
+            <ui:insert name="header">
+                <ui:include src="../edit_header_template.xhtml"/>
+            </ui:insert>
+        </div>
 
-		<div id="mainCrud">
-			<ui:insert name="mainCrud">
-				<ui:include src="/layout/edit/_statsCrud.xhtml" />
-			</ui:insert>
-		</div>
+        <div id="mainCrud">
+            <ui:insert name="mainCrud">
+                <ui:include src="/layout/edit/_statsCrud.xhtml"/>
+            </ui:insert>
+        </div>
 
-		<div id="editFooter">
-			<ui:insert name="editFooter">
-				<ui:include src="/layout/_navigationMenu.xhtml" />
-			</ui:insert>
-		</div>
-	</div>
+        <div id="editFooter">
+            <ui:insert name="editFooter">
+                <ui:include src="/layout/_navigationMenu.xhtml"/>
+            </ui:insert>
+        </div>
+    </div>
 
 </h:body>
 </html>

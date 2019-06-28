@@ -1,14 +1,13 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   TeamBeanEdit.java
-
 package fifa.edit;
 
 import fifa.dao.TeamDao;
 import fifa.jsf.TeamBean;
 import fifa.utilities.FIFAConstants;
 
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
@@ -19,157 +18,156 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
+
+@ManagedBean
+@ViewScoped
 public class TeamBeanEdit
-    implements Serializable, FIFAConstants
-{
+        implements Serializable, FIFAConstants {
+    private static final long serialVersionUID = 1L;
+    private List<TeamBean> teamList;
+    private DataModel<TeamBean> model;
+    private TeamBean teamBean = new TeamBean();
 
-    public TeamBeanEdit()
-    {
-        teamBean = new TeamBean();
-    }
+    private boolean edit;
+    private Integer restrictRows;
+    private List<TeamBean> filteredTeams;
 
-    public void init()
-    {
+    @PostConstruct
+    public void init() {
         int restrictRows = 0;
         restrictRows = getTeamRestrictRows(restrictRows);
         setRestrictRows(Integer.valueOf(restrictRows));
+
         TeamDao teamDao = new TeamDao();
-        teamList = teamDao.getTeamsEdit();
+        this.teamList = teamDao.getTeamsEdit();
     }
 
-    private int getTeamRestrictRows(int restrictRows)
-    {
+
+    private int getTeamRestrictRows(int restrictRows) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession)facesContext.getExternalContext().getSession(false);
-        if(session.getAttribute("teamsRestrictRows") != null)
-            restrictRows = ((Integer)session.getAttribute("teamsRestrictRows")).intValue();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
+
+        if (session.getAttribute("teamsRestrictRows") != null) {
+            restrictRows = ((Integer) session.getAttribute("teamsRestrictRows")).intValue();
+        }
         return restrictRows;
     }
 
-    public String add()
-    {
+
+    public String add() {
         TeamDao teamDao = new TeamDao();
-        teamDao.addTeam(teamBean.getTeamId(), teamBean.getCountryId(), teamBean.getTeamName(), teamBean.getTeamComments(), teamBean.getLogoImage());
+        teamDao.addTeam(this.teamBean.getTeamId(), this.teamBean.getCountryId(), this.teamBean.getTeamName(), this.teamBean.getTeamComments(),
+                this.teamBean.getLogoImage());
         refreshPage();
         return null;
     }
 
-    public String editTeam()
-    {
-        teamBean = (TeamBean)model.getRowData();
+
+    public String editTeam() {
+        this.teamBean = this.model.getRowData();
         setEdit(true);
         return null;
     }
 
-    public String save()
-    {
+    public String save() {
         TeamDao teamDao = new TeamDao();
-        teamDao.updateTeam(teamBean.getTeamId(), teamBean.getCountryId(), teamBean.getTeamName(), teamBean.getTeamComments(), teamBean.getLogoImage());
-        teamBean = new TeamBean();
+        teamDao.updateTeam(this.teamBean.getTeamId(), this.teamBean.getCountryId(), this.teamBean.getTeamName(), this.teamBean.getTeamComments(),
+                this.teamBean.getLogoImage());
+        this.teamBean = new TeamBean();
         setEdit(false);
+
         refreshPage();
         return null;
     }
 
-    public String cancel()
-    {
+    public String cancel() {
         resetPlaceHolder();
         refreshPage();
         return null;
     }
 
-    public String delete()
-    {
+    public String delete() {
         TeamDao teamDao = new TeamDao();
-        teamBean = (TeamBean)model.getRowData();
-        teamDao.deleteTeam(teamBean.getTeamId(), teamBean.getCountryId());
-        teamBean = new TeamBean();
+        this.teamBean = this.model.getRowData();
+        teamDao.deleteTeam(this.teamBean.getTeamId(), this.teamBean.getCountryId());
+        this.teamBean = new TeamBean();
         setEdit(false);
+
         refreshPage();
         return null;
     }
 
-    public List getTeamList()
-    {
-        return teamList;
+
+    public List<TeamBean> getTeamList() {
+        return this.teamList;
     }
 
-    public DataModel getModel()
-    {
-        if(model == null)
-            model = new ListDataModel(teamList);
-        return model;
+
+    public DataModel<TeamBean> getModel() {
+        if (this.model == null) {
+            this.model = new ListDataModel(this.teamList);
+        }
+
+        return this.model;
     }
 
-    public TeamBean getTeamBean()
-    {
-        return teamBean;
+
+    public TeamBean getTeamBean() {
+        return this.teamBean;
     }
 
-    public boolean isEdit()
-    {
-        return edit;
+
+    public boolean isEdit() {
+        return this.edit;
     }
 
-    public void setEdit(boolean edit)
-    {
+
+    public void setEdit(boolean edit) {
         this.edit = edit;
     }
 
-    public List getFilteredTeams()
-    {
-        return filteredTeams;
+
+    public List<TeamBean> getFilteredTeams() {
+        return this.filteredTeams;
     }
 
-    public void setFilteredTeams(List filteredTeams)
-    {
+
+    public void setFilteredTeams(List<TeamBean> filteredTeams) {
         this.filteredTeams = filteredTeams;
     }
 
-    private void resetPlaceHolder()
-    {
-        teamBean = new TeamBean();
+
+    private void resetPlaceHolder() {
+        this.teamBean = new TeamBean();
         setEdit(false);
     }
 
-    public Integer getRestrictRows()
-    {
-        return restrictRows;
+
+    public Integer getRestrictRows() {
+        return this.restrictRows;
     }
 
-    public void setRestrictRows(Integer restrictRows)
-    {
+
+    public void setRestrictRows(Integer restrictRows) {
         this.restrictRows = restrictRows;
         FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession)facesContext.getExternalContext().getSession(false);
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
         session.setAttribute("teamsRestrictRows", restrictRows);
     }
 
-    public String refreshPage()
-    {
+    public String refreshPage() {
         FacesContext fc = FacesContext.getCurrentInstance();
-        Iterator messages = fc.getMessages();
-        if(!messages.hasNext())
-        {
+        Iterator<FacesMessage> messages = fc.getMessages();
+        if (!messages.hasNext()) {
+
             String url = "editTeam_template.jsf";
             ExternalContext ec = fc.getExternalContext();
-            try
-            {
+            try {
                 ec.redirect(url);
-            }
-            catch(IOException ex)
-            {
+            } catch (IOException ex) {
                 System.err.println(ex.getLocalizedMessage());
             }
         }
         return null;
     }
-
-    private static final long serialVersionUID = 1L;
-    private transient List teamList;
-    private transient DataModel model;
-    private TeamBean teamBean;
-    private boolean edit;
-    private Integer restrictRows;
-    private transient List filteredTeams;
 }

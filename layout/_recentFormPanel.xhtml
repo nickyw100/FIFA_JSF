@@ -1,31 +1,31 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<br></br>
-	<p:panelGrid columns="4" id="recentForm" styleClass="panelGridCenter">
-		<f:facet name="header">
-		Recent Form              
+    <br></br>
+    <p:panelGrid columns="4" id="recentForm" styleClass="panelGridCenter">
+        <f:facet name="header">
+            Recent Form
         </f:facet>
-		<h:panelGroup>
-			<ui:include src="_last6All.xhtml" />
-		</h:panelGroup>
+        <h:panelGroup>
+            <ui:include src="_last6All.xhtml"/>
+        </h:panelGroup>
 
-		<h:panelGroup>
-			<ui:include src="_last6Season.xhtml" />
-		</h:panelGroup>
+        <h:panelGroup>
+            <ui:include src="_last6Season.xhtml"/>
+        </h:panelGroup>
 
-		<h:panelGroup>
-			<ui:include src="_last6Cup.xhtml" />
-		</h:panelGroup>
+        <h:panelGroup>
+            <ui:include src="_last6Cup.xhtml"/>
+        </h:panelGroup>
 
-		<h:panelGroup>
-			<ui:include src="_last6Friendly.xhtml" />
-		</h:panelGroup>
-	</p:panelGrid>
+        <h:panelGroup>
+            <ui:include src="_last6Friendly.xhtml"/>
+        </h:panelGroup>
+    </p:panelGrid>
 
 </ui:composition>

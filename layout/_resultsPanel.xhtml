@@ -1,130 +1,136 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
-<br></br>
-<h:form>
-		<p:dataTable value="#{searchBean.searchResults}" var="results"
-			headerClass="table-header" paginator="true" resizableColumns="true"
-			paginatorAlwaysVisible="false" paginatorPosition="bottom"
-			currentPageReportTemplate="(Displaying {startRecord} - {endRecord} of 
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+    <br></br>
+    <h:form>
+        <p:dataTable value="#{searchBean.searchResults}" var="results"
+                     headerClass="table-header" paginator="true" resizableColumns="true"
+                     paginatorAlwaysVisible="false" paginatorPosition="bottom"
+                     currentPageReportTemplate="(Displaying {startRecord} - {endRecord} of
        {totalRecords}, Page: {currentPage}/{totalPages})"
-			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-			rows="10" rowsPerPageTemplate="10,20,40,100">
+                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     rows="10" rowsPerPageTemplate="10,20,40,100">
 
-			<f:facet name="header">Search results</f:facet>
+            <f:facet name="header">Search results</f:facet>
 
-			<p:column styleClass="center" sortBy="#{results.homeTeamName}" sortFunction="#{sortHelper.sortCaseInsensitive}">
-				<f:facet name="header">Home Team</f:facet>
-				<h:graphicImage url="#{results.homeTeamLogo}" width="50"
-					id="homeTeam" escape="false" style="white-space:pre-line;"
-					alt="#{results.homeTeamName}" />
-				<p:tooltip for="homeTeam" value="#{results.homeTeamName}"
-					showEffect="clip" hideEffect="explode" />
-			</p:column>
+            <p:column styleClass="center" sortBy="#{results.homeTeamName}"
+                      sortFunction="#{sortHelper.sortCaseInsensitive}">
+                <f:facet name="header">Home Team</f:facet>
+                <h:graphicImage url="#{results.homeTeamLogo}" width="50"
+                                id="homeTeam" escape="false" style="white-space:pre-line;"
+                                alt="#{results.homeTeamName}"/>
+                <p:tooltip for="homeTeam" value="#{results.homeTeamName}"
+                           showEffect="clip" hideEffect="explode"/>
+            </p:column>
 
-			<p:column styleClass="left" sortBy="#{results.aggregateScore}" width="70">
-				<f:facet name="header">Score</f:facet>
-				<h:panelGroup>
-				<h:outputText value="&nbsp;&nbsp;"/>					
-					<h:outputText id="score1"
-						value="#{results.goalsFor} - #{results.goalsAgainst}"
-						styleClass="#{results.resultColor}"
-						rendered="#{results.homeAway.value == 'H'}" />
-					<h:outputText id="score2"
-						value="#{results.goalsAgainst} - #{results.goalsFor}"
-						styleClass="#{results.resultColor}"
-						rendered="#{results.homeAway.value == 'A'}" />
-					<p:tooltip for="score1" value="#{results.fullGameComments}"
-						showEffect="clip" hideEffect="explode"
-						rendered="#{!empty results.gameComments}" />
-					<p:tooltip for="score2" value="#{results.fullGameComments}"
-						showEffect="clip" hideEffect="explode"
-						rendered="#{!empty results.gameComments}" />					
-					<h:outputText id="aet" rendered="#{results.extraTime}"
-						value=" (AET)" styleClass="superscript3" />
-					<p:tooltip for="aet" value="After Extra Time" showEffect="clip"
-						hideEffect="explode" rendered="#{results.extraTime}" />
-						<h:outputText rendered="#{results.gameComments != null}" value=" *"
-						styleClass="superscript" />
-				</h:panelGroup>
-				<br />
-				<h:panelGroup rendered="#{((results.penaltiesFor > 0) or (results.penaltiesAgainst > 0))}">
-				
-					<!--  Was the game decided on penalties at home? -->
-					<h:outputText id="pscore1"
-						value="(#{results.penaltiesFor} - #{results.penaltiesAgainst} P)"
-						styleClass="#{results.win ? 'green' : 'red'}"
-						rendered="#{((results.homeAway.value == 'H') and ((results.penaltiesFor > 0) or (results.penaltiesAgainst > 0)))}" />
-					<p:tooltip for="pscore1"
-						value="Game finished #{results.penaltiesFor} - #{results.penaltiesAgainst} after penalties"
-						showEffect="clip" hideEffect="explode"
-						rendered="#{((results.homeAway.value == 'H') and ((results.penaltiesFor > 0) or (results.penaltiesAgainst > 0)))}" />
-					<!--  Was the game decided on penalties away? -->
-					<h:outputText id="pscore2"
-						value="(#{results.penaltiesAgainst} - #{results.penaltiesFor} P)"
-						styleClass="#{results.win ? 'green' : 'red'}"
-						rendered="#{((results.homeAway.value == 'A') and ((results.penaltiesFor > 0) or (results.penaltiesAgainst > 0)))}" />
-					<p:tooltip for="pscore2"
-						value="Game finished #{results.penaltiesAgainst} - #{results.penaltiesFor} after penalties"
-						showEffect="clip" hideEffect="explode"
-						rendered="#{((results.homeAway.value == 'A') and ((results.penaltiesFor > 0) or (results.penaltiesAgainst > 0)))}" />
-				</h:panelGroup>
-			</p:column>
+            <p:column styleClass="left" sortBy="#{results.aggregateScore}" width="70">
+                <f:facet name="header">Score</f:facet>
+                <h:panelGroup>
+                    <h:outputText value="&nbsp;&nbsp;"/>
+                    <h:outputText id="score1"
+                                  value="#{results.goalsFor} - #{results.goalsAgainst}"
+                                  styleClass="#{results.resultColor}"
+                                  rendered="#{results.homeAway.value == 'H'}"/>
+                    <h:outputText id="score2"
+                                  value="#{results.goalsAgainst} - #{results.goalsFor}"
+                                  styleClass="#{results.resultColor}"
+                                  rendered="#{results.homeAway.value == 'A'}"/>
+                    <p:tooltip for="score1" value="#{results.fullGameComments}"
+                               showEffect="clip" hideEffect="explode"
+                               rendered="#{!empty results.gameComments}"/>
+                    <p:tooltip for="score2" value="#{results.fullGameComments}"
+                               showEffect="clip" hideEffect="explode"
+                               rendered="#{!empty results.gameComments}"/>
+                    <h:outputText id="aet" rendered="#{results.extraTime}"
+                                  value=" (AET)" styleClass="superscript3"/>
+                    <p:tooltip for="aet" value="After Extra Time" showEffect="clip"
+                               hideEffect="explode" rendered="#{results.extraTime}"/>
+                    <h:outputText rendered="#{results.gameComments != null}" value=" *"
+                                  styleClass="superscript"/>
+                </h:panelGroup>
+                <br/>
+                <h:panelGroup rendered="#{((results.penaltiesFor > 0) or (results.penaltiesAgainst > 0))}">
 
-			<p:column styleClass="center" sortBy="#{results.awayTeamName}" sortFunction="#{sortHelper.sortCaseInsensitive}">
-				<f:facet name="header">Away Team</f:facet>
-				<h:graphicImage url="#{results.awayTeamLogo}" width="50"
-					id="awayTeam" escape="false" style="white-space:pre-line;"
-					alt="#{results.awayTeamName}" />
-				<p:tooltip for="awayTeam" value="#{results.awayTeamName}"
-					showEffect="clip" hideEffect="explode" />
-			</p:column>
+                    <!--  Was the game decided on penalties at home? -->
+                    <h:outputText id="pscore1"
+                                  value="(#{results.penaltiesFor} - #{results.penaltiesAgainst} P)"
+                                  styleClass="#{results.win ? 'green' : 'red'}"
+                                  rendered="#{((results.homeAway.value == 'H') and ((results.penaltiesFor > 0) or (results.penaltiesAgainst > 0)))}"/>
+                    <p:tooltip for="pscore1"
+                               value="Game finished #{results.penaltiesFor} - #{results.penaltiesAgainst} after penalties"
+                               showEffect="clip" hideEffect="explode"
+                               rendered="#{((results.homeAway.value == 'H') and ((results.penaltiesFor > 0) or (results.penaltiesAgainst > 0)))}"/>
+                    <!--  Was the game decided on penalties away? -->
+                    <h:outputText id="pscore2"
+                                  value="(#{results.penaltiesAgainst} - #{results.penaltiesFor} P)"
+                                  styleClass="#{results.win ? 'green' : 'red'}"
+                                  rendered="#{((results.homeAway.value == 'A') and ((results.penaltiesFor > 0) or (results.penaltiesAgainst > 0)))}"/>
+                    <p:tooltip for="pscore2"
+                               value="Game finished #{results.penaltiesAgainst} - #{results.penaltiesFor} after penalties"
+                               showEffect="clip" hideEffect="explode"
+                               rendered="#{((results.homeAway.value == 'A') and ((results.penaltiesFor > 0) or (results.penaltiesAgainst > 0)))}"/>
+                </h:panelGroup>
+            </p:column>
 
-			<p:column styleClass="center" sortBy="#{results.playerName}" sortFunction="#{sortHelper.sortCaseInsensitive}">
-				<f:facet name="header">Player</f:facet>
-				<h:outputText value="#{results.playerName}" id="player" />
-				<h:outputText rendered="#{results.playerComments != null}"
-					value=" *" styleClass="superscript" />
-				<p:tooltip for="player" value="#{results.playerComments}"
-					showEffect="clip" hideEffect="explode"
-					rendered="#{!empty results.playerComments}" />
-			</p:column>
-			
-			<p:column styleClass="center" sortBy="#{results.possessionPercentage}" sortFunction="#{sortHelper.sortCaseInsensitive}">
-				<f:facet name="header">Possession %</f:facet>
-				<h:outputText value="#{results.possessionPercentage}" id="poss" />	
-				<p:tooltip for="poss" value="Shots: #{results.shots}(#{results.shotsOnTarget}) v #{results.opponentShots}(#{results.opponentShotsOnTarget})"
-					showEffect="clip" hideEffect="explode" />							
-			</p:column>
+            <p:column styleClass="center" sortBy="#{results.awayTeamName}"
+                      sortFunction="#{sortHelper.sortCaseInsensitive}">
+                <f:facet name="header">Away Team</f:facet>
+                <h:graphicImage url="#{results.awayTeamLogo}" width="50"
+                                id="awayTeam" escape="false" style="white-space:pre-line;"
+                                alt="#{results.awayTeamName}"/>
+                <p:tooltip for="awayTeam" value="#{results.awayTeamName}"
+                           showEffect="clip" hideEffect="explode"/>
+            </p:column>
 
-			<p:column styleClass="center" sortBy="#{results.gameDateTime}">
-				<f:facet name="header">Date</f:facet>
-				<h:outputText id="date" value="#{results.gameDateTimeStr}"
-					styleClass="#{results.matchAbandoned ? 'red' : 'black'}" />
-				<p:tooltip for="date" value="Match abandoned" showEffect="clip"
-					hideEffect="explode" rendered="#{results.matchAbandoned}" />
-			</p:column>
+            <p:column styleClass="center" sortBy="#{results.playerName}"
+                      sortFunction="#{sortHelper.sortCaseInsensitive}">
+                <f:facet name="header">Player</f:facet>
+                <h:outputText value="#{results.playerName}" id="player"/>
+                <h:outputText rendered="#{results.playerComments != null}"
+                              value=" *" styleClass="superscript"/>
+                <p:tooltip for="player" value="#{results.playerComments}"
+                           showEffect="clip" hideEffect="explode"
+                           rendered="#{!empty results.playerComments}"/>
+            </p:column>
 
-			<p:column styleClass="center" sortBy="#{results.gameType}">
-				<f:facet name="header">Competition</f:facet>
-				<h:outputText id="comp" value="#{results.gameTypeDescription}" />
-				<p:tooltip for="comp" value="#{results.versionId}" showEffect="clip"
-					hideEffect="explode" />
-			</p:column>
+            <p:column styleClass="center" sortBy="#{results.possessionPercentage}"
+                      sortFunction="#{sortHelper.sortCaseInsensitive}">
+                <f:facet name="header">Possession %</f:facet>
+                <h:outputText value="#{results.possessionPercentage}" id="poss"/>
+                <p:tooltip for="poss"
+                           value="Shots: #{results.shots}(#{results.shotsOnTarget}) v #{results.opponentShots}(#{results.opponentShotsOnTarget})"
+                           showEffect="clip" hideEffect="explode"/>
+            </p:column>
 
-			<p:column styleClass="center" sortBy="#{results.countryName}" sortFunction="#{sortHelper.sortCaseInsensitive}">
-				<f:facet name="header">Country</f:facet>
-				<h:graphicImage url="#{results.flagImage}" id="country" height="50"
-					width="60" />
-				<p:tooltip for="country" value="#{results.countryName}"
-					showEffect="clip" hideEffect="explode" />
-			</p:column>
+            <p:column styleClass="center" sortBy="#{results.gameDateTime}">
+                <f:facet name="header">Date</f:facet>
+                <h:outputText id="date" value="#{results.gameDateTimeStr}"
+                              styleClass="#{results.matchAbandoned ? 'red' : 'black'}"/>
+                <p:tooltip for="date" value="Match abandoned" showEffect="clip"
+                           hideEffect="explode" rendered="#{results.matchAbandoned}"/>
+            </p:column>
 
-		</p:dataTable>
-	</h:form>
+            <p:column styleClass="center" sortBy="#{results.gameType}">
+                <f:facet name="header">Competition</f:facet>
+                <h:outputText id="comp" value="#{results.gameTypeDescription}"/>
+                <p:tooltip for="comp" value="#{results.versionId}" showEffect="clip"
+                           hideEffect="explode"/>
+            </p:column>
+
+            <p:column styleClass="center" sortBy="#{results.countryName}"
+                      sortFunction="#{sortHelper.sortCaseInsensitive}">
+                <f:facet name="header">Country</f:facet>
+                <h:graphicImage url="#{results.flagImage}" id="country" height="50"
+                                width="60"/>
+                <p:tooltip for="country" value="#{results.countryName}"
+                           showEffect="clip" hideEffect="explode"/>
+            </p:column>
+
+        </p:dataTable>
+    </h:form>
 
 </ui:composition>

@@ -1,28 +1,17 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   OverallCupResultsBean.java
-
 package fifa.jsf;
 
 import fifa.dao.OverallResultsDao;
 
+import javax.faces.bean.ManagedBean;
 import java.util.List;
 
-// Referenced classes of package fifa.jsf:
-//            OverallResultsBean
 
-public class OverallCupResultsBean extends OverallResultsBean
-{
-
-    public OverallCupResultsBean()
-    {
-    }
-
-    public List getOverallResultsList(String versionId)
-    {
+@ManagedBean
+public class OverallCupResultsBean
+        extends OverallResultsBean {
+    public List<Integer> getOverallResultsList(String versionId) {
         OverallResultsDao overallResultsDao = new OverallResultsDao();
-        overallResultsList = overallResultsDao.getOverallResultsList(versionId, "C");
-        return overallResultsList;
+        this.overallResultsList = overallResultsDao.getOverallResultsList(versionId, "C");
+        return this.overallResultsList;
     }
 }

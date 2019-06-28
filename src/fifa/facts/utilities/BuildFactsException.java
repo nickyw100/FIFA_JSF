@@ -1,16 +1,9 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   BuildFactsException.java
-
 package fifa.facts.utilities;
 
 
-public class BuildFactsException extends Exception
-{
+public class BuildFactsException extends Exception {
 
-    public BuildFactsException(String message)
-    {
+    public BuildFactsException(String message) {
         super(message);
     }
 
