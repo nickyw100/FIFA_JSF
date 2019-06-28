@@ -106,9 +106,9 @@ public class PropertiesUtilities
         String messageResource = null;
         String hostName = getHostName();
         if (hostName.equalsIgnoreCase("Win10x64Dev")) {
-            messageResource = "../WEB_INF/classes/resources/messageresources.properties";
+            messageResource = "C:/Users/Nick/FIFA_JSF/WEB-INF/classes/resources/messageresources.properties";
         } else {
-            messageResource = "../WEB_INF/classes/resources/messageresources.properties";
+            messageResource = "C:/Users/Nick/FIFA_JSF/WEB-INF/classes/resources/messageresources.properties";
         }
 
         return messageResource;
@@ -118,9 +118,9 @@ public class PropertiesUtilities
         String factResource = null;
         String hostName = getHostName();
         if (hostName.equalsIgnoreCase("Win10x64Dev")) {
-            factResource = "../WEB_INF/classes/resources/factresources.properties";
+            factResource = "C:/Users/Nick/FIFA_JSF/WEB-INF/classes/resources/factresources.properties";
         } else {
-            factResource = "../WEB_INF/classes/resources/factresources.properties";
+            factResource = "C:/Users/Nick/FIFA_JSF/WEB-INF/classes/resources/factresources.properties";
         }
 
         return factResource;
@@ -129,9 +129,9 @@ public class PropertiesUtilities
     public String getDatabaseResource() {
         String databaseResource, hostName = getHostName();
         if (hostName.equalsIgnoreCase("Win10x64Dev")) {
-            databaseResource = "../WEB_INF/classes/resources/database.properties";
+            databaseResource = "C:/Users/Nick/FIFA_JSF/WEB-INF/classes/resources/database.properties";
         } else {
-            databaseResource = "../WEB_INF/classes/resources/database.properties";
+            databaseResource = "C:/Users/Nick/FIFA_JSF/WEB-INF/classes/resources/database.properties";
         }
 
 
