@@ -5,7 +5,8 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
-	<h:panelGroup styleClass="panelGroupRight">
+	<ui:remove>
+		<h:panelGroup styleClass="panelGroupRight">
 		<h:form>
 		<p:growl id="growl" showDetail="false" sticky="false" life="3000"/>
 			<p:commandLink id="buildFacts" value="Build Facts"
@@ -13,5 +14,6 @@
 				<h:outputText value="  #{versionBean.lastFactBuildDate}"></h:outputText>
 		</h:form>
 	</h:panelGroup>
+	</ui:remove>
 
 </ui:composition>

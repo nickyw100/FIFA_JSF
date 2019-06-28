@@ -19,12 +19,13 @@
 			</ui:insert>
 		</h:panelGroup>
 
+		<ui:remove>
 		<h:panelGroup styleClass="panelGroupRightCarousel">
 			<ui:insert name="fact">
 				<ui:include src="/layout/_factCarousel.xhtml" />
 			</ui:insert>
-
 		</h:panelGroup>
+		</ui:remove>
 
 		<h:panelGroup styleClass="panelGroupRight">
 			<h:outputText value="#{versionBean.databaseEnvironment}"></h:outputText>
