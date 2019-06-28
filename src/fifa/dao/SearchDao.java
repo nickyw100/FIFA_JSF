@@ -99,7 +99,7 @@ public class SearchDao
                     searchResults.setShotsOnTarget(rs.getInt("s.shotsOnTarget"));
                     searchResults.setOpponentShots(rs.getInt("s.opponentShots"));
                     searchResults.setOpponentShotsOnTarget(rs.getInt("s.opponentShotsOnTarget"));
-                    searchResults.setOpponentDivision(rs.getInt("s.opponentDivision"));
+//                    searchResults.setOpponentDivision(rs.getInt("s.opponentDivision"));
                     searchResults.setDivision(rs.getInt("s.division"));
                     searchResults.setHomeAway(StatsBean.HomeAwayEnum.findByValue(rs.getString("s.homeAway")));
                     searchResults.setGameDateTime(rs.getTimestamp("s.gameDateTime"));

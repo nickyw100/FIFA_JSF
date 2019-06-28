@@ -226,7 +226,7 @@ public class StatsDao implements fifa.utilities.FIFAConstants {
             shotsOnTarget = rs.getInt("s.shotsOnTarget");
             opponentShots = rs.getInt("s.opponentShots");
             opponentShotsOnTarget = rs.getInt("s.opponentShotsOnTarget");
-            opponentDivision = rs.getInt("s.opponentDivision");
+//            opponentDivision = rs.getInt("s.opponentDivision");
             playerName = rs.getString("s.playerName");
             gameComments = rs.getString("s.gameComments");
             teamName = rs.getString("t.teamName");
