@@ -8,9 +8,10 @@ package fifa.jsf.charts;
 import fifa.jsf.OverallResultsBean;
 import fifa.utilities.FIFAConstants;
 import fifa.utilities.PropertiesUtilities;
+import org.primefaces.model.chart.PieChartModel;
+
 import java.io.Serializable;
 import java.util.List;
-import org.primefaces.model.chart.PieChartModel;
 
 public class ChartBeanOverall
     implements Serializable, FIFAConstants

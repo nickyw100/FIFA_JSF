@@ -1,8 +1,8 @@
 package fifa.utilities;
 
-import com.mysql.jdbc.StringUtils;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.lang3.StringUtils;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -91,7 +91,7 @@ public class PropertiesUtilities
         String whereClause = " ";
         String versionId = getProperty(messageResources, "defaultVersion");
 
-        if (!StringUtils.isNullOrEmpty(versionId) && versionId.startsWith("FIFA")) {
+        if (!StringUtils.isBlank(versionId) && versionId.startsWith("FIFA")) {
             if (addWhere) {
                 whereClause = " WHERE ";
             } else {

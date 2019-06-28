@@ -7,8 +7,11 @@ package fifa.jsf;
 
 import fifa.dao.CountryDao;
 import fifa.dao.CountrySingleton;
+
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class CountryBean
     implements Serializable

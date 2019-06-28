@@ -1,17 +1,13 @@
 package fifa.jsf;
 
-import com.mysql.jdbc.StringUtils;
 import fifa.facts.FactBean;
 import fifa.facts.dao.FactDao;
 import fifa.facts.utilities.FactUtilities;
 import fifa.utilities.FIFAConstants;
 import fifa.utilities.NavigationUtilities;
 import fifa.utilities.PropertiesUtilities;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import org.apache.commons.lang3.StringUtils;
+
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -19,6 +15,11 @@ import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 
 
@@ -144,7 +145,7 @@ public class VersionBean
         }
         else {
 
-            if (StringUtils.isNullOrEmpty(factVersionId)) {
+            if (StringUtils.isBlank(factVersionId)) {
                 factVersionId = propertiesUtilities.getProperty(
                         propertiesUtilities.getMessageResource(),
                         "defaultVersion");
@@ -214,7 +215,7 @@ public class VersionBean
         }
 
         String versionNumberString = "";
-        if (StringUtils.isEmptyOrWhitespaceOnly(versionId)) {
+        if (StringUtils.isBlank(versionId)) {
             versionNumberString = "0";
         } else {
             versionNumberString = (versionId.length() > 2) ? versionId.substring(versionId.length() - 2) :

@@ -5,7 +5,6 @@
 
 package fifa.facts.dao;
 
-import com.mysql.jdbc.StringUtils;
 import fifa.dao.TeamDao;
 import fifa.facts.FactBean;
 import fifa.facts.utilities.BuildFactsException;
@@ -13,6 +12,7 @@ import fifa.jsf.StatsBean;
 import fifa.utilities.FIFAConstants;
 import fifa.utilities.JDBCConnect;
 import fifa.utilities.PropertiesUtilities;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -43,14 +43,14 @@ public class FactDao
         HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
         propertiesUtilities = PropertiesUtilities.getInstance();
         factVersionId = (String) session.getAttribute("factVersion");
-        if (StringUtils.isNullOrEmpty(factVersionId))
+        if (StringUtils.isBlank(factVersionId))
             factVersionId = propertiesUtilities.getProperty(propertiesUtilities.getMessageResource(), "defaultVersion");
         jdbcConnect = new JDBCConnect();
         conn = jdbcConnect.getConnection();
         try {
             if (conn != null) {
 
-                if (StringUtils.isNullOrEmpty(factVersionId) || factVersionId.equals("ALL")) {
+                if (StringUtils.isBlank(factVersionId) || factVersionId.equals("ALL")) {
                     preparedStatement = conn.prepareStatement(propertiesUtilities.getProperty(propertiesUtilities.getFactResource(), "sql.factsSelect"));
                 } else {
                     preparedStatement = conn.prepareStatement(propertiesUtilities.getProperty(propertiesUtilities.getFactResource(), "sql.factsVersionSelect"));

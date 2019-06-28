@@ -6,13 +6,12 @@
 package fifa.jsf;
 
 import fifa.dao.SearchDao;
+
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 // Referenced classes of package fifa.jsf:
 //            PlayerBean, StatsBean

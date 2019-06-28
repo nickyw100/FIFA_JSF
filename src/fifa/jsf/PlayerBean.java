@@ -6,11 +6,14 @@
 package fifa.jsf;
 
 import fifa.dao.PlayerDao;
-import java.io.Serializable;
-import java.util.*;
+import org.apache.commons.lang.StringUtils;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import org.apache.commons.lang.StringUtils;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class PlayerBean
     implements Serializable

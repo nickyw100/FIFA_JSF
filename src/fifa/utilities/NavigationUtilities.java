@@ -5,11 +5,10 @@
 
 package fifa.utilities;
 
-import java.io.IOException;
-import java.io.PrintStream;
-import java.util.Calendar;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import java.io.IOException;
+import java.util.Calendar;
 
 // Referenced classes of package fifa.utilities:
 //            FIFAConstants

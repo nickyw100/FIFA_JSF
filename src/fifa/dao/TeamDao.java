@@ -1,20 +1,19 @@
 package fifa.dao;
 
-import com.mysql.jdbc.StringUtils;
 import fifa.jsf.TeamBean;
 import fifa.utilities.JDBCConnect;
 import fifa.utilities.PropertiesUtilities;
-import java.io.PrintStream;
+import org.apache.commons.lang3.StringUtils;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 public class TeamDao implements fifa.utilities.FIFAConstants
 {
@@ -36,7 +35,7 @@ public class TeamDao implements fifa.utilities.FIFAConstants
         
         String sql = propertiesUtilities.getProperty(propertiesUtilities.getMessageResource(), "sql.teamsEditSelect");
         
-        if (StringUtils.isEmptyOrWhitespaceOnly(sql)) {
+        if (StringUtils.isBlank(sql)) {
           throw new java.io.IOException("SQL Select statement is null.");
         }
         
@@ -284,7 +283,7 @@ public class TeamDao implements fifa.utilities.FIFAConstants
         preparedStatement.setString(1, teamId);
         preparedStatement.setString(2, countryId);
         preparedStatement.setString(3, teamName);
-        if (StringUtils.isEmptyOrWhitespaceOnly(teamComments)) {
+        if (StringUtils.isBlank(teamComments)) {
           teamComments = null;
         }
         preparedStatement.setString(4, teamComments);
@@ -325,7 +324,7 @@ public class TeamDao implements fifa.utilities.FIFAConstants
           "sql.teamUpdate"));
         
         preparedStatement.setString(1, teamName);
-        if (StringUtils.isEmptyOrWhitespaceOnly(teamComments)) {
+        if (StringUtils.isBlank(teamComments)) {
           teamComments = null;
         }
         preparedStatement.setString(2, teamComments);

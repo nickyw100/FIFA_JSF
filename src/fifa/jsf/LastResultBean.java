@@ -1,9 +1,10 @@
 package fifa.jsf;
 
 import fifa.dao.StatsDao;
-import java.util.List;
-import javax.faces.bean.ManagedBean;
 import org.apache.log4j.Logger;
+
+import javax.faces.bean.ManagedBean;
+import java.util.List;
 
 @ManagedBean
 public class LastResultBean

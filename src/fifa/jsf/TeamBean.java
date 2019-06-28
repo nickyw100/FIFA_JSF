@@ -6,8 +6,11 @@
 package fifa.jsf;
 
 import fifa.dao.TeamDao;
+
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class TeamBean
     implements Serializable

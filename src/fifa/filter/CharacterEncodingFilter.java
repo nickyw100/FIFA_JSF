@@ -5,8 +5,8 @@
 
 package fifa.filter;
 
-import java.io.IOException;
 import javax.servlet.*;
+import java.io.IOException;
 
 public class CharacterEncodingFilter
     implements Filter

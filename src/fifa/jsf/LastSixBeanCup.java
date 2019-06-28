@@ -6,6 +6,7 @@
 package fifa.jsf;
 
 import fifa.dao.StatsDao;
+
 import java.util.List;
 
 // Referenced classes of package fifa.jsf:

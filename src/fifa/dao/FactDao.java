@@ -6,16 +6,12 @@ import fifa.utilities.BuildFactsException;
 import fifa.utilities.FIFAConstants;
 import fifa.utilities.JDBCConnect;
 import fifa.utilities.PropertiesUtilities;
-import java.io.PrintStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FactDao implements FIFAConstants
 {

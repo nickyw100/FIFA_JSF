@@ -5,8 +5,8 @@
 
 package fifa.jsf;
 
-import java.io.Serializable;
 import javax.faces.model.SelectItem;
+import java.io.Serializable;
 
 // Referenced classes of package fifa.jsf:
 //            StatsBean

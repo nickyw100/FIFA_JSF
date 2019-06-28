@@ -1,11 +1,15 @@
 package fifa.dao;
 
-import com.mysql.jdbc.StringUtils;
 import fifa.jsf.SearchResultsBean;
 import fifa.jsf.StatsBean;
 import fifa.utilities.FIFAConstants;
 import fifa.utilities.JDBCConnect;
 import fifa.utilities.PropertiesUtilities;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,9 +20,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import org.apache.log4j.Logger;
 
 public class SearchDao
         implements FIFAConstants
@@ -45,7 +46,7 @@ public class SearchDao
 
         String orderBy = propertiesUtilities.getProperty(propertiesUtilities.getMessageResource(), "sql.searchOrderBy");
         String searchSelect = propertiesUtilities.getProperty(propertiesUtilities.getMessageResource(), "sql.searchSelect");
-        if (StringUtils.isEmptyOrWhitespaceOnly(searchSelect)) {
+        if (StringUtils.isBlank(searchSelect)) {
           throw new IOException("SQL Select statement is null.");
         }
 
@@ -112,7 +113,7 @@ public class SearchDao
           searchResults.setPlayerComments(rs.getString("p.playerComments"));
 
 
-          if (StringUtils.isNullOrEmpty(myTeamName)) {
+          if (StringUtils.isBlank(myTeamName)) {
             TeamDao teamDao = new TeamDao();
 
             myTeamName = teamDao.getTeamName("ENG", searchResults.getMyTeamId());
@@ -187,25 +188,25 @@ public class SearchDao
     String whereClause = " WHERE ";
     boolean andNeeded = false;
 
-    if (!StringUtils.isNullOrEmpty(teamName)) {
+    if (!StringUtils.isBlank(teamName)) {
       whereClause = andNeeded(whereClause, andNeeded);
       whereClause = String.valueOf(whereClause) + "t.teamName = '" + teamName + "' ";
       andNeeded = true;
     }
 
-    if (!StringUtils.isNullOrEmpty(playerName)) {
+    if (!StringUtils.isBlank(playerName)) {
       whereClause = andNeeded(whereClause, andNeeded);
       whereClause = String.valueOf(whereClause) + "s.playerName = '" + playerName + "' ";
       andNeeded = true;
     }
 
-    if (!StringUtils.isNullOrEmpty(homeAway) && (homeAway.equalsIgnoreCase("H") || homeAway.equalsIgnoreCase("A"))) {
+    if (!StringUtils.isBlank(homeAway) && (homeAway.equalsIgnoreCase("H") || homeAway.equalsIgnoreCase("A"))) {
       whereClause = andNeeded(whereClause, andNeeded);
       whereClause = String.valueOf(whereClause) + "s.homeAway = '" + homeAway + "' ";
       andNeeded = true;
     }
 
-    if (!StringUtils.isNullOrEmpty(gameType) && (
+    if (!StringUtils.isBlank(gameType) && (
             gameType.equalsIgnoreCase("C") || gameType.equalsIgnoreCase("S") || gameType
                     .equalsIgnoreCase("F"))) {
       whereClause = andNeeded(whereClause, andNeeded);
@@ -252,11 +253,11 @@ public class SearchDao
       whereClause = String.valueOf(whereClause) + "s.gameDateTime <= '" + toDateStr + "' ";
       andNeeded = true;
     }
-    if (!StringUtils.isNullOrEmpty(countryName)) {
+    if (!StringUtils.isBlank(countryName)) {
 
       CountryDao countryDao = new CountryDao();
       String countryId = countryDao.getCountryId(countryName);
-      if (!StringUtils.isNullOrEmpty(countryId)) {
+      if (!StringUtils.isBlank(countryId)) {
         whereClause = andNeeded(whereClause, andNeeded);
         whereClause = String.valueOf(whereClause) + "s.countryId = '" + countryId + "' ";
         andNeeded = true;

@@ -8,8 +8,9 @@ package fifa.jsf.charts;
 import fifa.jsf.AwayResultsBean;
 import fifa.utilities.FIFAConstants;
 import fifa.utilities.PropertiesUtilities;
-import java.util.List;
 import org.primefaces.model.chart.PieChartModel;
+
+import java.util.List;
 
 public class ChartBeanAway
     implements FIFAConstants

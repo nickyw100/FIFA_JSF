@@ -5,15 +5,19 @@
 
 package fifa.facts.utilities;
 
-import com.mysql.jdbc.StringUtils;
 import fifa.facts.FactBean;
 import fifa.facts.dao.FactDao;
 import fifa.jsf.StatsBean;
 import fifa.utilities.FIFAConstants;
 import fifa.utilities.PropertiesUtilities;
-import java.util.*;
+import org.apache.commons.lang3.StringUtils;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 // Referenced classes of package fifa.facts.utilities:
 //            BuildFactsException
@@ -423,7 +427,7 @@ public class FactUtilities
     {
         FactDao factDao = new FactDao();
         String factDescription = factDao.getFactDescription(factBean.getVersionId(), factBean.getFactId());
-        if(!StringUtils.isEmptyOrWhitespaceOnly(factDescription))
+        if(!StringUtils.isBlank(factDescription))
             factDao.updateFact(factBean);
         else
             factDao.addFact(factBean);

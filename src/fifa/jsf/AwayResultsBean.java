@@ -7,7 +7,10 @@ package fifa.jsf;
 
 import fifa.dao.AwayResultsDao;
 import fifa.utilities.FIFAConstants;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class AwayResultsBean
     implements FIFAConstants
