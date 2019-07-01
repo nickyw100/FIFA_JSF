@@ -11,8 +11,7 @@ import java.util.Date;
 
 @ManagedBean
 @RequestScoped
-public class SearchResultsBean
-        extends AbstractResultBean {
+public class SearchResultsBean extends AbstractResultBean {
     private static final long serialVersionUID = 9024576010797062889L;
     private String myTeamId;
     private String myTeamName;
@@ -27,11 +26,57 @@ public class SearchResultsBean
     private String gameDateTimeStr;
     private StatsBean.HomeAwayEnum homeAway;
     private int division;
-    private int opponentDivision;
     private boolean matchAbandoned;
     private String logoImage;
     private String myLogoImage;
     private String flagImage;
+
+    public SearchResultsBean () {
+
+    }
+
+    public SearchResultsBean (String versionId, String myTeamId, String myTeamName, String homeTeamName, String awayTeamName, String homeTeamLogo, String awayTeamLogo,
+                              String playerComments, StatsBean.GameTypeEnum gameType, String countryId, String countryName, Date gameDateTime,
+                              StatsBean.HomeAwayEnum homeAway, int division, boolean matchAbandoned, String logoImage, String myLogoImage, String flagImage,
+                              String playerName, int goalsFor, int goalsAgainst, boolean extraTime, int penaltiesFor, int penaltiesAgainst,
+                              int possessionPercentage, int shotAccuracyPercentage, int shots, int shotsOnTarget, int opponentShots, int opponentShotsOnTarget,
+                              int opponentDivision, String gameComments){
+
+        this.versionId = versionId;
+        this.myTeamId = myTeamId;
+        this.myTeamName = myTeamName;
+        this.homeTeamName = homeTeamName;
+        this.awayTeamName = awayTeamName;
+        this.homeTeamLogo = homeTeamLogo;
+        this.awayTeamLogo = awayTeamLogo;
+        this.playerComments = playerComments;
+        this.gameType = gameType;
+        this.countryId = countryId;
+        this.countryName = countryName;
+        this.gameDateTime = gameDateTime;
+        this.homeAway = homeAway;
+        this.division = division;
+        this.matchAbandoned = matchAbandoned;
+        this.logoImage = logoImage;
+        this.myLogoImage = myLogoImage;
+        this.flagImage = flagImage;
+
+        this.playerName = playerName;
+        this.goalsFor = goalsFor;
+        this.goalsAgainst = goalsAgainst;
+        this.extraTime = extraTime;
+        this.penaltiesFor = penaltiesFor;
+        this.penaltiesAgainst = penaltiesAgainst;
+        this.possessionPercentage = possessionPercentage;
+        this.shotAccuracyPercentage = shotAccuracyPercentage;
+        this.shots = shots;
+        this.shotsOnTarget = shotsOnTarget;
+        this.opponentShots = opponentShots;
+        this.opponentShotsOnTarget = opponentShotsOnTarget;
+        this.opponentDivision = opponentDivision;
+        this.gameComments = gameComments;
+
+    }
 
     public void setGameDateTime(Date gameDateTime) {
         this.gameDateTime = gameDateTime;

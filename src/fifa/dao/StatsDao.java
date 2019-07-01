@@ -153,7 +153,6 @@ public class StatsDao implements fifa.utilities.FIFAConstants {
             }
         }
 
-
         return results;
     }
 
@@ -161,7 +160,7 @@ public class StatsDao implements fifa.utilities.FIFAConstants {
     public List<LastResultBean> getLastResult() {
         List<LastResultBean> results = new ArrayList();
         Connection conn = null;
-        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement;
         JDBCConnect jdbcConnect = null;
         try {
             jdbcConnect = new JDBCConnect();
@@ -198,54 +197,18 @@ public class StatsDao implements fifa.utilities.FIFAConstants {
 
 
     private void prepareLast6ResultDetails(List<LastSixBean> results, ResultSet rs) {
-        LastSixBean lastSixBean = new LastSixBean();
-
         try {
+        LastSixBean lastSixBean = new LastSixBean(rs.getString("s.versionId"), rs.getString("t.teamName"), rs.getString("s.playerName"),
+                rs.getTimestamp("s.gameDateTime"), rs.getInt("s.goalsFor"), rs.getInt("s.goalsAgainst"),
+                rs.getBoolean("s.extraTime"), rs.getInt("s.penaltiesFor"), rs.getInt("s.penaltiesAgainst"),
+                rs.getInt("s.possessionPercentage"), 0,
+                rs.getInt("s.shots"), rs.getInt("s.shotsOnTarget"), rs.getInt("s.opponentShots"),
+                rs.getInt("s.opponentShotsOnTarget"),0, rs.getString("s.gameComments"));
 
-        loadSixBeanValues(lastSixBean, rs.getInt("s.goalsFor"), rs.getInt("s.goalsAgainst"), rs.getBoolean("s.extraTime"),
-                rs.getInt("s.penaltiesFor"), rs.getInt("s.penaltiesAgainst"), rs.getInt("s.possessionPercentage"),
-                rs.getInt("s.shots"), rs.getInt("s.shotsOnTarget"), rs.getInt("s.opponentShots"), rs.getInt("s.opponentShotsOnTarget"),
-                0, rs.getString("t.teamName"), rs.getString("s.playerName"), rs.getTimestamp("s.gameDateTime"),
-                rs.getString("s.versionId"), rs.getString("s.gameComments"));
         results.add(lastSixBean);
         } catch (SQLException se) {
             System.err.println(se.getLocalizedMessage());
         }
-    }
-
-    private void loadSixBeanValues(LastSixBean lastSixBean, int goalsFor, int goalsAgainst, boolean extraTime, int penaltiesFor, int penaltiesAgainst, int possessionPercentage, int shots, int shotsOnTarget, int opponentShots, int opponentShotsOnTarget, int opponentDivision, String teamName, String playerName, Date gameDateTime, String versionId, String gameComments) {
-        if (goalsFor > goalsAgainst) {
-            lastSixBean.setWinLossDraw("W");
-
-        } else if (goalsFor < goalsAgainst) {
-            lastSixBean.setWinLossDraw("L");
-
-
-        } else if ((extraTime) && (penaltiesFor > penaltiesAgainst)) {
-            lastSixBean.setWinLossDraw("W");
-        } else if ((extraTime) && (penaltiesFor < penaltiesAgainst)) {
-            lastSixBean.setWinLossDraw("L");
-        } else {
-            lastSixBean.setWinLossDraw("D");
-        }
-
-
-        lastSixBean.setVersionId(versionId);
-        lastSixBean.setPlayerName(playerName);
-        lastSixBean.setTeamName(teamName);
-        lastSixBean.setGoalsAgainst(goalsAgainst);
-        lastSixBean.setGoalsFor(goalsFor);
-        lastSixBean.setPenaltiesAgainst(penaltiesAgainst);
-        lastSixBean.setPossessionPercentage(possessionPercentage);
-        lastSixBean.setShots(shots);
-        lastSixBean.setShotsOnTarget(shotsOnTarget);
-        lastSixBean.setOpponentShots(opponentShots);
-        lastSixBean.setOpponentShotsOnTarget(opponentShotsOnTarget);
-        lastSixBean.setOpponentDivision(opponentDivision);
-        lastSixBean.setExtraTime(extraTime);
-        lastSixBean.setPenaltiesFor(penaltiesFor);
-        lastSixBean.setGameDateTime(gameDateTime);
-        lastSixBean.setGameComments(gameComments);
     }
 
 

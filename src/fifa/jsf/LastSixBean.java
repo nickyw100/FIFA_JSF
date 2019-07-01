@@ -10,12 +10,51 @@ import java.util.List;
 
 
 @ManagedBean
-public class LastSixBean
-        extends AbstractResultBean {
+public class LastSixBean extends AbstractResultBean {
     private static final long serialVersionUID = -6485511691963816181L;
     private List<LastSixBean> results;
     private String winLossDraw;
     private String gameDateTimeStr;
+
+    public LastSixBean () {
+
+    }
+
+    public LastSixBean(String versionId, String teamName, String playerName, Date gameDateTime, int goalsFor, int goalsAgainst, boolean extraTime,
+                       int penaltiesFor, int penaltiesAgainst, int possessionPercentage, int shotAccuracyPercentage, int shots, int shotsOnTarget, int opponentShots, int opponentShotsOnTarget,
+                       int opponentDivision, String gameComments) {
+        this.versionId = versionId;
+        this.teamName = teamName;
+        this.playerName = playerName;
+        this.gameDateTime = gameDateTime;
+        this.goalsFor = goalsFor;
+        this.goalsAgainst = goalsAgainst;
+        this.extraTime = extraTime;
+        this.penaltiesFor = penaltiesFor;
+        this.penaltiesAgainst = penaltiesAgainst;
+        this.possessionPercentage = possessionPercentage;
+        this.shotAccuracyPercentage = shotAccuracyPercentage;
+        this.shots = shots;
+        this.shotsOnTarget = shotsOnTarget;
+        this.opponentShots = opponentShots;
+        this.opponentShotsOnTarget = opponentShotsOnTarget;
+        this.opponentDivision = opponentDivision;
+        this.gameComments = gameComments;
+
+        if (goalsFor > goalsAgainst) {
+            this.winLossDraw = "W";
+
+        } else if (goalsFor < goalsAgainst) {
+            this.winLossDraw = "L";
+
+        } else if ((extraTime) && (penaltiesFor > penaltiesAgainst)) {
+            this.winLossDraw = "W";
+        } else if ((extraTime) && (penaltiesFor < penaltiesAgainst)) {
+            this.winLossDraw = "L";
+        } else {
+            this.winLossDraw = "D";
+        }
+    }
 
     public void setGameDateTime(Date gameDateTime) {
         setGameDateTimeStr(formatDate(gameDateTime));
