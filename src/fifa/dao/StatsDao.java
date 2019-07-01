@@ -1,9 +1,7 @@
 package fifa.dao;
 
-import fifa.jsf.LastResultBean;
-import fifa.jsf.LastSixBean;
-import fifa.jsf.StatsBean;
-import fifa.jsf.TeamBean;
+import fifa.jsf.*;
+import fifa.utilities.FIFAConstants;
 import fifa.utilities.JDBCConnect;
 import fifa.utilities.PropertiesUtilities;
 import org.apache.commons.lang3.StringUtils;
@@ -213,112 +211,43 @@ public class StatsDao implements fifa.utilities.FIFAConstants {
 
 
     private void prepareLastResultDetails(List<LastResultBean> results, ResultSet rs) {
-        LastResultBean lastResultBean = new LastResultBean();
-        int goalsFor = 0;
-        int goalsAgainst = 0;
-        int penaltiesFor = 0;
-        int penaltiesAgainst = 0;
-        int possessionPercentage = 0;
-        int shots = 0;
-        int shotsOnTarget = 0;
-        int opponentShots = 0;
-        int opponentShotsOnTarget = 0;
-        int opponentDivision = 0;
-        int division = 0;
-        String teamName = null;
-        String playerName = null;
-        String playerComments = null;
-        String gameComments = null;
-        Date gameDateTime = null;
-        String myTeamName = null;
-        String myTeamId = null;
-        String myLogoImage = null;
-        StatsBean.HomeAwayEnum homeAway = null;
-        StatsBean.GameTypeEnum gameType = null;
-        String logoImage = null;
-        String flagImage = null;
-        String countryId = null;
-        String countryName = null;
-        String versionId = null;
-        boolean matchAbandoned = false;
-        boolean extraTime = false;
         try {
-            goalsFor = rs.getInt("s.goalsFor");
-            goalsAgainst = rs.getInt("s.goalsAgainst");
-            penaltiesFor = rs.getInt("s.penaltiesFor");
-            penaltiesAgainst = rs.getInt("s.penaltiesAgainst");
-            possessionPercentage = rs.getInt("s.possessionPercentage");
-            shots = rs.getInt("s.shots");
-            shotsOnTarget = rs.getInt("s.shotsOnTarget");
-            opponentShots = rs.getInt("s.opponentShots");
-            opponentShotsOnTarget = rs.getInt("s.opponentShotsOnTarget");
-//            opponentDivision = rs.getInt("s.opponentDivision");
-            division = rs.getInt("s.division");
-            playerName = rs.getString("s.playerName");
-            teamName = rs.getString("t.teamName");
-            myTeamId = rs.getString("s.myTeamId");
-            homeAway = StatsBean.HomeAwayEnum.findByValue(rs.getString("s.homeAway"));
-            gameType = StatsBean.GameTypeEnum.findByValue(rs.getString("s.gameType"));
-            logoImage = rs.getString("t.logoImage");
-            flagImage = rs.getString("c.flagImage");
-            countryId = rs.getString("s.countryId");
-            countryName = rs.getString("c.countryName");
-            playerComments = rs.getString("p.playerComments");
-            gameComments = rs.getString("s.gameComments");
-            matchAbandoned = rs.getBoolean("s.matchAbandoned");
-            extraTime = rs.getBoolean("s.extraTime");
-            versionId = rs.getString("s.versionId");
+            SearchResultsBean searchResultsBean = new SearchResultsBean(rs.getString("s.versionId"), rs.getString("s.myTeamId"), rs.getString("s.myTeamName"),
+                    rs.getString("s.homeTeamName"), rs.getString("s.awayTeamName"), rs.getString("p.playerComments"),
+                    StatsBean.GameTypeEnum.findByValue(rs.getString("s.gameType")), rs.getString("s.countryId"), rs.getString("s.countryName"),
+                    rs.getTimestamp("s.gameDateTime"), StatsBean.HomeAwayEnum.findByValue(rs.getString("s.homeAway")),
+                    rs.getInt("s.division"), rs.getBoolean("s.matchAbandoned"), rs.getString("t.logoImage"),
+                    null, rs.getString("c.flagImage"), rs.getString("s.playerName"), rs.getInt("s.goalsFor"),rs.getInt("s.goalsAgainst"),
+                    rs.getBoolean("s.extraTime"),
+                    rs.getInt("s.penaltiesFor"), rs.getInt("s.penaltiesAgainst"), rs.getInt("s.possessionPercentage"),
+                   0, rs.getInt("s.shots"), rs.getInt("s.shotsOnTarget"), rs.getInt("s.opponentShots"), rs.getInt("s.opponentShotsOnTarget"),
+                    0, rs.getString("s.gameComments"), );
 
-            gameDateTime = rs.getTimestamp("s.gameDateTime");
+            LastResultBean lastResultBean = new LastResultBean(
+                    searchResultsBean, null);
+
+
+//            opponentDivision = rs.getInt("s.opponentDivision");
+
+            loadLastResultBean(lastResultBean, goalsFor, goalsAgainst, penaltiesFor, penaltiesAgainst, possessionPercentage, shots,
+                    shotsOnTarget, opponentShots, opponentShotsOnTarget, opponentDivision, division, teamName, playerName,
+                    playerComments, gameComments, gameDateTime, myTeamName, myTeamId, myLogoImage, homeAway, gameType, logoImage,
+                    flagImage, countryId, countryName, versionId, matchAbandoned, extraTime);
+            results.add(lastResultBean);
         } catch (SQLException se) {
             System.err.println(se.getLocalizedMessage());
         }
 
-        loadLastResultBean(lastResultBean, goalsFor, goalsAgainst, penaltiesFor, penaltiesAgainst, possessionPercentage, shots,
-                shotsOnTarget, opponentShots, opponentShotsOnTarget, opponentDivision, division, teamName, playerName,
-                playerComments, gameComments, gameDateTime, myTeamName, myTeamId, myLogoImage, homeAway, gameType, logoImage,
-                flagImage, countryId, countryName, versionId, matchAbandoned, extraTime);
-        results.add(lastResultBean);
     }
 
-
     private void loadLastResultBean(LastResultBean lastResultBean, int goalsFor, int goalsAgainst, int penaltiesFor, int penaltiesAgainst, int possessionPercentage, int shots, int shotsOnTarget, int opponentShots, int opponentShotsOnTarget, int opponentDivision, int division, String teamName, String playerName, String playerComments, String gameComments, Date gameDateTime, String myTeamName, String myTeamId, String myLogoImage, StatsBean.HomeAwayEnum homeAway, StatsBean.GameTypeEnum gameType, String logoImage, String flagImage, String countryId, String countryName, String versionId, boolean matchAbandoned, boolean extraTime) {
-        lastResultBean.setPlayerName(playerName);
-        lastResultBean.setTeamName(teamName);
-        lastResultBean.setMyTeamId(myTeamId);
-        lastResultBean.setGoalsAgainst(goalsAgainst);
-        lastResultBean.setGoalsFor(goalsFor);
-        lastResultBean.setPenaltiesAgainst(penaltiesAgainst);
-        lastResultBean.setPenaltiesFor(penaltiesFor);
-        lastResultBean.setPossessionPercentage(possessionPercentage);
-        lastResultBean.setShots(shots);
-        lastResultBean.setShotsOnTarget(shotsOnTarget);
-        lastResultBean.setOpponentShots(opponentShots);
-        lastResultBean.setOpponentShotsOnTarget(opponentShotsOnTarget);
-        lastResultBean.setOpponentDivision(opponentDivision);
-        lastResultBean.setGameDateTime(gameDateTime);
-
-        lastResultBean.setDivision(division);
-        lastResultBean.setHomeAway(homeAway);
-        lastResultBean.setGameType(gameType);
-        lastResultBean.setGameDateTime(gameDateTime);
-        lastResultBean.setMatchAbandoned(matchAbandoned);
-        lastResultBean.setExtraTime(extraTime);
-
-        lastResultBean.setGameComments(gameComments);
-        lastResultBean.setFlagImage(flagImage);
-        lastResultBean.setCountryId(countryId);
-        lastResultBean.setCountryName(countryName);
-        lastResultBean.setVersionId(versionId);
-        lastResultBean.setLogoImage(logoImage);
-        lastResultBean.setPlayerComments(playerComments);
 
 
         if (StringUtils.isBlank(myTeamName)) {
             TeamDao teamDao = new TeamDao();
 
-            myTeamName = teamDao.getTeamName("ENG", lastResultBean.getMyTeamId());
-            myLogoImage = teamDao.getTeamLogo("ENG", lastResultBean.getMyTeamId());
+            myTeamName = teamDao.getTeamName(FIFAConstants.defaultCountry, lastResultBean.getMyTeamId());
+            myLogoImage = teamDao.getTeamLogo(FIFAConstants.defaultCountry, lastResultBean.getMyTeamId());
         }
 
         lastResultBean.setMyTeamName(myTeamName);

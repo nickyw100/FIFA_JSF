@@ -13,23 +13,23 @@ import java.util.Date;
 @RequestScoped
 public class SearchResultsBean extends AbstractResultBean {
     private static final long serialVersionUID = 9024576010797062889L;
-    private String myTeamId;
-    private String myTeamName;
-    private String homeTeamName;
-    private String awayTeamName;
-    private String homeTeamLogo;
-    private String awayTeamLogo;
-    private String playerComments;
-    private StatsBean.GameTypeEnum gameType;
-    private String countryId;
-    private String countryName;
-    private String gameDateTimeStr;
-    private StatsBean.HomeAwayEnum homeAway;
-    private int division;
-    private boolean matchAbandoned;
-    private String logoImage;
-    private String myLogoImage;
-    private String flagImage;
+    protected String myTeamId;
+    protected String myTeamName;
+    protected String homeTeamName;
+    protected String awayTeamName;
+    protected String homeTeamLogo;
+    protected String awayTeamLogo;
+    protected String playerComments;
+    protected StatsBean.GameTypeEnum gameType;
+    protected String countryId;
+    protected String countryName;
+    protected String gameDateTimeStr;
+    protected StatsBean.HomeAwayEnum homeAway;
+    protected int division;
+    protected boolean matchAbandoned;
+    protected String logoImage;
+    protected String myLogoImage;
+    protected String flagImage;
 
     public SearchResultsBean () {
 
@@ -49,6 +49,7 @@ public class SearchResultsBean extends AbstractResultBean {
         this.awayTeamName = awayTeamName;
         this.homeTeamLogo = homeTeamLogo;
         this.awayTeamLogo = awayTeamLogo;
+        this.playerName = playerName;
         this.playerComments = playerComments;
         this.gameType = gameType;
         this.countryId = countryId;
