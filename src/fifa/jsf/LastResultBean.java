@@ -16,6 +16,10 @@ public class LastResultBean extends SearchResultsBean {
 
     private List<LastResultBean> lastResults;
 
+    public LastResultBean () {
+        // All managed beans need a default constructor.
+    }
+
     public LastResultBean(SearchResultsBean searchResultsBean, List<LastResultBean> lastResults) {
 
         this.myTeamId = searchResultsBean.myTeamId;
