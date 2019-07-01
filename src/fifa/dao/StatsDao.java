@@ -212,8 +212,9 @@ public class StatsDao implements fifa.utilities.FIFAConstants {
 
     private void prepareLastResultDetails(List<LastResultBean> results, ResultSet rs) {
         try {
+            // LastResultBean inherits from SearchResultsBean, so build that object first.
             SearchResultsBean searchResultsBean = new SearchResultsBean(rs.getString("s.versionId"), rs.getString("s.myTeamId"), rs.getString("s.myTeamName"),
-                    rs.getString("s.homeTeamName"), rs.getString("s.awayTeamName"), rs.getString("p.playerComments"),
+                    rs.getString("s.homeTeamName"), rs.getString("s.awayTeamName"), null, null, rs.getString("p.playerComments"),
                     StatsBean.GameTypeEnum.findByValue(rs.getString("s.gameType")), rs.getString("s.countryId"), rs.getString("s.countryName"),
                     rs.getTimestamp("s.gameDateTime"), StatsBean.HomeAwayEnum.findByValue(rs.getString("s.homeAway")),
                     rs.getInt("s.division"), rs.getBoolean("s.matchAbandoned"), rs.getString("t.logoImage"),
@@ -221,50 +222,17 @@ public class StatsDao implements fifa.utilities.FIFAConstants {
                     rs.getBoolean("s.extraTime"),
                     rs.getInt("s.penaltiesFor"), rs.getInt("s.penaltiesAgainst"), rs.getInt("s.possessionPercentage"),
                    0, rs.getInt("s.shots"), rs.getInt("s.shotsOnTarget"), rs.getInt("s.opponentShots"), rs.getInt("s.opponentShotsOnTarget"),
-                    0, rs.getString("s.gameComments"), );
+                    0, rs.getString("s.gameComments"));
 
             LastResultBean lastResultBean = new LastResultBean(
                     searchResultsBean, null);
 
-
-//            opponentDivision = rs.getInt("s.opponentDivision");
-
-            loadLastResultBean(lastResultBean, goalsFor, goalsAgainst, penaltiesFor, penaltiesAgainst, possessionPercentage, shots,
-                    shotsOnTarget, opponentShots, opponentShotsOnTarget, opponentDivision, division, teamName, playerName,
-                    playerComments, gameComments, gameDateTime, myTeamName, myTeamId, myLogoImage, homeAway, gameType, logoImage,
-                    flagImage, countryId, countryName, versionId, matchAbandoned, extraTime);
             results.add(lastResultBean);
+
         } catch (SQLException se) {
             System.err.println(se.getLocalizedMessage());
         }
 
-    }
-
-    private void loadLastResultBean(LastResultBean lastResultBean, int goalsFor, int goalsAgainst, int penaltiesFor, int penaltiesAgainst, int possessionPercentage, int shots, int shotsOnTarget, int opponentShots, int opponentShotsOnTarget, int opponentDivision, int division, String teamName, String playerName, String playerComments, String gameComments, Date gameDateTime, String myTeamName, String myTeamId, String myLogoImage, StatsBean.HomeAwayEnum homeAway, StatsBean.GameTypeEnum gameType, String logoImage, String flagImage, String countryId, String countryName, String versionId, boolean matchAbandoned, boolean extraTime) {
-
-
-        if (StringUtils.isBlank(myTeamName)) {
-            TeamDao teamDao = new TeamDao();
-
-            myTeamName = teamDao.getTeamName(FIFAConstants.defaultCountry, lastResultBean.getMyTeamId());
-            myLogoImage = teamDao.getTeamLogo(FIFAConstants.defaultCountry, lastResultBean.getMyTeamId());
-        }
-
-        lastResultBean.setMyTeamName(myTeamName);
-        lastResultBean.setMyLogoImage(myLogoImage);
-
-
-        if (lastResultBean.getHomeAway().equals(StatsBean.HomeAwayEnum.Home)) {
-            lastResultBean.setAwayTeamName(lastResultBean.getTeamName());
-            lastResultBean.setHomeTeamName(myTeamName);
-            lastResultBean.setHomeTeamLogo(myLogoImage);
-            lastResultBean.setAwayTeamLogo(lastResultBean.getLogoImage());
-        } else {
-            lastResultBean.setHomeTeamName(lastResultBean.getTeamName());
-            lastResultBean.setAwayTeamName(myTeamName);
-            lastResultBean.setHomeTeamLogo(lastResultBean.getLogoImage());
-            lastResultBean.setAwayTeamLogo(myLogoImage);
-        }
     }
 
 

@@ -1,6 +1,9 @@
 package fifa.jsf;
 
 import fifa.dao.StatsDao;
+import fifa.dao.TeamDao;
+import fifa.utilities.FIFAConstants;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import javax.faces.bean.ManagedBean;
@@ -44,6 +47,25 @@ public class LastResultBean extends SearchResultsBean {
         this.opponentShotsOnTarget = searchResultsBean.opponentShotsOnTarget;
         this.opponentDivision = searchResultsBean.opponentDivision;
         this.gameComments = searchResultsBean.gameComments;
+
+        if (StringUtils.isBlank(myTeamName)) {
+            TeamDao teamDao = new TeamDao();
+
+            myTeamName = teamDao.getTeamName(FIFAConstants.defaultCountry, myTeamId);
+            myLogoImage = teamDao.getTeamLogo(FIFAConstants.defaultCountry, myTeamId);
+        }
+
+        if (this.homeAway.equals(StatsBean.HomeAwayEnum.Home)) {
+            this.awayTeamName = teamName;
+            this.homeTeamName = myTeamName;
+            this.homeTeamLogo = myLogoImage;
+            this.awayTeamLogo = logoImage;
+        } else {
+            this.homeTeamName = teamName;
+            this.awayTeamName = myTeamName;
+            this.homeTeamLogo = logoImage;
+            this.awayTeamLogo = myLogoImage;
+        }
 
         this.lastResults = lastResults;
 
