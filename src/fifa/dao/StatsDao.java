@@ -199,49 +199,19 @@ public class StatsDao implements fifa.utilities.FIFAConstants {
 
     private void prepareLast6ResultDetails(List<LastSixBean> results, ResultSet rs) {
         LastSixBean lastSixBean = new LastSixBean();
-        int goalsFor = 0;
-        int goalsAgainst = 0;
-        boolean extraTime = false;
-        int penaltiesFor = 0;
-        int penaltiesAgainst = 0;
-        int possessionPercentage = 0;
-        int shots = 0;
-        int shotsOnTarget = 0;
-        int opponentShots = 0;
-        int opponentShotsOnTarget = 0;
-        int opponentDivision = 0;
-        String teamName = null;
-        String playerName = null;
-        String gameComments = null;
-        Date gameDateTime = null;
-        String versionId = null;
+
         try {
-            goalsFor = rs.getInt("s.goalsFor");
-            goalsAgainst = rs.getInt("s.goalsAgainst");
-            extraTime = rs.getBoolean("s.extraTime");
-            penaltiesFor = rs.getInt("s.penaltiesFor");
-            penaltiesAgainst = rs.getInt("s.penaltiesAgainst");
-            possessionPercentage = rs.getInt("s.possessionPercentage");
-            shots = rs.getInt("s.shots");
-            shotsOnTarget = rs.getInt("s.shotsOnTarget");
-            opponentShots = rs.getInt("s.opponentShots");
-            opponentShotsOnTarget = rs.getInt("s.opponentShotsOnTarget");
-//            opponentDivision = rs.getInt("s.opponentDivision");
-            playerName = rs.getString("s.playerName");
-            gameComments = rs.getString("s.gameComments");
-            teamName = rs.getString("t.teamName");
-            versionId = rs.getString("s.versionId");
-            gameDateTime = rs.getTimestamp("s.gameDateTime");
+
+        loadSixBeanValues(lastSixBean, rs.getInt("s.goalsFor"), rs.getInt("s.goalsAgainst"), rs.getBoolean("s.extraTime"),
+                rs.getInt("s.penaltiesFor"), rs.getInt("s.penaltiesAgainst"), rs.getInt("s.possessionPercentage"),
+                rs.getInt("s.shots"), rs.getInt("s.shotsOnTarget"), rs.getInt("s.opponentShots"), rs.getInt("s.opponentShotsOnTarget"),
+                0, rs.getString("t.teamName"), rs.getString("s.playerName"), rs.getTimestamp("s.gameDateTime"),
+                rs.getString("s.versionId"), rs.getString("s.gameComments"));
+        results.add(lastSixBean);
         } catch (SQLException se) {
             System.err.println(se.getLocalizedMessage());
         }
-
-        loadSixBeanValues(lastSixBean, goalsFor, goalsAgainst, extraTime, penaltiesFor, penaltiesAgainst, possessionPercentage,
-                shots, shotsOnTarget, opponentShots, opponentShotsOnTarget, opponentDivision, teamName, playerName, gameDateTime,
-                versionId, gameComments);
-        results.add(lastSixBean);
     }
-
 
     private void loadSixBeanValues(LastSixBean lastSixBean, int goalsFor, int goalsAgainst, boolean extraTime, int penaltiesFor, int penaltiesAgainst, int possessionPercentage, int shots, int shotsOnTarget, int opponentShots, int opponentShotsOnTarget, int opponentDivision, String teamName, String playerName, Date gameDateTime, String versionId, String gameComments) {
         if (goalsFor > goalsAgainst) {
