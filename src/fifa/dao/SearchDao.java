@@ -88,7 +88,7 @@ public class SearchDao
                             rs.getInt("s.goalsFor"), rs.getInt("s.goalsAgainst"), rs.getBoolean("s.extraTime"), rs.getInt("s.penaltiesFor"),
                             rs.getInt("s.penaltiesAgainst"), rs.getInt("s.possessionPercentage"), 0, rs.getInt("s.shots"),
                             rs.getInt("s.shotsOnTarget"), rs.getInt("s.opponentShots"), rs.getInt("s.opponentShotsOnTarget"),
-                            rs.getInt("s.opponentDivision"), rs.getString("s.gameComments"));
+                            0, rs.getString("s.gameComments"));
 
 
                     if (StringUtils.isBlank(myTeamName)) {

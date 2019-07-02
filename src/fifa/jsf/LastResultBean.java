@@ -22,7 +22,6 @@ public class LastResultBean extends SearchResultsBean {
     }
 
     public LastResultBean(SearchResultsBean searchResultsBean, List<LastResultBean> lastResults) {
-
         this.myTeamId = searchResultsBean.myTeamId;
         this.myTeamName = searchResultsBean.myTeamName;
         this.teamName = searchResultsBean.teamName; // I am the opposition team name
