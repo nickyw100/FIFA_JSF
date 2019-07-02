@@ -81,8 +81,8 @@ public class SearchDao
                 while (rs.next()) {
 
                     SearchResultsBean searchResults = new SearchResultsBean(rs.getString("s.versionId"), rs.getString("s.myTeamId"), rs.getString("t.teamName"),
-                            null, null, null, null, rs.getString("p.playerComments"), StatsBean.GameTypeEnum.findByValue(rs.getString("s.gameType")),
-                            rs.getString("s.countryId"), rs.getString("c.countryName"), rs.getTimestamp("s.gameDateTime"),
+                             rs.getString("p.playerComments"), StatsBean.GameTypeEnum.findByValue(rs.getString("s.gameType")),
+                            rs.getString("s.countryId"), rs.getTimestamp("s.gameDateTime"),
                             StatsBean.HomeAwayEnum.findByValue(rs.getString("s.homeAway")), rs.getInt("s.division"), rs.getBoolean("s.matchAbandoned"),
                             rs.getString("t.logoImage"), null, rs.getString("c.flagImage"), rs.getString("s.playerName"),
                             rs.getInt("s.goalsFor"), rs.getInt("s.goalsAgainst"), rs.getBoolean("s.extraTime"), rs.getInt("s.penaltiesFor"),

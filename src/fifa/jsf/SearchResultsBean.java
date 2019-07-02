@@ -35,8 +35,8 @@ public class SearchResultsBean extends AbstractResultBean {
 
     }
 
-    public SearchResultsBean (String versionId, String myTeamId, String myTeamName, String homeTeamName, String awayTeamName, String homeTeamLogo, String awayTeamLogo,
-                              String playerComments, StatsBean.GameTypeEnum gameType, String countryId, String countryName, Date gameDateTime,
+    public SearchResultsBean (String versionId, String myTeamId, String teamName,
+                              String playerComments, StatsBean.GameTypeEnum gameType, String countryId, Date gameDateTime,
                               StatsBean.HomeAwayEnum homeAway, int division, boolean matchAbandoned, String logoImage, String myLogoImage, String flagImage,
                               String playerName, int goalsFor, int goalsAgainst, boolean extraTime, int penaltiesFor, int penaltiesAgainst,
                               int possessionPercentage, int shotAccuracyPercentage, int shots, int shotsOnTarget, int opponentShots, int opponentShotsOnTarget,
@@ -44,17 +44,13 @@ public class SearchResultsBean extends AbstractResultBean {
 
         this.versionId = versionId;
         this.myTeamId = myTeamId;
-        this.myTeamName = myTeamName;
-        this.homeTeamName = homeTeamName;
-        this.awayTeamName = awayTeamName;
-        this.homeTeamLogo = homeTeamLogo;
-        this.awayTeamLogo = awayTeamLogo;
+        this.teamName = teamName; // I am the opposition team name
         this.playerName = playerName;
         this.playerComments = playerComments;
         this.gameType = gameType;
         this.countryId = countryId;
-        this.countryName = countryName;
         this.gameDateTime = gameDateTime;
+        this.gameDateTimeStr = formatDate(gameDateTime);
         this.homeAway = homeAway;
         this.division = division;
         this.matchAbandoned = matchAbandoned;

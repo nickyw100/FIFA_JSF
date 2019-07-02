@@ -1,5 +1,6 @@
 package fifa.jsf;
 
+import fifa.dao.CountryDao;
 import fifa.dao.StatsDao;
 import fifa.dao.TeamDao;
 import fifa.utilities.FIFAConstants;
@@ -24,14 +25,23 @@ public class LastResultBean extends SearchResultsBean {
 
         this.myTeamId = searchResultsBean.myTeamId;
         this.myTeamName = searchResultsBean.myTeamName;
+        this.teamName = searchResultsBean.teamName; // I am the opposition team name
         this.homeTeamName = searchResultsBean.homeTeamName;
         this.awayTeamName = searchResultsBean.awayTeamName;
         this.homeTeamLogo = searchResultsBean.homeTeamLogo;
         this.awayTeamLogo = searchResultsBean.awayTeamLogo;
+        this.playerName = searchResultsBean.playerName;
         this.playerComments = searchResultsBean.playerComments;
         this.gameType = searchResultsBean.gameType;
         this.countryId = searchResultsBean.countryId;
         this.countryName = searchResultsBean.countryName;
+
+        if (StringUtils.isBlank(this.countryName)) {
+            CountryDao countryDao = new CountryDao();
+            this.countryName = countryDao.getCountryName(this.countryId);
+            searchResultsBean.setCountryName(this.countryName);
+        }
+        this.gameDateTime = searchResultsBean.gameDateTime;
         this.gameDateTimeStr = searchResultsBean.gameDateTimeStr;
         this.homeAway = searchResultsBean.homeAway;
         this.division = searchResultsBean.division;
@@ -40,6 +50,8 @@ public class LastResultBean extends SearchResultsBean {
         this.myLogoImage = searchResultsBean.myLogoImage;
         this.flagImage = searchResultsBean.flagImage;
         this.teamName = searchResultsBean.teamName;
+        this.goalsFor = searchResultsBean.goalsFor;
+        this.goalsAgainst = searchResultsBean.goalsAgainst;
         this.extraTime = searchResultsBean.extraTime;
         this.penaltiesFor = searchResultsBean.penaltiesFor;
         this.penaltiesAgainst = searchResultsBean.penaltiesAgainst;
