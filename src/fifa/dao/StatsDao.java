@@ -213,9 +213,9 @@ public class StatsDao implements fifa.utilities.FIFAConstants {
     private void prepareLastResultDetails(List<LastResultBean> results, ResultSet rs) {
         try {
             // LastResultBean inherits from SearchResultsBean, so build that object first.
-            SearchResultsBean searchResultsBean = new SearchResultsBean(rs.getString("s.versionId"), rs.getString("s.myTeamId"), rs.getString("s.myTeamName"),
-                    rs.getString("s.homeTeamName"), rs.getString("s.awayTeamName"), null, null, rs.getString("p.playerComments"),
-                    StatsBean.GameTypeEnum.findByValue(rs.getString("s.gameType")), rs.getString("s.countryId"), rs.getString("s.countryName"),
+            SearchResultsBean searchResultsBean = new SearchResultsBean(rs.getString("s.versionId"), rs.getString("s.myTeamId"), null,
+                    null, null, null, null, rs.getString("p.playerComments"),
+                    StatsBean.GameTypeEnum.findByValue(rs.getString("s.gameType")), rs.getString("s.countryId"), null,
                     rs.getTimestamp("s.gameDateTime"), StatsBean.HomeAwayEnum.findByValue(rs.getString("s.homeAway")),
                     rs.getInt("s.division"), rs.getBoolean("s.matchAbandoned"), rs.getString("t.logoImage"),
                     null, rs.getString("c.flagImage"), rs.getString("s.playerName"), rs.getInt("s.goalsFor"),rs.getInt("s.goalsAgainst"),

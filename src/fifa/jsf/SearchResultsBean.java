@@ -137,10 +137,12 @@ public class SearchResultsBean extends AbstractResultBean {
 
 
     private String formatDate(Date inputDate) {
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+        if (null != inputDate) {
+            DateFormat df = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
 
-
-        return df.format(inputDate);
+            return df.format(inputDate);
+        }
+        return null;
     }
 
 
